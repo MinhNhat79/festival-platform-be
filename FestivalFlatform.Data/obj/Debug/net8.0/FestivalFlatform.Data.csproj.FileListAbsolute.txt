@@ -1,0 +1,14 @@
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalFlatform.Data\bin\Debug\net8.0\FestivalFlatform.Data.deps.json
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalFlatform.Data\bin\Debug\net8.0\FestivalFlatform.Data.runtimeconfig.json
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalFlatform.Data\bin\Debug\net8.0\FestivalFlatform.Data.dll
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalFlatform.Data\bin\Debug\net8.0\FestivalFlatform.Data.pdb
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalFlatform.Data\obj\Debug\net8.0\FestivalFlatform.Data.csproj.AssemblyReference.cache
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalFlatform.Data\obj\Debug\net8.0\FestivalFlatform.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalFlatform.Data\obj\Debug\net8.0\FestivalFlatform.Data.AssemblyInfoInputs.cache
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalFlatform.Data\obj\Debug\net8.0\FestivalFlatform.Data.AssemblyInfo.cs
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalFlatform.Data\obj\Debug\net8.0\FestivalFlatform.Data.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalFlatform.Data\obj\Debug\net8.0\FestivalFlatform.Data.dll
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalFlatform.Data\obj\Debug\net8.0\refint\FestivalFlatform.Data.dll
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalFlatform.Data\obj\Debug\net8.0\FestivalFlatform.Data.pdb
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalFlatform.Data\obj\Debug\net8.0\FestivalFlatform.Data.genruntimeconfig.cache
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalFlatform.Data\obj\Debug\net8.0\ref\FestivalFlatform.Data.dll

@@ -1,0 +1,546 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{53ABA795-DB17-4155-9F90-6E0A30BCF2DE}|FestivalManagementFlatformm\\FestivalManagementFlatformm.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalmanagementflatformm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53ABA795-DB17-4155-9F90-6E0A30BCF2DE}|FestivalManagementFlatformm\\FestivalManagementFlatformm.csproj|solutionrelative:festivalmanagementflatformm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\migrations\\20250604134734_mgr.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\migrations\\20250604134734_mgr.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\orderitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\orderitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\festivalflatformdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\festivalflatformdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\image.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\image.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53ABA795-DB17-4155-9F90-6E0A30BCF2DE}|FestivalManagementFlatformm\\FestivalManagementFlatformm.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalmanagementflatformm\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{53ABA795-DB17-4155-9F90-6E0A30BCF2DE}|FestivalManagementFlatformm\\FestivalManagementFlatformm.csproj|solutionrelative:festivalmanagementflatformm\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\supplier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\supplier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\studentgroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\studentgroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\schoolaccount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\schoolaccount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\school.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\school.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\question.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\question.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\pointstransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\pointstransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\minigame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\minigame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\menuitemingredient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\menuitemingredient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\menuitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\menuitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\maplocation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\maplocation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\ingredient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\ingredient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\groupmember.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\groupmember.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\festivalschool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\festivalschool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\festivalmap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\festivalmap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\festivalingredient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\festivalingredient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\festival.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\festival.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\chatsession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\chatsession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\chatmessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\chatmessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\chatattachment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\chatattachment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\booth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\booth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\accountpoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\accountpoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "20250604134734_mgr.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Migrations\\20250604134734_mgr.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Migrations\\20250604134734_mgr.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Migrations\\20250604134734_mgr.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Migrations\\20250604134734_mgr.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAgwAgAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:47:35.044Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalManagementFlatformm\\appsettings.json",
+              "RelativeDocumentMoniker": "FestivalManagementFlatformm\\appsettings.json",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalManagementFlatformm\\appsettings.json",
+              "RelativeToolTip": "FestivalManagementFlatformm\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-04T13:34:04.564Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalManagementFlatformm\\Program.cs",
+              "RelativeDocumentMoniker": "FestivalManagementFlatformm\\Program.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalManagementFlatformm\\Program.cs",
+              "RelativeToolTip": "FestivalManagementFlatformm\\Program.cs",
+              "ViewState": "AgIAAFIAAAAAAAAAAAAgwHEAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:29:25.142Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FestivalFlatformDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\FestivalFlatformDbContext.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\FestivalFlatformDbContext.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\FestivalFlatformDbContext.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\FestivalFlatformDbContext.cs",
+              "ViewState": "AgIAAA0BAAAAAAAAAADwv+cAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:25:40.99Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Supplier.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Supplier.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\Supplier.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Supplier.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\Supplier.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAIBJwCAAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:25:12.767Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "StudentGroup.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\StudentGroup.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\StudentGroup.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\StudentGroup.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\StudentGroup.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:24:57.652Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Image.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Image.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\Image.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Image.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\Image.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:21:41.109Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Order.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Order.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\Order.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Order.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\Order.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAgwBkAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:23:17.393Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "OrderItem.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\OrderItem.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\OrderItem.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\OrderItem.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\OrderItem.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAlwCUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:23:31.617Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "SchoolAccount.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\SchoolAccount.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\SchoolAccount.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\SchoolAccount.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\SchoolAccount.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:24:41.254Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "School.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\School.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\School.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\School.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\School.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:24:26.653Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Role.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Role.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\Role.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Role.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\Role.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:24:13.88Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Question.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Question.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\Question.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Question.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\Question.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:24:00.892Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "PointsTransaction.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\PointsTransaction.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\PointsTransaction.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\PointsTransaction.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\PointsTransaction.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:23:48.663Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Minigame.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Minigame.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\Minigame.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Minigame.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\Minigame.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:23:03.902Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "MenuItemIngredient.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\MenuItemIngredient.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\MenuItemIngredient.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\MenuItemIngredient.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\MenuItemIngredient.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:22:39.335Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "MenuItem.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\MenuItem.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\MenuItem.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\MenuItem.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\MenuItem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:22:25.048Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "MapLocation.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\MapLocation.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\MapLocation.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\MapLocation.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\MapLocation.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:22:11.22Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Ingredient.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Ingredient.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\Ingredient.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Ingredient.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\Ingredient.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:21:56.336Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "GroupMember.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\GroupMember.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\GroupMember.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\GroupMember.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\GroupMember.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:21:27.08Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "FestivalSchool.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\FestivalSchool.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\FestivalSchool.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\FestivalSchool.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\FestivalSchool.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:21:14.962Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "FestivalMap.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\FestivalMap.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\FestivalMap.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\FestivalMap.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\FestivalMap.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:21:02.871Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "FestivalIngredient.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\FestivalIngredient.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\FestivalIngredient.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\FestivalIngredient.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\FestivalIngredient.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:20:42.912Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Festival.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Festival.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\Festival.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Festival.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\Festival.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:20:25.444Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "ChatSession.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\ChatSession.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\ChatSession.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\ChatSession.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\ChatSession.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:20:10.988Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "ChatMessage.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\ChatMessage.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\ChatMessage.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\ChatMessage.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\ChatMessage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:19:55.374Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "ChatAttachment.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\ChatAttachment.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\ChatAttachment.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\ChatAttachment.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\ChatAttachment.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAIBJwB8AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:19:10.748Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "Booth.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Booth.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\Booth.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Booth.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\Booth.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwCcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:18:45.551Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "AccountPoints.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\AccountPoints.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\AccountPoints.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\AccountPoints.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\AccountPoints.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:18:30.994Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Account.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Account.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\Account.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Account.cs",
+              "RelativeToolTip": "FestivalFlatform.Data\\Models\\Account.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAABQwCkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T13:18:10.084Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
