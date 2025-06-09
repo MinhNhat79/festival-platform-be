@@ -1,0 +1,44 @@
+[
+  {
+    "ContainingType": "FestivalManagementFlatformm.Controllers.AccountController",
+    "Method": "RegisterStudentAccountBySchool",
+    "RelativePath": "api/accounts/register-student-account",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FestivalFlatform.Service.DTOs.Request.RegisterRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FestivalFlatform.Service.DTOs.Response.AccountResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FestivalManagementFlatformm.Controllers.LoginController",
+    "Method": "Login",
+    "RelativePath": "api/logins",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FestivalFlatform.Service.DTOs.Request.LoginnRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

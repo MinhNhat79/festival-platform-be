@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35913.81 d17.13
+VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FestivalManagementFlatformm", "FestivalManagementFlatformm\FestivalManagementFlatformm.csproj", "{53ABA795-DB17-4155-9F90-6E0A30BCF2DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FestivalFlatform.Data", "FestivalFlatform.Data\FestivalFlatform.Data.csproj", "{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FestivalFlatform.Service", "FestivalFlatform.Service\FestivalFlatform.Service.csproj", "{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

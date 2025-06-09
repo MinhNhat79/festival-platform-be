@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FestivalManagementFlatformm")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3c4315fb30965f7867dd78f2e78c919889976d07")]
 [assembly: System.Reflection.AssemblyProductAttribute("FestivalManagementFlatformm")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FestivalManagementFlatformm")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

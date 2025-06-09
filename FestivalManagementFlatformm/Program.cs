@@ -1,6 +1,4 @@
-﻿
-
-using FestivalFlatform.Data;
+﻿using FestivalFlatform.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +9,11 @@ using System.Text;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using FestivalFlatform.Service.Helpers;
+using FestivalFlatform.Service.Services.Implement;
+using FestivalFlatform.Service.Services.Interface;
+using FestivalFlatform.Data.UnitOfWork;
+using System.Security.Claims;
 
 namespace FF.API
 {
@@ -20,12 +23,11 @@ namespace FF.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-
-            #region JWT
+            // Lấy cấu hình JWT từ appsettings.json
             var jwtSettings = builder.Configuration.GetSection("JwtAuth");
             var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
 
-
+            #region Đăng ký Authentication với JWT Bearer
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -44,64 +46,52 @@ namespace FF.API
                     ValidateAudience = true,
                     ValidAudience = jwtSettings["Audience"],
                     ValidateLifetime = true,
+
+                    
                 };
             });
             #endregion
-            // 1. Đọc chuỗi cấu hình JWT từ appsettings.json
-            
 
-            // 2. Đăng ký Authentication với JwtBearer
-           
-
-            // Thêm Authorization
-            builder.Services.AddAuthorization();
-
-            // Thêm các service khác (Repositories, Services, v.v.)
-            builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-            // Add services to the container.
-            builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-            // Register ApplicationDbContext
-            builder.Services.AddDbContext<FestivalFlatformDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-            // Thêm MemoryCache
-            builder.Services.AddMemoryCache();
-
-
-            // Inject IWebHostEnvironment: giúp acc update ảnh đại diện
-            builder.Services.AddSingleton<IWebHostEnvironment>(builder.Environment);
-
-            // Add CORS
-            builder.Services.AddCors(options =>
+            // Đăng ký Authorization với các policy theo Roles
+            builder.Services.AddAuthorization(options =>
             {
-                options.AddPolicy("AllowAll",
-                    policy => policy.AllowAnyOrigin()
-                                    .AllowAnyMethod()
-                                    .AllowAnyHeader());
+                options.AddPolicy(Roles.Admin, policy =>
+                    policy.RequireRole(Roles.Admin));
+                options.AddPolicy(Roles.SchoolManager, policy =>
+                    policy.RequireRole(Roles.SchoolManager));
+                options.AddPolicy(Roles.Teacher, policy =>
+                    policy.RequireRole(Roles.Teacher));
+                options.AddPolicy(Roles.Student, policy =>
+                    policy.RequireRole(Roles.Student));
+                options.AddPolicy(Roles.Supplier, policy =>
+                    policy.RequireRole(Roles.Supplier));
             });
 
-            builder.Services.AddAutoMapper(typeof(Program));
+            // Đăng ký DbContext với SQL Server
+            builder.Services.AddDbContext<FestivalFlatformDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // Đăng ký Identity (nếu bạn có sử dụng)
             builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-            .AddEntityFrameworkStores<FestivalFlatformDbContext>()
-            .AddDefaultTokenProviders();
+                .AddEntityFrameworkStores<FestivalFlatformDbContext>()
+                .AddDefaultTokenProviders();
 
+            // Các service khác
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<ILoginService, LoginService>();
+            builder.Services.AddScoped<IAccountService, AccountService>();
 
+            // Các cấu hình bổ sung
+            builder.Services.AddControllers()
+                .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "LSAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "FF.API", Version = "v1" });
 
-
-                // Thêm khai báo bảo mật Bearer
+                // Cấu hình Swagger để hỗ trợ JWT Bearer Authentication
                 var securitySchema = new OpenApiSecurityScheme
                 {
                     Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
@@ -115,56 +105,52 @@ namespace FF.API
                         Id = "Bearer"
                     }
                 };
-                c.AddSecurityDefinition("Bearer", securitySchema
-                   );
-
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                c.AddSecurityDefinition("Bearer", securitySchema);
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
-                        securitySchema,
-                    new string[] { "Bearer" }
-                    }
-                }
-
-                );
-
-
+                    { securitySchema, new string[] { "Bearer" } }
+                });
             });
-            // Register IService and Service
 
+            builder.Services.AddMemoryCache();
+
+            builder.Services.AddSingleton<IWebHostEnvironment>(builder.Environment);
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", policy =>
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+            });
+
+            builder.Services.AddAutoMapper(typeof(Program));
 
             var app = builder.Build();
 
-            app.UseCors("AllowAll");
-            app.UseAuthorization();
-            app.MapControllers();
-
-            // Lấy IWebHostEnvironment từ app.Services
-            var env = app.Services.GetRequiredService<IWebHostEnvironment>();
-
-            // Debug thông tin môi trường
-            Console.WriteLine($"Environment: {env.EnvironmentName}");
-            Console.WriteLine($"WebRootPath: {env.WebRootPath}");
-
-            // Configure the HTTP request pipeline.
+            // Môi trường phát triển
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FF.API v1"));
             }
+
+            app.UseDeveloperExceptionPage();
+
+            app.UseRouting();
+
+            app.UseCors("AllowAll");
+
+            app.UseAuthentication(); // Phải trước Authorization
+            app.UseAuthorization();
 
             app.UseHttpsRedirection();
 
-            app.UseAuthentication();
-
-            app.UseAuthorization();
-
-            app.UseStaticFiles(); // Cho phép truy cập ảnh đã upload
+            app.UseStaticFiles();
 
             app.MapControllers();
 
             app.Run();
-
-
         }
     }
 }

@@ -12,3 +12,4 @@ C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalFlatform.Data\ob
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalFlatform.Data\obj\Debug\net8.0\FestivalFlatform.Data.pdb
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalFlatform.Data\obj\Debug\net8.0\FestivalFlatform.Data.genruntimeconfig.cache
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalFlatform.Data\obj\Debug\net8.0\ref\FestivalFlatform.Data.dll
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalFlatform.Data\obj\Debug\net8.0\FestivalFlatform.Data.sourcelink.json
