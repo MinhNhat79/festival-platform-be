@@ -47,7 +47,7 @@ namespace FF.API
                     ValidAudience = jwtSettings["Audience"],
                     ValidateLifetime = true,
 
-                    
+
                 };
             });
             #endregion
@@ -80,6 +80,13 @@ namespace FF.API
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<ILoginService, LoginService>();
             builder.Services.AddScoped<IAccountService, AccountService>();
+            builder.Services.AddScoped<IAccountPointsService, AccountPointsService>();
+            builder.Services.AddScoped<IFestivalService, FestivalService>();
+            builder.Services.AddScoped<IBoothService, BoothService>();
+            builder.Services.AddScoped<ISupplierService, SupplierService>();
+            builder.Services.AddScoped<ISchoolService, SchoolService>();
+            builder.Services.AddScoped<ISchoolAccountService, SchoolAccountService>();
+            builder.Services.AddScoped<IStudentGroupService, StudentGroupService>();
 
             // Các cấu hình bổ sung
             builder.Services.AddControllers()

@@ -26,5 +26,8 @@ namespace FestivalFlatform.Data.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+        public virtual MenuItem MenuItem { get; set; } = null!;
+
+        public virtual Ingredient Ingredient { get; set; } = null!;
     }
 }

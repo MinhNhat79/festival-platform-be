@@ -28,5 +28,7 @@ namespace FestivalFlatform.Data.Models
         public DateTime? UpdatedAt { get; set; }
         public virtual ICollection<Question> Questions { get; set; } = new HashSet<Question>();
 
+        public virtual Booth Booth { get; set; } = null!;
+
     }
 }

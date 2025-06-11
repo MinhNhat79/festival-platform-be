@@ -24,5 +24,7 @@ namespace FestivalFlatform.Data.Models
 
         public virtual ICollection<MapLocation> Locations { get; set; } = new List<MapLocation>();
 
+        public virtual Festival Festival { get; set; } = null!;
+
     }
 }

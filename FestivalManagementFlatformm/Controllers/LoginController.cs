@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace FestivalManagementFlatformm.Controllers
 {
     [ApiController]
-    [Route("api/logins")]
     public class LoginController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -25,7 +24,7 @@ namespace FestivalManagementFlatformm.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost("api/auth/login")]
         public async Task<IActionResult> Login([FromBody] LoginnRequest request)
         {
             if (request == null || string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password))

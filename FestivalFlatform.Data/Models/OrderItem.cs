@@ -34,5 +34,7 @@ namespace FestivalFlatform.Data.Models
         public virtual Order Order { get; set; } = null!;
 
         public virtual MenuItem MenuItem { get; set; } = null!;
+
+        
     }
 }

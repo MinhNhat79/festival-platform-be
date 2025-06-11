@@ -20,6 +20,7 @@ namespace FestivalFlatform.Data.Models
         public DateTime? LastMessageAt { get; set; }
 
         public virtual ICollection<ChatMessage> Messages { get; set; } = new List<ChatMessage>();
+        public virtual Account Account { get; set; } = null!;
 
     }
 }

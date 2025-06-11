@@ -25,17 +25,29 @@ namespace FestivalFlatform.Data.Models
         public string BoothName { get; set; } = null!;
 
         public string? BoothType { get; set; }
+
         public string? Description { get; set; }
-        public string Status { get; set; } = "pending";
+
+        [Required]
+        public string Status { get; set; } // pending, approved, rejected, active
 
         public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
+
         public DateTime? ApprovalDate { get; set; }
 
         public int PointsBalance { get; set; } = 0;
+
         public DateTime? UpdatedAt { get; set; }
-        public virtual ICollection<MenuItem> MenuItems { get; set; } = new List<MenuItem>();
+
+        // ✅ Navigation Properties
+        public virtual StudentGroup StudentGroup { get; set; } = null!;
+        public virtual Festival Festival { get; set; } = null!;
+        public virtual MapLocation Location { get; set; } = null!;
+
         public virtual ICollection<Minigame> Minigames { get; set; } = new List<Minigame>();
         public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
         public virtual ICollection<PointsTransaction> PointsTransactions { get; set; } = new List<PointsTransaction>();
+        public virtual ICollection<BoothMenuItem> BoothMenuItems { get; set; } = new List<BoothMenuItem>();
+
     }
 }

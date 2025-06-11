@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FestivalFlatform.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class mgr : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -65,26 +65,6 @@ namespace FestivalFlatform.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StudentGroups",
-                columns: table => new
-                {
-                    GroupId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SchoolId = table.Column<int>(type: "int", nullable: false),
-                    AdvisorId = table.Column<int>(type: "int", nullable: false),
-                    ClassName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GroupName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    GroupBudget = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StudentGroups", x => x.GroupId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Accounts",
                 columns: table => new
                 {
@@ -115,7 +95,7 @@ namespace FestivalFlatform.Data.Migrations
                 {
                     FestivalId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrganizerSchoolId = table.Column<int>(type: "int", nullable: false),
+                    SchoolId = table.Column<int>(type: "int", nullable: false),
                     FestivalName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Theme = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -123,11 +103,13 @@ namespace FestivalFlatform.Data.Migrations
                     RegistrationStartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RegistrationEndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MaxBooths = table.Column<int>(type: "int", nullable: true),
+                    MaxFoodBooths = table.Column<int>(type: "int", nullable: false),
+                    MaxBeverageBooths = table.Column<int>(type: "int", nullable: false),
+                    RegisteredFoodBooths = table.Column<int>(type: "int", nullable: false),
+                    RegisteredBeverageBooths = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    SchoolId = table.Column<int>(type: "int", nullable: true)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -136,7 +118,8 @@ namespace FestivalFlatform.Data.Migrations
                         name: "FK_Festivals_Schools_SchoolId",
                         column: x => x.SchoolId,
                         principalTable: "Schools",
-                        principalColumn: "SchoolId");
+                        principalColumn: "SchoolId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -183,34 +166,6 @@ namespace FestivalFlatform.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GroupMembers",
-                columns: table => new
-                {
-                    MemberId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GroupId = table.Column<int>(type: "int", nullable: false),
-                    AccountId = table.Column<int>(type: "int", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    JoinDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GroupMembers", x => x.MemberId);
-                    table.ForeignKey(
-                        name: "FK_GroupMembers_Accounts_AccountId",
-                        column: x => x.AccountId,
-                        principalTable: "Accounts",
-                        principalColumn: "AccountId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_GroupMembers_StudentGroups_GroupId",
-                        column: x => x.GroupId,
-                        principalTable: "StudentGroups",
-                        principalColumn: "GroupId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "SchoolAccounts",
                 columns: table => new
                 {
@@ -221,8 +176,7 @@ namespace FestivalFlatform.Data.Migrations
                     Position = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Department = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    SchoolId1 = table.Column<int>(type: "int", nullable: true)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -239,11 +193,32 @@ namespace FestivalFlatform.Data.Migrations
                         principalTable: "Schools",
                         principalColumn: "SchoolId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StudentGroups",
+                columns: table => new
+                {
+                    GroupId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SchoolId = table.Column<int>(type: "int", nullable: false),
+                    AccountId = table.Column<int>(type: "int", nullable: false),
+                    ClassName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GroupName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    GroupBudget = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentGroups", x => x.GroupId);
                     table.ForeignKey(
-                        name: "FK_SchoolAccounts_Schools_SchoolId1",
-                        column: x => x.SchoolId1,
-                        principalTable: "Schools",
-                        principalColumn: "SchoolId");
+                        name: "FK_StudentGroups_Accounts_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "Accounts",
+                        principalColumn: "AccountId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -293,6 +268,29 @@ namespace FestivalFlatform.Data.Migrations
                     table.PrimaryKey("PK_FestivalMaps", x => x.MapId);
                     table.ForeignKey(
                         name: "FK_FestivalMaps_Festivals_FestivalId",
+                        column: x => x.FestivalId,
+                        principalTable: "Festivals",
+                        principalColumn: "FestivalId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FestivalMenus",
+                columns: table => new
+                {
+                    MenuId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FestivalId = table.Column<int>(type: "int", nullable: false),
+                    MenuName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FestivalMenus", x => x.MenuId);
+                    table.ForeignKey(
+                        name: "FK_FestivalMenus_Festivals_FestivalId",
                         column: x => x.FestivalId,
                         principalTable: "Festivals",
                         principalColumn: "FestivalId",
@@ -352,6 +350,33 @@ namespace FestivalFlatform.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GroupMembers",
+                columns: table => new
+                {
+                    GroupId = table.Column<int>(type: "int", nullable: false),
+                    AccountId = table.Column<int>(type: "int", nullable: false),
+                    MemberId = table.Column<int>(type: "int", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JoinDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GroupMembers", x => new { x.AccountId, x.GroupId });
+                    table.ForeignKey(
+                        name: "FK_GroupMembers_Accounts_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "Accounts",
+                        principalColumn: "AccountId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GroupMembers_StudentGroups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "StudentGroups",
+                        principalColumn: "GroupId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Ingredients",
                 columns: table => new
                 {
@@ -398,6 +423,32 @@ namespace FestivalFlatform.Data.Migrations
                         column: x => x.MapId,
                         principalTable: "FestivalMaps",
                         principalColumn: "MapId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MenuItems",
+                columns: table => new
+                {
+                    ItemId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MenuId = table.Column<int>(type: "int", nullable: false),
+                    ItemName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BasePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MenuItems", x => x.ItemId);
+                    table.ForeignKey(
+                        name: "FK_MenuItems_FestivalMenus_MenuId",
+                        column: x => x.MenuId,
+                        principalTable: "FestivalMenus",
+                        principalColumn: "MenuId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -474,58 +525,6 @@ namespace FestivalFlatform.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MenuItems",
-                columns: table => new
-                {
-                    ItemId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    BoothId = table.Column<int>(type: "int", nullable: false),
-                    ItemName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    QuantityLimit = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MenuItems", x => x.ItemId);
-                    table.ForeignKey(
-                        name: "FK_MenuItems_Booths_BoothId",
-                        column: x => x.BoothId,
-                        principalTable: "Booths",
-                        principalColumn: "BoothId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Minigames",
-                columns: table => new
-                {
-                    GameId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    BoothId = table.Column<int>(type: "int", nullable: false),
-                    GameName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GameType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Rules = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RewardPoints = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Minigames", x => x.GameId);
-                    table.ForeignKey(
-                        name: "FK_Minigames_Booths_BoothId",
-                        column: x => x.BoothId,
-                        principalTable: "Booths",
-                        principalColumn: "BoothId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Images",
                 columns: table => new
                 {
@@ -578,6 +577,62 @@ namespace FestivalFlatform.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BoothMenuItems",
+                columns: table => new
+                {
+                    BoothMenuItemId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BoothId = table.Column<int>(type: "int", nullable: false),
+                    MenuItemId = table.Column<int>(type: "int", nullable: false),
+                    CustomPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    QuantityLimit = table.Column<int>(type: "int", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BoothMenuItems", x => x.BoothMenuItemId);
+                    table.ForeignKey(
+                        name: "FK_BoothMenuItems_Booths_BoothId",
+                        column: x => x.BoothId,
+                        principalTable: "Booths",
+                        principalColumn: "BoothId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_BoothMenuItems_MenuItems_MenuItemId",
+                        column: x => x.MenuItemId,
+                        principalTable: "MenuItems",
+                        principalColumn: "ItemId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Minigames",
+                columns: table => new
+                {
+                    GameId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BoothId = table.Column<int>(type: "int", nullable: false),
+                    GameName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GameType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Rules = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RewardPoints = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Minigames", x => x.GameId);
+                    table.ForeignKey(
+                        name: "FK_Minigames_Booths_BoothId",
+                        column: x => x.BoothId,
+                        principalTable: "Booths",
+                        principalColumn: "BoothId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -590,8 +645,7 @@ namespace FestivalFlatform.Data.Migrations
                     PointsUsed = table.Column<int>(type: "int", nullable: false),
                     CashAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MenuItemItemId = table.Column<int>(type: "int", nullable: true)
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -608,11 +662,6 @@ namespace FestivalFlatform.Data.Migrations
                         principalTable: "Booths",
                         principalColumn: "BoothId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Orders_MenuItems_MenuItemItemId",
-                        column: x => x.MenuItemItemId,
-                        principalTable: "MenuItems",
-                        principalColumn: "ItemId");
                 });
 
             migrationBuilder.CreateTable(
@@ -716,6 +765,17 @@ namespace FestivalFlatform.Data.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BoothMenuItems_BoothId_MenuItemId",
+                table: "BoothMenuItems",
+                columns: new[] { "BoothId", "MenuItemId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BoothMenuItems_MenuItemId",
+                table: "BoothMenuItems",
+                column: "MenuItemId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Booths_FestivalId",
                 table: "Booths",
                 column: "FestivalId");
@@ -756,6 +816,11 @@ namespace FestivalFlatform.Data.Migrations
                 column: "FestivalId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FestivalMenus_FestivalId",
+                table: "FestivalMenus",
+                column: "FestivalId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Festivals_SchoolId",
                 table: "Festivals",
                 column: "SchoolId");
@@ -769,11 +834,6 @@ namespace FestivalFlatform.Data.Migrations
                 name: "IX_FestivalSchools_SchoolId",
                 table: "FestivalSchools",
                 column: "SchoolId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GroupMembers_AccountId",
-                table: "GroupMembers",
-                column: "AccountId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GroupMembers_GroupId",
@@ -806,9 +866,9 @@ namespace FestivalFlatform.Data.Migrations
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MenuItems_BoothId",
+                name: "IX_MenuItems_MenuId",
                 table: "MenuItems",
-                column: "BoothId");
+                column: "MenuId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Minigames_BoothId",
@@ -834,11 +894,6 @@ namespace FestivalFlatform.Data.Migrations
                 name: "IX_Orders_BoothId",
                 table: "Orders",
                 column: "BoothId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_MenuItemItemId",
-                table: "Orders",
-                column: "MenuItemItemId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PointsTransactions_AccountId",
@@ -871,9 +926,9 @@ namespace FestivalFlatform.Data.Migrations
                 column: "SchoolId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SchoolAccounts_SchoolId1",
-                table: "SchoolAccounts",
-                column: "SchoolId1");
+                name: "IX_StudentGroups_AccountId",
+                table: "StudentGroups",
+                column: "AccountId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Suppliers_AccountId",
@@ -886,6 +941,9 @@ namespace FestivalFlatform.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AccountPoints");
+
+            migrationBuilder.DropTable(
+                name: "BoothMenuItems");
 
             migrationBuilder.DropTable(
                 name: "ChatAttachments");
@@ -927,6 +985,9 @@ namespace FestivalFlatform.Data.Migrations
                 name: "Ingredients");
 
             migrationBuilder.DropTable(
+                name: "MenuItems");
+
+            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
@@ -936,16 +997,10 @@ namespace FestivalFlatform.Data.Migrations
                 name: "Suppliers");
 
             migrationBuilder.DropTable(
-                name: "MenuItems");
-
-            migrationBuilder.DropTable(
-                name: "Accounts");
+                name: "FestivalMenus");
 
             migrationBuilder.DropTable(
                 name: "Booths");
-
-            migrationBuilder.DropTable(
-                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "MapLocations");
@@ -957,7 +1012,13 @@ namespace FestivalFlatform.Data.Migrations
                 name: "FestivalMaps");
 
             migrationBuilder.DropTable(
+                name: "Accounts");
+
+            migrationBuilder.DropTable(
                 name: "Festivals");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Schools");

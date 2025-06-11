@@ -21,5 +21,11 @@ namespace FestivalFlatform.Data.Models
         public string? Role { get; set; }
 
         public DateTime JoinDate { get; set; } = DateTime.UtcNow;
+
+        public virtual StudentGroup StudentGroup { get; set; } = null!;
+        public virtual Account Account { get; set; } = null!;
+
+
+
     }
 }

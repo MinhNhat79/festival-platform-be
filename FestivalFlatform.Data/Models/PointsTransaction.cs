@@ -27,5 +27,10 @@ namespace FestivalFlatform.Data.Models
 
         public DateTime TransactionDate { get; set; } = DateTime.UtcNow;
 
+        public virtual Account Account { get; set; } = null!;
+
+        public virtual Booth Booth { get; set; } = null!;
+
+        public virtual Minigame Minigame { get; set; } = null!;
     }
 }

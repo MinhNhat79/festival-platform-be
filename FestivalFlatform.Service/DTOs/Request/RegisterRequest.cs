@@ -27,4 +27,27 @@ namespace FestivalFlatform.Service.DTOs.Request
         public string? PhoneNumber { get; set; }
 
     }
+    public class RegisterRequestAll
+    {
+        [Required]
+        [EmailAddress]
+        [MaxLength(100)]
+        public string Email { get; set; } = null!;
+
+        [Required]
+        [MinLength(6)]
+        public string Password { get; set; } = null!;
+
+        [Required]
+        [MaxLength(100)]
+        public string FullName { get; set; } = null!;
+        [Required]
+        public int RoleId { get; set; } = 0;
+
+
+        [Phone]
+        [MaxLength(15)]
+        public string? PhoneNumber { get; set; }
+
+    }
 }

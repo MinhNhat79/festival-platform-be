@@ -65,7 +65,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 }
 
                 // So sánh mật khẩu trực tiếp (hoặc dùng hàm verify nếu hash)
-                if (account.PasswordHash != password)
+                if (!BCrypt.Net.BCrypt.Verify(password, account.PasswordHash))
                 {
                     return new LoginResponse
                     {

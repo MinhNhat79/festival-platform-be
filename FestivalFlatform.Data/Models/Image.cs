@@ -25,5 +25,7 @@ namespace FestivalFlatform.Data.Models
 
         [ForeignKey(nameof(MenuItemId))]
         public virtual MenuItem? MenuItem { get; set; } // Nullable luôn cho đồng bộ
+
+        
     }
 }

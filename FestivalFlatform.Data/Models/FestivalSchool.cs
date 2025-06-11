@@ -21,5 +21,10 @@ namespace FestivalFlatform.Data.Models
         public string Status { get; set; } = "pending";
         public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
         public DateTime? ApprovalDate { get; set; }
+
+        public virtual Festival Festival { get; set; } = null!;
+
+        public virtual School School { get; set; } = null!;
+            
     }
 }

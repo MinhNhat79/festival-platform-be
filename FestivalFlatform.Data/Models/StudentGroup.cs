@@ -16,7 +16,7 @@ namespace FestivalFlatform.Data.Models
         public int SchoolId { get; set; }
 
         [Required]
-        public int AdvisorId { get; set; }
+        public int AccountId { get; set; }
 
         [Required]
         public string ClassName { get; set; } = null!;
@@ -29,6 +29,9 @@ namespace FestivalFlatform.Data.Models
         public string Status { get; set; } = "active";
 
         public DateTime? UpdatedAt { get; set; }
+
+
+        public virtual Account Account { get; set; } = null!;
         public virtual ICollection<GroupMember> GroupMembers { get; set; } = new List<GroupMember>();
         public virtual ICollection<Booth> Booths { get; set; } = new List<Booth>();
     }

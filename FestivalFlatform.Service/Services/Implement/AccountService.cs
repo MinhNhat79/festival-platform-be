@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
@@ -12,6 +14,7 @@ using FestivalFlatform.Service.DTOs.Request;
 using FestivalFlatform.Service.DTOs.Response;
 using FestivalFlatform.Service.Exceptions;
 using FestivalFlatform.Service.Services.Interface;
+using Microsoft.AspNetCore.Identity;
 
 namespace FestivalFlatform.Service.Services.Implement
 {
@@ -29,16 +32,13 @@ namespace FestivalFlatform.Service.Services.Implement
 
 
         //HashPAss
-        public void CreatePasswordHash(string password, out string passwordHash)
+        private void CreatePasswordHash(string password, out string passwordHash)
         {
-            using (var hmac = new HMACSHA512())
-            {
-                var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-                passwordHash = Convert.ToBase64String(hash);
-            }
+            passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
         }
-        //Create Account Student by SchoolManager
-        public async Task<AccountResponse> RegisterStudentAccountBySchoolManager(RegisterRequest request) {
+
+        public async Task<AccountResponse> RegisterAccount(RegisterRequestAll request)
+        {
             var emailExisted = _unitOfWork.Repository<Account>().Find(x => x.Email == request.Email);
 
             if (emailExisted != null)
@@ -46,15 +46,51 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.Conflict, "Email đã tồn tại", request.Email.ToString());
             }
 
-            CreatePasswordHash(request.Password, out string passwordHash);
+            CreatePasswordHash(request.Password, out string passwordHash); // tạo password đã mã hóa
 
             var account = new Account
             {
                 FullName = request.FullName,
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber,
-                RoleId = 3, // Đảm bảo RoleId là role học sinh
-                PasswordHash = request.Password, // Nếu cần thì băm password trước              
+                RoleId = request.RoleId,
+                PasswordHash = passwordHash, // ✅ dùng mật khẩu đã hash
+                CreatedAt = DateTime.UtcNow
+            };
+            await _unitOfWork.Repository<Account>().InsertAsync(account);
+            await _unitOfWork.CommitAsync();
+
+            return new AccountResponse
+            {
+                Id = account.AccountId,
+                Email = account.Email,
+                Pasword = account.PasswordHash,
+                FullNme = account.FullName,
+                PhoneNumber = account.PhoneNumber,
+                RoleId = account.RoleId,
+                CreatedAt = account.CreatedAt,
+            };
+        }
+
+        //Create Account Student by SchoolManager
+        public async Task<AccountResponse> RegisterStudentAccountBySchoolManager(RegisterRequest request)
+        {
+            var emailExisted = _unitOfWork.Repository<Account>().Find(x => x.Email == request.Email);
+
+            if (emailExisted != null)
+            {
+                throw new CrudException(HttpStatusCode.Conflict, "Email đã tồn tại", request.Email.ToString());
+            }
+
+            CreatePasswordHash(request.Password, out string passwordHash); // tạo password đã mã hóa
+
+            var account = new Account
+            {
+                FullName = request.FullName,
+                Email = request.Email,
+                PhoneNumber = request.PhoneNumber,
+                RoleId = 5, // học sinh
+                PasswordHash = passwordHash, // ✅ dùng mật khẩu đã hash
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -62,15 +98,115 @@ namespace FestivalFlatform.Service.Services.Implement
             await _unitOfWork.CommitAsync();
 
             return new AccountResponse
-            {           
+            {
+                Id = account.AccountId,
                 Email = account.Email,
                 Pasword = account.PasswordHash,
                 FullNme = account.FullName,
                 PhoneNumber = account.PhoneNumber,
                 RoleId = account.RoleId,
-                CreatedAt = account.UpdatedAt
+                CreatedAt = account.CreatedAt,
             };
-
         }
+
+
+        public async Task<List<AccountResponse>> GetAccount(int? id, string? phone, string? email, int? role, int? pageNumber, int? pageSize)
+        {
+            var query = _unitOfWork.Repository<Account>().GetAll()
+                                                         // Lọc theo từng param, nếu param null hoặc rỗng thì bỏ qua
+                                                         .Where(a => !id.HasValue || id == 0 || a.AccountId == id.Value)
+                                                         .Where(a => string.IsNullOrWhiteSpace(phone) || a.PhoneNumber.Contains(phone.Trim()))
+                                                         .Where(a => string.IsNullOrWhiteSpace(email) || a.Email.Contains(email.Trim()))
+                                                         .Where(a => !role.HasValue || role == 0 || a.RoleId == role.Value);                                                     
+
+            int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
+            int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
+
+            query = query.Skip((currentPage - 1) * currentSize)
+                         .Take(currentSize);
+
+            var accounts = await query.ToListAsync();
+
+            if (accounts == null || accounts.Count == 0)
+            {
+                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy tài khoản phù hợp", id?.ToString() ?? "No filter");
+            }
+
+            return accounts.Select(account => new AccountResponse
+            {
+                Id = account.AccountId,
+                Email = account.Email,
+                Pasword = account.PasswordHash,
+                FullNme = account.FullName,
+                PhoneNumber = account.PhoneNumber,
+                RoleId = account.RoleId,
+                CreatedAt = account.CreatedAt
+            }).ToList();
+        }
+
+        public async Task DeleteAccountAsync(int accountId)
+        {
+            var account = _unitOfWork.Repository<Account>().Find(a => a.AccountId == accountId);
+            if (account == null)
+            {
+                throw new KeyNotFoundException("Không tìm thấy tài khoản.");
+            }
+
+            _unitOfWork.Repository<Account>().Delete(account);
+            await _unitOfWork.CommitAsync();
+        }
+
+        public async Task<AccountResponse> UpdateAccount(int id, AccountUpdateRequest accountRequest)
+        {
+            var account = await _unitOfWork.Repository<Account>()
+                .GetAll()
+                .Include(o => o.Role)
+                .FirstOrDefaultAsync(a => a.AccountId == id);
+
+            if (account == null)
+            {
+                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy tài khoản", id.ToString());
+            }
+
+            // Chỉ cập nhật Email, Password, PhoneNumber
+            if (!string.IsNullOrWhiteSpace(accountRequest.Email))
+                account.Email = accountRequest.Email;
+
+            if (!string.IsNullOrWhiteSpace(accountRequest.Pasword))
+            {
+                CreatePasswordHash(accountRequest.Pasword, out string passwordHash);
+                account.PasswordHash = passwordHash;
+            }
+
+            if (!string.IsNullOrWhiteSpace(accountRequest.PhoneNumber))
+                account.PhoneNumber = accountRequest.PhoneNumber;
+
+            account.UpdatedAt = DateTime.UtcNow;
+
+            await _unitOfWork.Repository<Account>().Update(account, id);
+            await _unitOfWork.CommitAsync();
+
+            // Lấy lại dữ liệu đã cập nhật
+            account = await _unitOfWork.Repository<Account>()
+                .GetAll()
+                .Include(o => o.Role)
+                .FirstOrDefaultAsync(a => a.AccountId == id);
+
+            return new AccountResponse
+            {
+                Id = account.AccountId,
+                Email = account.Email,
+                FullNme = account.FullName,
+                Pasword = account.PasswordHash,
+                PhoneNumber = account.PhoneNumber,
+                RoleId = account.RoleId,
+                CreatedAt = account.CreatedAt,
+                UpdatedAt = account.UpdatedAt,
+
+            };
+        }
+
+        
+
     }
 }

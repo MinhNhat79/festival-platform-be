@@ -31,5 +31,10 @@ namespace FestivalFlatform.Data.Models
 
         public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
+        public virtual Account Account { get; set; } = null!;
+        public virtual Booth Booth { get; set; } = null!;
+
+
+
     }
 }
