@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FestivalFlatform.Data.Migrations
 {
     [DbContext(typeof(FestivalFlatformDbContext))]
-    [Migration("20250611161300_InitialCreate")]
+    [Migration("20250615123515_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -475,6 +475,12 @@ namespace FestivalFlatform.Data.Migrations
 
             modelBuilder.Entity("FestivalFlatform.Data.Models.GroupMember", b =>
                 {
+                    b.Property<int>("MemberId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MemberId"));
+
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
 
@@ -484,13 +490,12 @@ namespace FestivalFlatform.Data.Migrations
                     b.Property<DateTime>("JoinDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("AccountId", "GroupId");
+                    b.HasKey("MemberId");
+
+                    b.HasIndex("AccountId");
 
                     b.HasIndex("GroupId");
 

@@ -353,15 +353,16 @@ namespace FestivalFlatform.Data.Migrations
                 name: "GroupMembers",
                 columns: table => new
                 {
+                    MemberId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     GroupId = table.Column<int>(type: "int", nullable: false),
                     AccountId = table.Column<int>(type: "int", nullable: false),
-                    MemberId = table.Column<int>(type: "int", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     JoinDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GroupMembers", x => new { x.AccountId, x.GroupId });
+                    table.PrimaryKey("PK_GroupMembers", x => x.MemberId);
                     table.ForeignKey(
                         name: "FK_GroupMembers_Accounts_AccountId",
                         column: x => x.AccountId,
@@ -834,6 +835,11 @@ namespace FestivalFlatform.Data.Migrations
                 name: "IX_FestivalSchools_SchoolId",
                 table: "FestivalSchools",
                 column: "SchoolId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GroupMembers_AccountId",
+                table: "GroupMembers",
+                column: "AccountId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GroupMembers_GroupId",

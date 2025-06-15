@@ -296,8 +296,6 @@ namespace FestivalFlatform.Data
 
             // ==== Composite or Unique Keys (if needed) ====
             // Ví dụ: GroupMember => composite key
-            modelBuilder.Entity<GroupMember>()
-                .HasKey(gm => new { gm.AccountId, gm.GroupId });
         }
     }
 }

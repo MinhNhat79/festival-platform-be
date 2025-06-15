@@ -28,7 +28,14 @@ namespace FestivalFlatform.Service.Services.Implement
         }
         public async Task<Festival> CreateFestivalAsync(FestivalCreateRequest request)
         {
-            // Có thể thêm kiểm tra validate input tại đây nếu cần
+
+            var groupExists = await _unitOfWork.Repository<Festival>()
+           .AnyAsync(g => g.SchoolId == request.OrganizerSchoolId);
+            if (!groupExists)
+            {
+                throw new CrudException(HttpStatusCode.NotFound, "SchoolId không tồn tại", request.OrganizerSchoolId.ToString());
+            }
+
 
             var festival = new Festival
             {

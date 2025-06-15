@@ -38,7 +38,7 @@ namespace FestivalFlatform.Service.Services.Implement
             }
 
             // Kiểm tra RoleId có phải là School (RoleId = 3)
-            if (account.RoleId != 3)
+            if (account.RoleId != 2)
             {
                 throw new CrudException(HttpStatusCode.BadRequest, "Tài khoản không thuộc vai trò Trường ", request.AccountId.ToString());
             }

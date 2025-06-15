@@ -16,7 +16,7 @@ namespace FestivalFlatform.Data.Repository
         Task InsertAsync(TEntity entity);
         Task UpdateAsync(TEntity entity, object id);
         Task InsertRangeAsync(IQueryable<TEntity> entities);
-
+        Task<bool> AnyAsync(Expression<Func<TEntity , bool>> predicate);
         DbSet<TEntity> GetAll();
         IQueryable<TEntity> GetAllApart();
         Task<IEnumerable<TEntity>> GetWhere(Expression<Func<TEntity, bool>> predicate);

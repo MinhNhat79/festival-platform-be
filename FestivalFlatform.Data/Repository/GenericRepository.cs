@@ -20,6 +20,11 @@ namespace FestivalFlatform.Data.Repository
             Context = context;
             Table = Context.Set<T>();
         }
+
+        public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await Table.AnyAsync(predicate);
+        }
         public async Task UpdateAsync(T entity, object id)
         {
             var existing = await Context.Set<T>().FindAsync(id);

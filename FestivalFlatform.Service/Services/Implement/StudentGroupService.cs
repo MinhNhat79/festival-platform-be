@@ -36,7 +36,13 @@ namespace FestivalFlatform.Service.Services.Implement
             {
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy trường tương ứng", request.SchoolId.ToString());
             }
+            var accountExists = _unitOfWork.Repository<Account>()
+       .GetAll().Any(s => s.AccountId == request.AccountId);
 
+            if (!schoolExists)
+            {
+                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy Account tương ứng", request.AccountId.ToString());
+            }
             var group = new StudentGroup
             {
                 SchoolId = request.SchoolId,

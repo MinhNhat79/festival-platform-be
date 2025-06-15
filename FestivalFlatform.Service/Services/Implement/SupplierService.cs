@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FestivalFlatform.Service.Services.Implement
 {
-    public class  SupplierService : ISupplierService
+    public class SupplierService : ISupplierService
     {
         private readonly IUnitOfWork _unitOfWork;
         private IMapper _mapper;
@@ -29,6 +29,14 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<Supplier> CreateSupplierAsync(SupplierCreateRequest request)
         {
+            var accountExists = _unitOfWork.Repository<Account>()
+      .GetAll().Any(s => s.AccountId == request.AccountId);
+
+            if (!accountExists)
+            {
+                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy account tương ứng", request.AccountId.ToString());
+            }
+
             var supplier = new Supplier
             {
                 AccountId = request.AccountId,
@@ -64,7 +72,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             return true;
         }
-        public async Task<List<Supplier>> GetSuppliers(int? supplierId,int? accountId,string? companyName,string? status, int? pageNumber, int? pageSize)
+        public async Task<List<Supplier>> GetSuppliers(int? supplierId, int? accountId, string? companyName, string? status, int? pageNumber, int? pageSize)
         {
             var query = _unitOfWork.Repository<Supplier>().GetAll()
 

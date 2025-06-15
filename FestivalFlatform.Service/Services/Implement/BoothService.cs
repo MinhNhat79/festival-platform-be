@@ -29,7 +29,28 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<Booth> CreateBoothAsync(BoothCreateRequest request)
         {
-            // Bạn có thể thêm kiểm tra hợp lệ ở đây (ví dụ kiểm tra tồn tại GroupId, FestivalId, LocationId...)
+            var groupExists = await _unitOfWork.Repository<StudentGroup>()
+           .AnyAsync(g => g.GroupId == request.GroupId);
+            if (!groupExists)
+            {
+                throw new CrudException(HttpStatusCode.NotFound, "GroupId không tồn tại", request.GroupId.ToString());
+            }
+
+            // 2. Check FestivalId tồn tại
+            var festivalExists = await _unitOfWork.Repository<Festival>()
+                .AnyAsync(f => f.FestivalId == request.FestivalId);
+            if (!festivalExists)
+            {
+                throw new CrudException(HttpStatusCode.NotFound, "FestivalId không tồn tại", request.FestivalId.ToString());
+            }
+
+            // 3. Check LocationId tồn tại
+            var locationExists = await _unitOfWork.Repository<MapLocation>()
+                .AnyAsync(l => l.LocationId == request.LocationId);
+            if (!locationExists)
+            {
+                throw new CrudException(HttpStatusCode.NotFound, "LocationId không tồn tại", request.LocationId.ToString());
+            }
 
             var booth = new Booth
             {
@@ -70,7 +91,7 @@ namespace FestivalFlatform.Service.Services.Implement
             return booth;
         }
 
-        public async Task<List<Booth>> GetBooths(int? boothId, int? groupId,int? festivalId, int? locationId,string? boothType,string? status,int? pageNumber,int? pageSize)
+        public async Task<List<Booth>> GetBooths(int? boothId, int? groupId, int? festivalId, int? locationId, string? boothType, string? status, int? pageNumber, int? pageSize)
         {
             var query = _unitOfWork.Repository<Booth>().GetAll()
 

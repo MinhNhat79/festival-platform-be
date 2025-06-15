@@ -87,6 +87,20 @@ namespace FF.API
             builder.Services.AddScoped<ISchoolService, SchoolService>();
             builder.Services.AddScoped<ISchoolAccountService, SchoolAccountService>();
             builder.Services.AddScoped<IStudentGroupService, StudentGroupService>();
+            builder.Services.AddScoped<IFestivalMapService, FestivalMapService>();
+            builder.Services.AddScoped<IMapLocationService, MapLocationService>();
+            builder.Services.AddScoped<IFestivalMenuService, FestivalMenuService>();
+            builder.Services.AddScoped<IBoothMenuItemService, BoothMenuItemService>();
+            builder.Services.AddScoped<IMenuItemService, MenuItemService>();
+            builder.Services.AddScoped<IIngredientService, IngredientService>();
+            builder.Services.AddScoped<IFestivalIngredientService, FestivalIngredientService>();
+            builder.Services.AddScoped<IFestivalSchoolService, FestivalSchoolService>();
+            builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IGroupMemberService, GroupMemberService>();
+            builder.Services.AddScoped<IImageService, ImageService>();
+            builder.Services.AddScoped<IMenuItemIngredientService, MenuItemIngredientService>();
+
+
 
             // Các cấu hình bổ sung
             builder.Services.AddControllers()

@@ -26,7 +26,7 @@ namespace FestivalManagementFlatformm.Controllers
 
             return Ok(supplier);
         }
-        [HttpPut("update/{groupId}")]
+        [HttpPut("update")]
         public async Task<IActionResult> UpdateStudentGroup(int groupId,
             [FromQuery] string? className,
             [FromQuery] string? groupName,
@@ -50,7 +50,7 @@ namespace FestivalManagementFlatformm.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("delete/{groupId}")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> DeleteStudentGroup(int groupId)
         {
             await _studentGroupService.DeleteStudentGroupAsync(groupId);

@@ -22,7 +22,7 @@ namespace FestivalManagementFlatformm.Controllers
             try
             {
                 var createdBooth = await _boothService.CreateBoothAsync(request);
-                return Ok();
+                return Ok(createdBooth);
             }
             catch (Exception ex)
             {

@@ -46,6 +46,12 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.Conflict, "Email đã tồn tại", request.Email.ToString());
             }
 
+            var phoneNumberExisted = _unitOfWork.Repository<Account>().Find(x => x.PhoneNumber == request.PhoneNumber);
+
+            if (emailExisted != null)
+            {
+                throw new CrudException(HttpStatusCode.Conflict, "so dien thaoi đã tồn tại", request.Email.ToString());
+            }
             CreatePasswordHash(request.Password, out string passwordHash); // tạo password đã mã hóa
 
             var account = new Account
@@ -82,6 +88,14 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.Conflict, "Email đã tồn tại", request.Email.ToString());
             }
 
+
+            var phoneNumberExisted = _unitOfWork.Repository<Account>().Find(x => x.PhoneNumber == request.PhoneNumber);
+
+            if (emailExisted != null)
+            {
+                throw new CrudException(HttpStatusCode.Conflict, "so dien thaoi đã tồn tại", request.Email.ToString());
+            }
+
             CreatePasswordHash(request.Password, out string passwordHash); // tạo password đã mã hóa
 
             var account = new Account
@@ -89,7 +103,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 FullName = request.FullName,
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber,
-                RoleId = 5, // học sinh
+                RoleId = 4, // học sinh
                 PasswordHash = passwordHash, // ✅ dùng mật khẩu đã hash
                 CreatedAt = DateTime.UtcNow
             };
