@@ -490,8 +490,7 @@
               "RelativeToolTip": "FestivalManagementFlatformm\\Controllers\\MenuItemIngredientController.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAxwCwAAAB9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T15:08:46.581Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T15:08:46.581Z"
             },
             {
               "$type": "Document",
@@ -503,8 +502,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Services\\Interface\\IMenuItemIngredientService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T15:07:57.981Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T15:07:57.981Z"
             },
             {
               "$type": "Document",
@@ -516,8 +514,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\MenuItemIngredientService.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAAIwEAAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T15:07:12.58Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T15:07:12.58Z"
             },
             {
               "$type": "Document",
@@ -529,8 +526,7 @@
               "RelativeToolTip": "FestivalManagementFlatformm\\Controllers\\MenuItemController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T08:29:41.24Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-12T08:29:41.24Z"
             },
             {
               "$type": "Document",
@@ -542,8 +538,7 @@
               "RelativeToolTip": "FestivalManagementFlatformm\\Controllers\\ImageController.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAABAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T14:50:51.247Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T14:50:51.247Z"
             },
             {
               "$type": "Document",
@@ -555,8 +550,7 @@
               "RelativeToolTip": "FestivalManagementFlatformm\\Controllers\\StudentGroupController.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAAwDQAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T17:11:29.625Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-11T17:11:29.625Z"
             },
             {
               "$type": "Document",
@@ -568,8 +562,7 @@
               "RelativeToolTip": "FestivalManagementFlatformm\\Controllers\\MapLocationController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T07:04:37.65Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-12T07:04:37.65Z"
             },
             {
               "$type": "Document",
@@ -594,8 +587,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\IngredientService.cs",
               "ViewState": "AgIAAE4AAAAAAAAAAAAcwDYAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T09:56:47.347Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-13T09:56:47.347Z"
             },
             {
               "$type": "Document",
@@ -607,8 +599,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\DTOs\\Request\\CreateMenuItemIngredientRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T15:06:42.233Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T15:06:42.233Z"
             },
             {
               "$type": "Document",
@@ -620,8 +611,7 @@
               "RelativeToolTip": "FestivalFlatform.Data\\Models\\MenuItemIngredient.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T14:57:07.424Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T14:57:07.424Z"
             },
             {
               "$type": "Document",
@@ -633,8 +623,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\ImageService.cs",
               "ViewState": "AgIAABoAAAAAAAAAAAAwwBAAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T14:37:29.446Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T14:37:29.446Z"
             },
             {
               "$type": "Document",
@@ -646,8 +635,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Services\\Interface\\IImageService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T14:37:38.269Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T14:37:38.269Z"
             },
             {
               "$type": "Document",
@@ -659,8 +647,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\GroupMemberService.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAlwBoAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T11:42:41.486Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-13T11:42:41.486Z"
             },
             {
               "$type": "Document",
@@ -672,8 +659,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\MapLocationService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T07:01:30.393Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-12T07:01:30.393Z"
             },
             {
               "$type": "Document",
@@ -685,8 +671,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\DTOs\\Request\\CreateImageRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T14:49:24.637Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T14:49:24.637Z"
             },
             {
               "$type": "Document",
@@ -698,8 +683,7 @@
               "RelativeToolTip": "FestivalManagementFlatformm\\Controllers\\GroupMemberController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAABmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T11:43:29.585Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-13T11:43:29.585Z"
             },
             {
               "$type": "Document",
@@ -711,8 +695,7 @@
               "RelativeToolTip": "FestivalManagementFlatformm\\Controllers\\IngredientController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADgAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T09:58:43.213Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-13T09:58:43.213Z"
             },
             {
               "$type": "Document",
@@ -724,8 +707,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Services\\Interface\\IFestivalService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T16:57:59.668Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-11T16:57:59.668Z"
             },
             {
               "$type": "Document",
@@ -737,8 +719,7 @@
               "RelativeToolTip": "FestivalManagementFlatformm\\Controllers\\OrderController.cs",
               "ViewState": "AgIAAB0AAAAAAAAAAAAwwDQAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T14:08:16.075Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T14:08:16.075Z"
             },
             {
               "$type": "Document",
@@ -750,8 +731,7 @@
               "RelativeToolTip": "FestivalFlatform.Data\\Models\\Image.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T14:42:07.826Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T14:42:07.826Z"
             },
             {
               "$type": "Document",
@@ -763,8 +743,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Services\\Interface\\IOrderService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T13:50:41.227Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T13:50:41.227Z"
             },
             {
               "$type": "Document",
@@ -776,8 +755,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Services\\Interface\\IGroupMemberService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwAwAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T11:42:56.479Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-13T11:42:56.479Z"
             },
             {
               "$type": "Document",
@@ -789,8 +767,7 @@
               "RelativeToolTip": "FestivalFlatform.Data\\Models\\GroupMember.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwBgAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T11:37:17.046Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-13T11:37:17.046Z"
             },
             {
               "$type": "Document",
@@ -802,8 +779,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\FestivalService.cs",
               "ViewState": "AgIAABcAAAAAAAAAAAAQwBsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T15:00:11.985Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-11T15:00:11.985Z"
             },
             {
               "$type": "Document",
@@ -815,8 +791,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\DTOs\\Request\\CreateGroupMemberRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T14:32:36.539Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T14:32:36.539Z"
             },
             {
               "$type": "Document",
@@ -828,8 +803,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\OrderService.cs",
               "ViewState": "AgIAAHEAAAAAAAAAAAAwwIkAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T13:50:13.588Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T13:50:13.588Z"
             },
             {
               "$type": "Document",
@@ -841,8 +815,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\MenuItemService.cs",
               "ViewState": "AgIAAGsAAAAAAAAAAAAwwJAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T08:22:00.924Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-12T08:22:00.924Z"
             },
             {
               "$type": "Document",
@@ -854,8 +827,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\SchoolAccountService.cs",
               "ViewState": "AgIAAA8AAAAAAAAAAAAAADAAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T15:31:13.655Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-11T15:31:13.655Z"
             },
             {
               "$type": "Document",
@@ -867,8 +839,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\SchoolService.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAA9wB4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T14:59:25.511Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-11T14:59:25.511Z"
             },
             {
               "$type": "Document",
@@ -880,8 +851,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\DTOs\\Request\\MenuItemCreateRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T08:22:57.011Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-12T08:22:57.011Z"
             },
             {
               "$type": "Document",
@@ -893,8 +863,7 @@
               "RelativeToolTip": "FestivalManagementFlatformm\\Controllers\\LoginController.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAADkAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T15:07:37.817Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-11T15:07:37.817Z"
             },
             {
               "$type": "Document",
@@ -906,8 +875,7 @@
               "RelativeToolTip": "FestivalManagementFlatformm\\Controllers\\SchoolAccountController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T15:37:25.656Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-11T15:37:25.656Z"
             },
             {
               "$type": "Document",
@@ -919,8 +887,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\BoothService.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAACUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T14:51:30.163Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-11T14:51:30.163Z"
             },
             {
               "$type": "Document",
@@ -932,8 +899,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\AccountService.cs",
               "ViewState": "AgIAABwAAAAAAAAAAAAgwC0AAABvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T16:15:23.874Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-11T16:15:23.874Z"
             },
             {
               "$type": "Document",
@@ -945,8 +911,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\DTOs\\Request\\AccountRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T16:19:55.069Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-11T16:19:55.069Z"
             },
             {
               "$type": "Document",
@@ -958,8 +923,7 @@
               "RelativeToolTip": "FestivalFlatform.Data\\Models\\Account.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAAAoAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T16:07:59.642Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-11T16:07:59.642Z"
             },
             {
               "$type": "Document",
@@ -971,8 +935,7 @@
               "RelativeToolTip": "FestivalFlatform.Data\\Models\\Order.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwAkAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T13:25:39.538Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T13:25:39.538Z"
             },
             {
               "$type": "Document",
@@ -984,8 +947,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\DTOs\\Request\\CreateOrderRequest .cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwBAAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T13:49:44.886Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T13:49:44.886Z"
             },
             {
               "$type": "Document",
@@ -997,8 +959,7 @@
               "RelativeToolTip": "FestivalFlatform.Data\\Models\\Festival.cs",
               "ViewState": "AgIAABUAAAAAAAAAAAA6wCQAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T16:39:07.618Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-11T16:39:07.618Z"
             },
             {
               "$type": "Document",
@@ -1010,8 +971,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Helpers\\StatusOrder.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T13:56:47.764Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T13:56:47.764Z"
             },
             {
               "$type": "Document",
@@ -1023,8 +983,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Helpers\\StatusSupplier.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T08:19:48.586Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-12T08:19:48.586Z"
             },
             {
               "$type": "Document",
@@ -1036,8 +995,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Helpers\\StatusMenuItem.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T08:19:46.975Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-12T08:19:46.975Z"
             },
             {
               "$type": "Document",
@@ -1049,8 +1007,7 @@
               "RelativeToolTip": "FestivalFlatform.Service\\Helpers\\Roles.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-12T08:21:37.273Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-12T08:21:37.273Z"
             },
             {
               "$type": "Document",
@@ -1062,8 +1019,7 @@
               "RelativeToolTip": "FestivalFlatform.Data\\Migrations\\20250615123515_InitialCreate.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-15T12:35:16.497Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-15T12:35:16.497Z"
             },
             {
               "$type": "Document",
@@ -1099,8 +1055,7 @@
               "RelativeToolTip": "FestivalManagementFlatformm\\Controllers\\AccountController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAABSAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T16:21:47.354Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-11T16:21:47.354Z"
             },
             {
               "$type": "Document",
@@ -1112,8 +1067,7 @@
               "RelativeToolTip": "FestivalFlatform.Data\\FestivalFlatformDbContext.cs",
               "ViewState": "AgIAAPwAAAAAAAAAAAAswBgBAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T16:09:00.768Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-11T16:09:00.768Z"
             },
             {
               "$type": "Document",
