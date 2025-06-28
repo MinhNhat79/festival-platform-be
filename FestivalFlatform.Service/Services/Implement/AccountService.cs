@@ -15,6 +15,7 @@ using FestivalFlatform.Service.DTOs.Response;
 using FestivalFlatform.Service.Exceptions;
 using FestivalFlatform.Service.Services.Interface;
 using Microsoft.AspNetCore.Identity;
+using Azure.Core;
 
 namespace FestivalFlatform.Service.Services.Implement
 {
@@ -48,9 +49,9 @@ namespace FestivalFlatform.Service.Services.Implement
 
             var phoneNumberExisted = _unitOfWork.Repository<Account>().Find(x => x.PhoneNumber == request.PhoneNumber);
 
-            if (emailExisted != null)
+            if (phoneNumberExisted != null)
             {
-                throw new CrudException(HttpStatusCode.Conflict, "so dien thaoi đã tồn tại", request.Email.ToString());
+                throw new CrudException(HttpStatusCode.Conflict, "so dien thaoi đã tồn tại", request.PhoneNumber.ToString());
             }
             CreatePasswordHash(request.Password, out string passwordHash); // tạo password đã mã hóa
 
@@ -91,11 +92,18 @@ namespace FestivalFlatform.Service.Services.Implement
 
             var phoneNumberExisted = _unitOfWork.Repository<Account>().Find(x => x.PhoneNumber == request.PhoneNumber);
 
-            if (emailExisted != null)
+            if (phoneNumberExisted != null)
             {
-                throw new CrudException(HttpStatusCode.Conflict, "so dien thaoi đã tồn tại", request.Email.ToString());
+                throw new CrudException(HttpStatusCode.Conflict, "so dien thaoi đã tồn tại");
             }
+            var studentRole = await _unitOfWork.Repository<Role>()
+            .GetAll()
+            .FirstOrDefaultAsync(r => r.RoleName.ToLower() == "Student");
 
+            if (studentRole == null)
+            {
+                throw new CrudException(HttpStatusCode.BadRequest, "Không tìm thấy role 'student'");
+            }
             CreatePasswordHash(request.Password, out string passwordHash); // tạo password đã mã hóa
 
             var account = new Account
@@ -103,7 +111,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 FullName = request.FullName,
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber,
-                RoleId = 4, // học sinh
+                RoleId = studentRole.RoleId, // học sinh
                 PasswordHash = passwordHash, // ✅ dùng mật khẩu đã hash
                 CreatedAt = DateTime.UtcNow
             };
@@ -181,7 +189,19 @@ namespace FestivalFlatform.Service.Services.Implement
             {
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy tài khoản", id.ToString());
             }
+            var emailExisted = _unitOfWork.Repository<Account>().Find(x => x.Email == accountRequest.Email);
 
+            if (emailExisted != null)
+            {
+                throw new CrudException(HttpStatusCode.Conflict, "Email đã tồn tại", accountRequest.Email.ToString());
+            }
+
+            var phoneNumberExisted = _unitOfWork.Repository<Account>().Find(x => x.PhoneNumber == accountRequest.PhoneNumber);
+
+            if (phoneNumberExisted != null)
+            {
+                throw new CrudException(HttpStatusCode.Conflict, "so dien thaoi đã tồn tại", accountRequest.PhoneNumber.ToString());
+            }
             // Chỉ cập nhật Email, Password, PhoneNumber
             if (!string.IsNullOrWhiteSpace(accountRequest.Email))
                 account.Email = accountRequest.Email;

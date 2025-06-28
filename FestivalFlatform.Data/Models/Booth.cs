@@ -39,6 +39,8 @@ namespace FestivalFlatform.Data.Models
 
         public DateTime? UpdatedAt { get; set; }
 
+        public string? Note { get; set; }
+
         // ✅ Navigation Properties
         public virtual StudentGroup StudentGroup { get; set; } = null!;
         public virtual Festival Festival { get; set; } = null!;

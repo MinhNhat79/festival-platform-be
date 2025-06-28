@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FestivalFlatform.Data.Migrations
 {
     [DbContext(typeof(FestivalFlatformDbContext))]
-    [Migration("20250615123515_InitialCreate")]
+    [Migration("20250625151307_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -118,6 +118,9 @@ namespace FestivalFlatform.Data.Migrations
 
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PointsBalance")
                         .HasColumnType("int");
@@ -353,6 +356,9 @@ namespace FestivalFlatform.Data.Migrations
 
                     b.Property<int>("IngredientId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("QuantityAvailable")
                         .HasColumnType("int");

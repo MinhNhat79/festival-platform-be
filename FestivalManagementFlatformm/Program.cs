@@ -99,6 +99,14 @@ namespace FF.API
             builder.Services.AddScoped<IGroupMemberService, GroupMemberService>();
             builder.Services.AddScoped<IImageService, ImageService>();
             builder.Services.AddScoped<IMenuItemIngredientService, MenuItemIngredientService>();
+            builder.Services.AddScoped<IMiniGameService, MiniGameService>();
+            builder.Services.AddScoped<IOrderItemService, OrderItemService>();
+            builder.Services.AddScoped<IPointsTransactionService, PointsTransactionService>();
+            builder.Services.AddScoped<IQuestionService, QuestionService>();
+            builder.Services.AddScoped<IChatSessionService, ChatSessionService>();
+            builder.Services.AddScoped<IRoleService, RoleService>();
+
+           
 
 
 

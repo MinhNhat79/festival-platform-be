@@ -465,7 +465,8 @@ namespace FestivalFlatform.Data.Migrations
                     SpecialPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -500,7 +501,8 @@ namespace FestivalFlatform.Data.Migrations
                     RegistrationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ApprovalDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     PointsBalance = table.Column<int>(type: "int", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

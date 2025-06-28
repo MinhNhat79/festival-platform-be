@@ -60,7 +60,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 IngredientId = request.IngredientId,
                 QuantityAvailable = request.QuantityAvailable,
                 SpecialPrice = request.SpecialPrice ?? ingredient.PricePerUnit,
-                Status = StatusFestivalIngredient.Available,
+                Status = StatusFestivalIngredient.Pending,
                 CreatedAt = DateTime.UtcNow
             };
 

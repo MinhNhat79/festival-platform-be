@@ -116,6 +116,9 @@ namespace FestivalFlatform.Data.Migrations
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PointsBalance")
                         .HasColumnType("int");
 
@@ -350,6 +353,9 @@ namespace FestivalFlatform.Data.Migrations
 
                     b.Property<int>("IngredientId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("QuantityAvailable")
                         .HasColumnType("int");
