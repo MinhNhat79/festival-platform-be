@@ -29,7 +29,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<BoothMenuItem> CreateBoothMenuItemAsync(BoothMenuItemCreateRequest request)
         {
-            // Kiểm tra BoothMenuItem đã tồn tại chưa
+           
             var existed = await _unitOfWork.Repository<BoothMenuItem>()
                 .GetAll()
                 .FirstOrDefaultAsync(x => x.BoothId == request.BoothId && x.MenuItemId == request.MenuItemId);
@@ -39,21 +39,21 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.Conflict, "BoothMenuItem đã tồn tại", $"BoothId: {request.BoothId}, MenuItemId: {request.MenuItemId}");
             }
 
-            // Kiểm tra BoothId
+         
             var booth = await _unitOfWork.Repository<Booth>().FindAsync(b => b.BoothId == request.BoothId);
             if (booth == null)
             {
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy Booth", request.BoothId.ToString());
             }
 
-            // Kiểm tra MenuItemId
+           
             var menuItem = await _unitOfWork.Repository<MenuItem>().FindAsync(mi => mi.ItemId == request.MenuItemId);
             if (menuItem == null)
             {
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy MenuItem", request.MenuItemId.ToString());
             }
 
-            // Tạo mới BoothMenuItem
+          
             var boothMenuItem = new BoothMenuItem
             {
                 BoothId = request.BoothId,

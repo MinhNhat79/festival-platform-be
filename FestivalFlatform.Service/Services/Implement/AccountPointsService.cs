@@ -24,7 +24,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<AccountPoints> CreateAccountPointsAsync(int accountId)
         {
-            // Kiểm tra tài khoản có tồn tại không
+          
             var account = await _unitOfWork.Repository<Account>()
                 .FindAsync(a => a.AccountId == accountId);
 
@@ -33,7 +33,6 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new KeyNotFoundException($"Không tìm thấy tài khoản với ID: {accountId}");
             }
 
-            // Kiểm tra nếu AccountPoints đã tồn tại
             var existingPoints = await _unitOfWork.Repository<AccountPoints>()
                 .FindAsync(ap => ap.AccountId == accountId);
 
@@ -78,7 +77,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<AccountPoints> UpdateAccountPointsAsync(int accountPointsId, int newPointsBalance)
         {
-            // Tìm AccountPoints theo ID
+          
             var accountPoints = await _unitOfWork.Repository<AccountPoints>()
                 .FindAsync(ap => ap.AccountPointsId == accountPointsId);
 
@@ -87,7 +86,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new KeyNotFoundException($"Không tìm thấy AccountPoints với ID: {accountPointsId}");
             }
 
-            // Cập nhật PointsBalance và LastUpdated
+          
             accountPoints.PointsBalance = newPointsBalance;
             accountPoints.LastUpdated = DateTime.UtcNow;
 

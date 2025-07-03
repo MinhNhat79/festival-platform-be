@@ -51,9 +51,9 @@ namespace FestivalFlatform.Service.Services.Implement
 
             if (phoneNumberExisted != null)
             {
-                throw new CrudException(HttpStatusCode.Conflict, "so dien thaoi đã tồn tại", request.PhoneNumber.ToString());
+                throw new CrudException(HttpStatusCode.Conflict, "so dien thoai đã tồn tại", request.PhoneNumber.ToString());
             }
-            CreatePasswordHash(request.Password, out string passwordHash); // tạo password đã mã hóa
+            CreatePasswordHash(request.Password, out string passwordHash);
 
             var account = new Account
             {
@@ -61,7 +61,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber,
                 RoleId = request.RoleId,
-                PasswordHash = passwordHash, // ✅ dùng mật khẩu đã hash
+                PasswordHash = passwordHash,
                 CreatedAt = DateTime.UtcNow
             };
             await _unitOfWork.Repository<Account>().InsertAsync(account);
@@ -79,7 +79,6 @@ namespace FestivalFlatform.Service.Services.Implement
             };
         }
 
-        //Create Account Student by SchoolManager
         public async Task<AccountResponse> RegisterStudentAccountBySchoolManager(RegisterRequest request)
         {
             var emailExisted = _unitOfWork.Repository<Account>().Find(x => x.Email == request.Email);
@@ -94,7 +93,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             if (phoneNumberExisted != null)
             {
-                throw new CrudException(HttpStatusCode.Conflict, "so dien thaoi đã tồn tại");
+                throw new CrudException(HttpStatusCode.Conflict, "so dien thoai đã tồn tại");
             }
             var studentRole = await _unitOfWork.Repository<Role>()
             .GetAll()
@@ -104,15 +103,15 @@ namespace FestivalFlatform.Service.Services.Implement
             {
                 throw new CrudException(HttpStatusCode.BadRequest, "Không tìm thấy role 'student'");
             }
-            CreatePasswordHash(request.Password, out string passwordHash); // tạo password đã mã hóa
+            CreatePasswordHash(request.Password, out string passwordHash); 
 
             var account = new Account
             {
                 FullName = request.FullName,
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber,
-                RoleId = studentRole.RoleId, // học sinh
-                PasswordHash = passwordHash, // ✅ dùng mật khẩu đã hash
+                RoleId = studentRole.RoleId,
+                PasswordHash = passwordHash, 
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -135,7 +134,7 @@ namespace FestivalFlatform.Service.Services.Implement
         public async Task<List<AccountResponse>> GetAccount(int? id, string? phone, string? email, int? role, int? pageNumber, int? pageSize)
         {
             var query = _unitOfWork.Repository<Account>().GetAll()
-                                                         // Lọc theo từng param, nếu param null hoặc rỗng thì bỏ qua
+                                                        
                                                          .Where(a => !id.HasValue || id == 0 || a.AccountId == id.Value)
                                                          .Where(a => string.IsNullOrWhiteSpace(phone) || a.PhoneNumber.Contains(phone.Trim()))
                                                          .Where(a => string.IsNullOrWhiteSpace(email) || a.Email.Contains(email.Trim()))
@@ -198,7 +197,7 @@ namespace FestivalFlatform.Service.Services.Implement
             {
                 throw new CrudException(HttpStatusCode.Conflict, "so dien thoai đã tồn tại", accountRequest.PhoneNumber.ToString());
             }
-            // Chỉ cập nhật Email, Password, PhoneNumber
+           
             if (!string.IsNullOrWhiteSpace(accountRequest.Email))
                 account.Email = accountRequest.Email;
 
@@ -216,7 +215,7 @@ namespace FestivalFlatform.Service.Services.Implement
             await _unitOfWork.Repository<Account>().Update(account, id);
             await _unitOfWork.CommitAsync();
 
-            // Lấy lại dữ liệu đã cập nhật
+          
             account = await _unitOfWork.Repository<Account>()
                 .GetAll()
                 .Include(o => o.Role)

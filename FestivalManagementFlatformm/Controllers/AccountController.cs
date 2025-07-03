@@ -41,14 +41,14 @@ namespace FestivalManagementFlatformm.Controllers
                     return BadRequest("Số điện thoại phải có từ 9 đến 11 số");
                 }
 
-                // Kiểm tra định dạng email (chỉ gmail)
+                
                 var regexEmail = new Regex(@"^\w+@gmail\.com$");
                 if (!regexEmail.IsMatch(request.Email))
                 {
                     return BadRequest("Email phải có định dạng @gmail.com");
                 }
 
-                // Gọi service
+              
                 var result = await _accountService.RegisterStudentAccountBySchoolManager(request);
                 return Ok(result);
             }
@@ -115,7 +115,7 @@ namespace FestivalManagementFlatformm.Controllers
             try
             {
                 await _accountService.DeleteAccountAsync(id);
-                return NoContent(); // 204 No Content
+                return NoContent(); 
             }
             catch (KeyNotFoundException)
             {
@@ -141,7 +141,7 @@ namespace FestivalManagementFlatformm.Controllers
             }
             catch (CrudException ex)
             {
-                // Chỉ check theo message hoặc tạo custom logic nếu cần
+               
                 if (ex.Message.Contains("Không tìm thấy tài khoản"))
                     return NotFound(new { message = ex.Message });
 
@@ -149,7 +149,6 @@ namespace FestivalManagementFlatformm.Controllers
             }
             catch (Exception ex)
             {
-                // Log lỗi nếu cần
                 return StatusCode(500, new { message = "Lỗi server", details = ex.Message });
             }
         }
