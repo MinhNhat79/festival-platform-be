@@ -2077,6 +2077,22 @@
             }
           },
           {
+            "name": "boothId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "festivalId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
             "name": "imageUrl",
             "in": "query",
             "schema": {
@@ -2114,7 +2130,7 @@
         }
       }
     },
-    "/api/images/{id}": {
+    "/api/images/delete": {
       "delete": {
         "tags": [
           "Image"
@@ -2122,14 +2138,44 @@
         "parameters": [
           {
             "name": "id",
-            "in": "path",
-            "required": true,
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/images/add-to-entity": {
+      "post": {
+        "tags": [
+          "Image"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddImageToEntityRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddImageToEntityRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddImageToEntityRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -3882,6 +3928,14 @@
             }
           },
           {
+            "name": "accountId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
             "name": "name",
             "in": "query",
             "schema": {
@@ -3963,163 +4017,6 @@
         "parameters": [
           {
             "name": "id",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/schoolaccounts/create": {
-      "post": {
-        "tags": [
-          "SchoolAccount"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SchoolAccountCreateRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SchoolAccountCreateRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/SchoolAccountCreateRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/schoolaccounts/search": {
-      "get": {
-        "tags": [
-          "SchoolAccount"
-        ],
-        "parameters": [
-          {
-            "name": "schoolAccountId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "schoolId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "accountId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "position",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "department",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "pageNumber",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/schoolaccounts/update": {
-      "put": {
-        "tags": [
-          "SchoolAccount"
-        ],
-        "parameters": [
-          {
-            "name": "schoolAccountId",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "position",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "department",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/schoolaccounts/delete": {
-      "delete": {
-        "tags": [
-          "SchoolAccount"
-        ],
-        "parameters": [
-          {
-            "name": "schoolAccountId",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -4501,10 +4398,10 @@
           "accountPoints": {
             "$ref": "#/components/schemas/AccountPoints"
           },
-          "schoolAccounts": {
+          "schools": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/SchoolAccount"
+              "$ref": "#/components/schemas/School"
             },
             "nullable": true
           },
@@ -4638,6 +4535,35 @@
         },
         "additionalProperties": false
       },
+      "AddImageToEntityRequest": {
+        "type": "object",
+        "properties": {
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "imageName": {
+            "type": "string",
+            "nullable": true
+          },
+          "festivalId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "boothId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Booth": {
         "required": [
           "boothName",
@@ -4710,6 +4636,13 @@
           },
           "location": {
             "$ref": "#/components/schemas/MapLocation"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Image"
+            },
+            "nullable": true
           },
           "minigames": {
             "type": "array",
@@ -5113,6 +5046,13 @@
           "school": {
             "$ref": "#/components/schemas/School"
           },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Image"
+            },
+            "nullable": true
+          },
           "booths": {
             "type": "array",
             "items": {
@@ -5505,11 +5445,6 @@
             "type": "integer",
             "format": "int32"
           },
-          "menuItemId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
           "imageUrl": {
             "minLength": 1,
             "type": "string"
@@ -5527,8 +5462,29 @@
             "format": "date-time",
             "nullable": true
           },
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "boothId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "festivalId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
           "menuItem": {
             "$ref": "#/components/schemas/MenuItem"
+          },
+          "booth": {
+            "$ref": "#/components/schemas/Booth"
+          },
+          "festival": {
+            "$ref": "#/components/schemas/Festival"
           }
         },
         "additionalProperties": false
@@ -6314,7 +6270,8 @@
       },
       "School": {
         "required": [
-          "schoolName"
+          "account",
+          "accountId"
         ],
         "type": "object",
         "properties": {
@@ -6322,9 +6279,13 @@
             "type": "integer",
             "format": "int32"
           },
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "schoolName": {
-            "minLength": 1,
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "address": {
             "type": "string",
@@ -6351,12 +6312,8 @@
             "format": "date-time",
             "nullable": true
           },
-          "schoolAccounts": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SchoolAccount"
-            },
-            "nullable": true
+          "account": {
+            "$ref": "#/components/schemas/Account"
           },
           "festivals": {
             "type": "array",
@@ -6370,73 +6327,6 @@
             "items": {
               "$ref": "#/components/schemas/FestivalSchool"
             },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "SchoolAccount": {
-        "required": [
-          "accountId",
-          "schoolId"
-        ],
-        "type": "object",
-        "properties": {
-          "schoolAccountId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "schoolId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "accountId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "position": {
-            "type": "string",
-            "nullable": true
-          },
-          "department": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "school": {
-            "$ref": "#/components/schemas/School"
-          },
-          "account": {
-            "$ref": "#/components/schemas/Account"
-          }
-        },
-        "additionalProperties": false
-      },
-      "SchoolAccountCreateRequest": {
-        "type": "object",
-        "properties": {
-          "schoolId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "accountId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "position": {
-            "type": "string",
-            "nullable": true
-          },
-          "department": {
-            "type": "string",
             "nullable": true
           }
         },
@@ -6464,6 +6354,10 @@
           "description": {
             "type": "string",
             "nullable": true
+          },
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

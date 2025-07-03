@@ -149,11 +149,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             var accounts = await query.ToListAsync();
 
-            if (accounts == null || accounts.Count == 0)
-            {
-                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy tài khoản phù hợp", id?.ToString() ?? "No filter");
-            }
-
+        
             return accounts.Select(account => new AccountResponse
             {
                 Id = account.AccountId,

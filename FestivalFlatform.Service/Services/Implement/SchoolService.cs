@@ -34,6 +34,7 @@ namespace FestivalFlatform.Service.Services.Implement
             var school = new School
             {
                 SchoolName = request.SchoolName,
+                AccountId = request.AccountId,
                 Address = request.Address,
                 ContactInfo = request.ContactInfo,
                 LogoUrl = request.LogoUrl,
@@ -65,7 +66,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             return school;
         }
-        public async Task<List<School>> SearchSchoolsAsync(int? schoolId, string? schoolName, int? pageNumber, int? pageSize)
+        public async Task<List<School>> SearchSchoolsAsync(int? schoolId, int? accountId, string? schoolName, int? pageNumber, int? pageSize)
         {
             var query = _unitOfWork.Repository<School>().GetAll()
                 .Where(s => !schoolId.HasValue || schoolId == 0 || s.SchoolId == schoolId.Value)
@@ -79,10 +80,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             var schools = await query.ToListAsync();
 
-            if (schools == null || schools.Count == 0)
-            {
-                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy trường phù hợp", schoolId?.ToString() ?? schoolName ?? "No filter");
-            }
+         
 
             return schools;
         }

@@ -110,11 +110,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             var booths = await query.ToListAsync();
 
-            if (booths == null || booths.Count == 0)
-            {
-                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy booth phù hợp", boothId?.ToString() ?? "No filter");
-            }
-
+       
             return booths;
         }
 

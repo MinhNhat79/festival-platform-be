@@ -103,10 +103,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             var result = await query.ToListAsync();
 
-            if (result == null || result.Count == 0)
-            {
-                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy nguyên liệu phù hợp", ingredientId?.ToString() ?? "No filter");
-            }
+         
 
             return result;
         }

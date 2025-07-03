@@ -13,6 +13,7 @@ namespace FestivalFlatform.Data.Models
         public int SchoolId { get; set; }
 
         [Required]
+        public int AccountId { get; set; }
         public string SchoolName { get; set; } = null!;
 
         public string? Address { get; set; }
@@ -23,7 +24,11 @@ namespace FestivalFlatform.Data.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
 
-        public virtual ICollection<SchoolAccount> SchoolAccounts { get; set; } = new List<SchoolAccount>();
+        [Required]
+        
+        public Account Account { get; set; } = null!;
+
+
         public virtual ICollection<Festival> Festivals { get; set; } = new List<Festival>();
         public virtual ICollection<FestivalSchool> FestivalSchools { get; set; } = new List<FestivalSchool>();
     }

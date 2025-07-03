@@ -513,8 +513,14 @@ namespace FestivalFlatform.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageId"));
 
+                    b.Property<int?>("BoothId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("FestivalId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
@@ -530,6 +536,10 @@ namespace FestivalFlatform.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("ImageId");
+
+                    b.HasIndex("BoothId");
+
+                    b.HasIndex("FestivalId");
 
                     b.HasIndex("MenuItemId");
 
@@ -910,6 +920,9 @@ namespace FestivalFlatform.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SchoolId"));
 
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
@@ -934,42 +947,9 @@ namespace FestivalFlatform.Data.Migrations
 
                     b.HasKey("SchoolId");
 
-                    b.ToTable("Schools");
-                });
-
-            modelBuilder.Entity("FestivalFlatform.Data.Models.SchoolAccount", b =>
-                {
-                    b.Property<int>("SchoolAccountId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SchoolAccountId"));
-
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Department")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Position")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SchoolId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("SchoolAccountId");
-
                     b.HasIndex("AccountId");
 
-                    b.HasIndex("SchoolId");
-
-                    b.ToTable("SchoolAccounts");
+                    b.ToTable("Schools");
                 });
 
             modelBuilder.Entity("FestivalFlatform.Data.Models.StudentGroup", b =>
@@ -1246,10 +1226,24 @@ namespace FestivalFlatform.Data.Migrations
 
             modelBuilder.Entity("FestivalFlatform.Data.Models.Image", b =>
                 {
+                    b.HasOne("FestivalFlatform.Data.Models.Booth", "Booth")
+                        .WithMany("Images")
+                        .HasForeignKey("BoothId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("FestivalFlatform.Data.Models.Festival", "Festival")
+                        .WithMany("Images")
+                        .HasForeignKey("FestivalId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("FestivalFlatform.Data.Models.MenuItem", "MenuItem")
                         .WithMany("Images")
                         .HasForeignKey("MenuItemId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Booth");
+
+                    b.Navigation("Festival");
 
                     b.Navigation("MenuItem");
                 });
@@ -1390,23 +1384,15 @@ namespace FestivalFlatform.Data.Migrations
                     b.Navigation("Game");
                 });
 
-            modelBuilder.Entity("FestivalFlatform.Data.Models.SchoolAccount", b =>
+            modelBuilder.Entity("FestivalFlatform.Data.Models.School", b =>
                 {
                     b.HasOne("FestivalFlatform.Data.Models.Account", "Account")
-                        .WithMany("SchoolAccounts")
+                        .WithMany("Schools")
                         .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FestivalFlatform.Data.Models.School", "School")
-                        .WithMany("SchoolAccounts")
-                        .HasForeignKey("SchoolId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Account");
-
-                    b.Navigation("School");
                 });
 
             modelBuilder.Entity("FestivalFlatform.Data.Models.StudentGroup", b =>
@@ -1441,7 +1427,7 @@ namespace FestivalFlatform.Data.Migrations
 
                     b.Navigation("PointsTransactions");
 
-                    b.Navigation("SchoolAccounts");
+                    b.Navigation("Schools");
 
                     b.Navigation("Suppliers");
                 });
@@ -1449,6 +1435,8 @@ namespace FestivalFlatform.Data.Migrations
             modelBuilder.Entity("FestivalFlatform.Data.Models.Booth", b =>
                 {
                     b.Navigation("BoothMenuItems");
+
+                    b.Navigation("Images");
 
                     b.Navigation("Minigames");
 
@@ -1471,6 +1459,8 @@ namespace FestivalFlatform.Data.Migrations
                     b.Navigation("FestivalMaps");
 
                     b.Navigation("FestivalSchools");
+
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("FestivalFlatform.Data.Models.FestivalMap", b =>
@@ -1514,8 +1504,6 @@ namespace FestivalFlatform.Data.Migrations
                     b.Navigation("FestivalSchools");
 
                     b.Navigation("Festivals");
-
-                    b.Navigation("SchoolAccounts");
                 });
 
             modelBuilder.Entity("FestivalFlatform.Data.Models.StudentGroup", b =>

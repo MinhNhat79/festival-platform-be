@@ -18,12 +18,16 @@ namespace FestivalFlatform.Service.Services.Interface
         string imageUrl,
         string? imageName);
         Task<List<Image>> SearchImagesAsync(
-        int? imageId,
-        int? menuItemId,
-        string? imageUrl,
-        string? imageName,
-        int? pageNumber,
-        int? pageSize);
+       int? imageId,
+       int? menuItemId,
+       int? boothId,
+       int? festivalId,
+       string? imageUrl,
+       string? imageName,
+       int? pageNumber,
+       int? pageSize);
+
         Task<bool> DeleteImageAsync(int imageId);
+        Task<Image> AddImageToEntityAsync(AddImageToEntityRequest request);
     }
 }

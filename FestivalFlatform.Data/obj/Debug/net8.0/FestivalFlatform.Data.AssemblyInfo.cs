@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FestivalFlatform.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+06c9a48ae6eaf962b9b715bf4e07b315f8fdedd4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+82827c1d73d718c63787222ca0b55ec73374dc87")]
 [assembly: System.Reflection.AssemblyProductAttribute("FestivalFlatform.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FestivalFlatform.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

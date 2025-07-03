@@ -68,7 +68,6 @@ namespace FestivalManagementFlatformm.Controllers
         {
             try
             {
-                // Kiểm tra định dạng tên
                 var regexName = new Regex("^[a-zA-Z ]+$");
                 if (!regexName.IsMatch(request.FullName))
                 {

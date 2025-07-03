@@ -116,8 +116,6 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Take(currentSize)
                 .ToListAsync();
 
-            if (result == null || result.Count == 0)
-                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy MenuItemIngredient phù hợp", "");
 
             return result;
 

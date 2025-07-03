@@ -13,5 +13,7 @@ namespace FestivalFlatform.Service.DTOs.Request
         public string? ContactInfo { get; set; }
         public string? LogoUrl { get; set; }
         public string? Description { get; set; }
+
+        public int AccountId { get; set; }
     }
 }

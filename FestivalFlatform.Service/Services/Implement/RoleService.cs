@@ -71,8 +71,6 @@ namespace FestivalFlatform.Service.Services.Implement
             var role = await _unitOfWork.Repository<Role>().GetAll()
                 .FirstOrDefaultAsync(r => r.RoleId == roleId);
 
-            if (role == null)
-                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy Role", roleId.ToString());
 
             _unitOfWork.Repository<Role>().Delete(role);
             await _unitOfWork.CommitAsync();

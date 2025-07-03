@@ -37,19 +37,38 @@ namespace FestivalManagementFlatformm.Controllers
         public async Task<IActionResult> SearchImages(
         [FromQuery] int? imageId,
         [FromQuery] int? menuItemId,
+        [FromQuery] int? boothId,
+        [FromQuery] int? festivalId,
         [FromQuery] string? imageUrl,
         [FromQuery] string? imageName,
         [FromQuery] int? pageNumber,
         [FromQuery] int? pageSize)
         {
-            var result = await _service.SearchImagesAsync(imageId, menuItemId, imageUrl, imageName, pageNumber, pageSize);
+            var result = await _service.SearchImagesAsync(
+                imageId,
+                menuItemId,
+                boothId,
+                festivalId,
+                imageUrl,
+                imageName,
+                pageNumber,
+                pageSize
+            );
+
             return Ok(result);
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> DeleteImage(int id)
         {
             var result = await _service.DeleteImageAsync(id);
             return Ok(new { success = result });
+        }
+
+        [HttpPost("add-to-entity")]
+        public async Task<IActionResult> AddImageToEntity([FromBody] AddImageToEntityRequest request)
+        {
+            var image = await _service.AddImageToEntityAsync(request);
+            return Ok(image);
         }
     }
 }

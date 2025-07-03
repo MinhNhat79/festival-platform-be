@@ -39,6 +39,10 @@ namespace FestivalFlatform.Data.Models
         public DateTime? UpdatedAt { get; set; }
 
         public virtual School School { get; set; } = null!;
+
+
+        public virtual ICollection<Image> Images { get; set; } = new List<Image>();
+
         public virtual ICollection<Booth> Booths { get; set; } = new List<Booth>();
         public virtual ICollection<FestivalIngredient> FestivalIngredients { get; set; } = new List<FestivalIngredient>();
         public virtual ICollection<FestivalMap> FestivalMaps { get; set; } = new List<FestivalMap>();

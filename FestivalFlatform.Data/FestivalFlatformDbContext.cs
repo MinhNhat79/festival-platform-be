@@ -37,7 +37,7 @@ namespace FestivalFlatform.Data
         public DbSet<Question> Questions { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<School> Schools { get; set; }
-        public DbSet<SchoolAccount> SchoolAccounts { get; set; }
+
         public DbSet<StudentGroup> StudentGroups { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<FestivalMenu> FestivalMenus { get; set; }
@@ -73,18 +73,10 @@ namespace FestivalFlatform.Data
                 .HasForeignKey<AccountPoints>(ap => ap.AccountId)
                 .OnDelete(DeleteBehavior.Cascade);
             // ==== Account & SchoolAccounts (1-n) ====
-            modelBuilder.Entity<SchoolAccount>()
-                .HasOne(sa => sa.Account)
-                .WithMany(a => a.SchoolAccounts)
-                .HasForeignKey(sa => sa.AccountId)
-                .OnDelete(DeleteBehavior.Cascade);
+          
 
             // ==== School & SchoolAccounts (1-n) ====
-            modelBuilder.Entity<SchoolAccount>()
-                .HasOne(sa => sa.School)
-                .WithMany(s => s.SchoolAccounts)
-                .HasForeignKey(sa => sa.SchoolId)
-                .OnDelete(DeleteBehavior.Cascade);
+           
 
             // ==== Booth - Group (n-1) ====
             modelBuilder.Entity<Booth>()
@@ -293,6 +285,30 @@ namespace FestivalFlatform.Data
                 .WithMany() // hoặc WithMany(a => a.AdvisedGroups) nếu có
                 .HasForeignKey(sg => sg.AccountId)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<School>()
+            .HasOne(s => s.Account)
+            .WithMany(a => a.Schools)
+            .HasForeignKey(s => s.AccountId)
+            .OnDelete(DeleteBehavior.Restrict); // hoặc Cascade nếu bạn muốn xoá account xoá luôn school
+
+            modelBuilder.Entity<Image>()
+            .HasOne(i => i.MenuItem)
+            .WithMany(mi => mi.Images)
+            .HasForeignKey(i => i.MenuItemId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Image>()
+                .HasOne(i => i.Booth)
+                .WithMany(b => b.Images)
+                .HasForeignKey(i => i.BoothId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Image>()
+                .HasOne(i => i.Festival)
+                .WithMany(f => f.Images)
+                .HasForeignKey(i => i.FestivalId)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             // ==== Composite or Unique Keys (if needed) ====
             // Ví dụ: GroupMember => composite key

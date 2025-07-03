@@ -107,9 +107,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             var result = await query.ToListAsync();
 
-            if (result.Count == 0)
-                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy GroupMember phù hợp", memberId?.ToString() ?? "No filter");
-
+        
             return result;
         }
 

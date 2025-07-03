@@ -1323,8 +1323,24 @@
   },
   {
     "ContainingType": "FestivalManagementFlatformm.Controllers.ImageController",
+    "Method": "AddImageToEntity",
+    "RelativePath": "api/images/add-to-entity",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FestivalFlatform.Service.DTOs.Request.AddImageToEntityRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FestivalManagementFlatformm.Controllers.ImageController",
     "Method": "DeleteImage",
-    "RelativePath": "api/images/{id}",
+    "RelativePath": "api/images/delete",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -1332,7 +1348,7 @@
       {
         "Name": "id",
         "Type": "System.Int32",
-        "IsRequired": true
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -1352,6 +1368,16 @@
       },
       {
         "Name": "menuItemId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "boothId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "festivalId",
         "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },
@@ -2479,110 +2505,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "FestivalManagementFlatformm.Controllers.SchoolAccountController",
-    "Method": "CreateSchoolAccount",
-    "RelativePath": "api/schoolaccounts/create",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "request",
-        "Type": "FestivalFlatform.Service.DTOs.Request.SchoolAccountCreateRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "FestivalManagementFlatformm.Controllers.SchoolAccountController",
-    "Method": "DeleteSchoolAccount",
-    "RelativePath": "api/schoolaccounts/delete",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "schoolAccountId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "FestivalManagementFlatformm.Controllers.SchoolAccountController",
-    "Method": "SearchSchoolAccounts",
-    "RelativePath": "api/schoolaccounts/search",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "schoolAccountId",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "schoolId",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "accountId",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "position",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "department",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "pageNumber",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "pageSize",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "FestivalManagementFlatformm.Controllers.SchoolAccountController",
-    "Method": "UpdateSchoolAccount",
-    "RelativePath": "api/schoolaccounts/update",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "schoolAccountId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "position",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "department",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "FestivalManagementFlatformm.Controllers.SchoolController",
     "Method": "CreateSchool",
     "RelativePath": "api/schools/create",
@@ -2624,6 +2546,11 @@
     "Parameters": [
       {
         "Name": "id",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "accountId",
         "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },

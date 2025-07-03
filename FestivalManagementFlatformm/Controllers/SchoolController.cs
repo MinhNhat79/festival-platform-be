@@ -24,9 +24,9 @@ namespace FestivalManagementFlatformm.Controllers
 
 
         [HttpGet("search")]
-        public async Task<IActionResult> SearchSchools([FromQuery] int? id, [FromQuery] string? name, [FromQuery] int? pageNumber, [FromQuery] int? pageSize)
+        public async Task<IActionResult> SearchSchools([FromQuery] int? id, int? accountId, [FromQuery] string? name, [FromQuery] int? pageNumber, [FromQuery] int? pageSize)
         {
-            var result = await _schoolService.SearchSchoolsAsync(id, name, pageNumber, pageSize);
+            var result = await _schoolService.SearchSchoolsAsync(id, accountId, name, pageNumber, pageSize);
             return Ok(result);
         }
         [HttpPut("update")]

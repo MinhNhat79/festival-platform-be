@@ -46,6 +46,8 @@ namespace FestivalFlatform.Data.Models
         public virtual Festival Festival { get; set; } = null!;
         public virtual MapLocation Location { get; set; } = null!;
 
+        public virtual ICollection<Image> Images { get; set; } = new List<Image>();
+
         public virtual ICollection<Minigame> Minigames { get; set; } = new List<Minigame>();
         public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
         public virtual ICollection<PointsTransaction> PointsTransactions { get; set; } = new List<PointsTransaction>();

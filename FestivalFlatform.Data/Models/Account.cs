@@ -33,7 +33,8 @@ namespace FestivalFlatform.Data.Models
         public DateTime? UpdatedAt { get; set; }
 
         public virtual AccountPoints? AccountPoints { get; set; }
-        public virtual ICollection<SchoolAccount> SchoolAccounts { get; set; } = new List<SchoolAccount>();
+
+        public virtual ICollection<School> Schools { get; set; } = new List<School>();
         public virtual ICollection<GroupMember> GroupMemberships { get; set; } = new List<GroupMember>();
         public virtual ICollection<ChatSession> ChatSessions { get; set; } = new List<ChatSession>();
         public virtual ICollection<Order> Orders { get; set; } = new List<Order>();

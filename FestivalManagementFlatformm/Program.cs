@@ -85,7 +85,7 @@ namespace FF.API
             builder.Services.AddScoped<IBoothService, BoothService>();
             builder.Services.AddScoped<ISupplierService, SupplierService>();
             builder.Services.AddScoped<ISchoolService, SchoolService>();
-            builder.Services.AddScoped<ISchoolAccountService, SchoolAccountService>();
+  
             builder.Services.AddScoped<IStudentGroupService, StudentGroupService>();
             builder.Services.AddScoped<IFestivalMapService, FestivalMapService>();
             builder.Services.AddScoped<IMapLocationService, MapLocationService>();
@@ -106,7 +106,7 @@ namespace FF.API
             builder.Services.AddScoped<IChatSessionService, ChatSessionService>();
             builder.Services.AddScoped<IRoleService, RoleService>();
 
-           
+
 
 
 
@@ -158,11 +158,10 @@ namespace FF.API
             var app = builder.Build();
 
             // Môi trường phát triển
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FF.API v1"));
-            }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FF.API v1"));
+
 
             app.UseDeveloperExceptionPage();
 

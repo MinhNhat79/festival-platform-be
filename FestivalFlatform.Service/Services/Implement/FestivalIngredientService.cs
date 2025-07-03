@@ -108,10 +108,7 @@ namespace FestivalFlatform.Service.Services.Implement
             query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
             var results = await query.ToListAsync();
 
-            if (results == null || results.Count == 0)
-            {
-                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy FestivalIngredient phù hợp", festivalIngredientId?.ToString() ?? "No filter");
-            }
+          
 
             return results;
         }

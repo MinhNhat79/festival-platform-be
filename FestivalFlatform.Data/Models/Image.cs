@@ -13,8 +13,6 @@ namespace FestivalFlatform.Data.Models
         [Key]
         public int ImageId { get; set; }
 
-        public int? MenuItemId { get; set; } // Sửa thành nullable
-
         [Required]
         public string ImageUrl { get; set; } = null!;
 
@@ -23,9 +21,14 @@ namespace FestivalFlatform.Data.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
 
-        [ForeignKey(nameof(MenuItemId))]
-        public virtual MenuItem? MenuItem { get; set; } // Nullable luôn cho đồng bộ
+        public int? MenuItemId { get; set; }
+        public int? BoothId { get; set; }
+        public int? FestivalId { get; set; }
 
-        
+        public virtual MenuItem? MenuItem { get; set; }
+        public virtual Booth? Booth { get; set; }
+        public virtual Festival? Festival { get; set; }
+
+
     }
 }

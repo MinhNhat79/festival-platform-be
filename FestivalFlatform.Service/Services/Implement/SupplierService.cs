@@ -75,7 +75,7 @@ namespace FestivalFlatform.Service.Services.Implement
         public async Task<List<Supplier>> GetSuppliers(int? supplierId, int? accountId, string? companyName, string? status, int? pageNumber, int? pageSize)
         {
             var query = _unitOfWork.Repository<Supplier>().GetAll()
-
+                .Include(s => s.Ingredients)
                 .Where(s => !supplierId.HasValue || supplierId == 0 || s.SupplierId == supplierId.Value)
                 .Where(s => !accountId.HasValue || accountId == 0 || s.AccountId == accountId.Value)
                 .Where(s => string.IsNullOrWhiteSpace(companyName) || s.CompanyName.Contains(companyName.Trim()))
@@ -89,10 +89,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             var suppliers = await query.ToListAsync();
 
-            if (suppliers == null || suppliers.Count == 0)
-            {
-                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy nhà cung cấp phù hợp", supplierId?.ToString() ?? "No filter");
-            }
+         
 
             return suppliers;
         }

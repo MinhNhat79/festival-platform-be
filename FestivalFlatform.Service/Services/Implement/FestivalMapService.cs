@@ -90,11 +90,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             var result = await query.ToListAsync();
 
-            if (result == null || result.Count == 0)
-            {
-                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy FestivalMap phù hợp", mapId?.ToString() ?? mapName ?? "No filter");
-            }
-
+         
             return result;
         }
         public async Task<bool> DeleteFestivalMapAsync(int mapId)

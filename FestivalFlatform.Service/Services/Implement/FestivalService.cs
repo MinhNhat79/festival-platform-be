@@ -110,10 +110,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             var festivals = await query.ToListAsync();
 
-            if (festivals == null || festivals.Count == 0)
-            {
-                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy festival phù hợp", festivalId?.ToString() ?? "No filter");
-            }
+        
 
             return festivals;
         }

@@ -77,10 +77,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             var result = await query.ToListAsync();
 
-            if (result == null || result.Count == 0)
-            {
-                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy FestivalMenu phù hợp", menuId?.ToString() ?? "No filter");
-            }
+         
 
             return result;
         }
