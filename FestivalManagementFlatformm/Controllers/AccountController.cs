@@ -27,12 +27,7 @@ namespace FestivalManagementFlatformm.Controllers
         {
             try
             {
-                // Kiểm tra định dạng tên
-                var regexName = new Regex("^[a-zA-Z ]+$");
-                if (!regexName.IsMatch(request.FullName))
-                {
-                    return BadRequest("Tên không hợp lệ");
-                }
+               
 
                 // Kiểm tra định dạng số điện thoại
                 var regexPhone = new Regex("^[0-9]+$");
@@ -68,12 +63,7 @@ namespace FestivalManagementFlatformm.Controllers
         {
             try
             {
-                var regexName = new Regex("^[a-zA-Z ]+$");
-                if (!regexName.IsMatch(request.FullName))
-                {
-                    return BadRequest("Tên không hợp lệ");
-                }
-
+       
                 // Kiểm tra định dạng số điện thoại
                 var regexPhone = new Regex("^[0-9]+$");
                 if (!regexPhone.IsMatch(request.PhoneNumber))

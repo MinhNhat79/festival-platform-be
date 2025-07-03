@@ -29,7 +29,7 @@ namespace FestivalFlatform.Service.Services.Implement
         public async Task<Festival> CreateFestivalAsync(FestivalCreateRequest request)
         {
 
-            var groupExists = await _unitOfWork.Repository<Festival>()
+            var groupExists = await _unitOfWork.Repository<School>()
            .AnyAsync(g => g.SchoolId == request.OrganizerSchoolId);
             if (!groupExists)
             {

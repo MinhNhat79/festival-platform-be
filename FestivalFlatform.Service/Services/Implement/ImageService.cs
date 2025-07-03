@@ -59,10 +59,12 @@ namespace FestivalFlatform.Service.Services.Implement
         }
 
         public async Task<Image> UpdateImageAsync(
-        int imageId,
-        int? menuItemId,
-        string imageUrl,
-        string? imageName)
+    int imageId,
+    string? imageUrl,
+    string? imageName,
+    int? festivalId,
+    int? boothId,
+    int? menuItemId)
         {
             var image = await _unitOfWork.Repository<Image>().GetAll()
                 .FirstOrDefaultAsync(x => x.ImageId == imageId);
@@ -70,26 +72,58 @@ namespace FestivalFlatform.Service.Services.Implement
             if (image == null)
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy ảnh", imageId.ToString());
 
-            if (string.IsNullOrWhiteSpace(imageUrl))
-                throw new CrudException(HttpStatusCode.BadRequest, "ImageUrl không được để trống", nameof(imageUrl));
-
-            if (menuItemId.HasValue)
+            // Gán imageUrl nếu có truyền
+            if (!string.IsNullOrWhiteSpace(imageUrl))
             {
-                var menuItemExists = await _unitOfWork.Repository<MenuItem>()
-                    .AnyAsync(x => x.ItemId == menuItemId.Value);
-
-                if (!menuItemExists)
-                    throw new CrudException(HttpStatusCode.BadRequest, "Không tìm thấy MenuItem", menuItemId.Value.ToString());
+                image.ImageUrl = imageUrl.Trim();
             }
 
-            image.MenuItemId = menuItemId;
-            image.ImageUrl = imageUrl.Trim();
-            image.ImageName = imageName?.Trim();
+            // Gán imageName nếu có truyền
+            if (imageName != null)
+            {
+                image.ImageName = imageName.Trim();
+            }
+
+            // Chỉ kiểm tra và cập nhật nếu có truyền festivalId/boothId/menuItemId
+            if (festivalId.HasValue)
+            {
+                var exists = await _unitOfWork.Repository<Festival>().AnyAsync(f => f.FestivalId == festivalId.Value);
+                if (!exists)
+                    throw new CrudException(HttpStatusCode.BadRequest, "Không tìm thấy Festival", festivalId.Value.ToString());
+
+                image.FestivalId = festivalId;
+                image.BoothId = null;
+                image.MenuItemId = null;
+            }
+            else if (boothId.HasValue)
+            {
+                var exists = await _unitOfWork.Repository<Booth>().AnyAsync(b => b.BoothId == boothId.Value);
+                if (!exists)
+                    throw new CrudException(HttpStatusCode.BadRequest, "Không tìm thấy Booth", boothId.Value.ToString());
+
+                image.BoothId = boothId;
+                image.FestivalId = null;
+                image.MenuItemId = null;
+            }
+            else if (menuItemId.HasValue)
+            {
+                var exists = await _unitOfWork.Repository<MenuItem>().AnyAsync(m => m.ItemId == menuItemId.Value);
+                if (!exists)
+                    throw new CrudException(HttpStatusCode.BadRequest, "Không tìm thấy MenuItem", menuItemId.Value.ToString());
+
+                image.MenuItemId = menuItemId;
+                image.BoothId = null;
+                image.FestivalId = null;
+            }
+
+            // Nếu không truyền gì thì giữ nguyên liên kết
             image.UpdatedAt = DateTime.UtcNow;
 
             await _unitOfWork.CommitAsync();
             return image;
         }
+
+
         public async Task<List<Image>> SearchImagesAsync(
         int? imageId,
         int? menuItemId,

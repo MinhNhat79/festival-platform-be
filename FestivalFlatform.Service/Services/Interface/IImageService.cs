@@ -13,10 +13,12 @@ namespace FestivalFlatform.Service.Services.Interface
 
         Task<Image> CreateImageAsync(CreateImageRequest request);
         Task<Image> UpdateImageAsync(
-        int imageId,
-        int? menuItemId,
-        string imageUrl,
-        string? imageName);
+    int imageId,
+    string? imageUrl,
+    string? imageName,
+    int? festivalId,
+    int? boothId,
+    int? menuItemId);
         Task<List<Image>> SearchImagesAsync(
        int? imageId,
        int? menuItemId,

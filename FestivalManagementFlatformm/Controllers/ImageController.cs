@@ -28,9 +28,12 @@ namespace FestivalManagementFlatformm.Controllers
        int imageId,
        int? menuItemId,
        string imageUrl,
-       string? imageName)
+       string? imageName,
+       int? festivalId,
+       int? boothId
+    )
         {
-            var result = await _service.UpdateImageAsync(imageId, menuItemId, imageUrl, imageName);
+            var result = await _service.UpdateImageAsync(imageId, imageUrl, imageName, festivalId,boothId, menuItemId);
             return Ok(result);
         }
         [HttpGet("search")]

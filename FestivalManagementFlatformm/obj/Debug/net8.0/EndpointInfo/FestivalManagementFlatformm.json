@@ -2045,6 +2045,22 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "festivalId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "boothId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         ],
         "responses": {
@@ -4486,7 +4502,7 @@
             "type": "string",
             "nullable": true
           },
-          "fullNme": {
+          "fullName": {
             "type": "string",
             "nullable": true
           },

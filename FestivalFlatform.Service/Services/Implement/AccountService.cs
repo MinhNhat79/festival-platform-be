@@ -72,7 +72,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 Id = account.AccountId,
                 Email = account.Email,
                 Pasword = account.PasswordHash,
-                FullNme = account.FullName,
+                FullName = account.FullName,
                 PhoneNumber = account.PhoneNumber,
                 RoleId = account.RoleId,
                 CreatedAt = account.CreatedAt,
@@ -124,7 +124,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 Id = account.AccountId,
                 Email = account.Email,
                 Pasword = account.PasswordHash,
-                FullNme = account.FullName,
+                FullName = account.FullName,
                 PhoneNumber = account.PhoneNumber,
                 RoleId = account.RoleId,
                 CreatedAt = account.CreatedAt,
@@ -155,7 +155,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 Id = account.AccountId,
                 Email = account.Email,
                 Pasword = account.PasswordHash,
-                FullNme = account.FullName,
+                FullName = account.FullName,
                 PhoneNumber = account.PhoneNumber,
                 RoleId = account.RoleId,
                 CreatedAt = account.CreatedAt
@@ -196,7 +196,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             if (phoneNumberExisted != null)
             {
-                throw new CrudException(HttpStatusCode.Conflict, "so dien thaoi đã tồn tại", accountRequest.PhoneNumber.ToString());
+                throw new CrudException(HttpStatusCode.Conflict, "so dien thoai đã tồn tại", accountRequest.PhoneNumber.ToString());
             }
             // Chỉ cập nhật Email, Password, PhoneNumber
             if (!string.IsNullOrWhiteSpace(accountRequest.Email))
@@ -226,7 +226,7 @@ namespace FestivalFlatform.Service.Services.Implement
             {
                 Id = account.AccountId,
                 Email = account.Email,
-                FullNme = account.FullName,
+                FullName = account.FullName,
                 Pasword = account.PasswordHash,
                 PhoneNumber = account.PhoneNumber,
                 RoleId = account.RoleId,
