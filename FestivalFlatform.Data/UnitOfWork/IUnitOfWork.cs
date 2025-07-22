@@ -11,7 +11,7 @@ namespace FestivalFlatform.Data.UnitOfWork
     {
         public IGenericRepository<T> Repository<T>()
           where T : class;
-
+        Task<int> SaveChangesAsync();
         int Commit();
 
         Task<int> CommitAsync();

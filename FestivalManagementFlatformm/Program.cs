@@ -14,6 +14,7 @@ using FestivalFlatform.Service.Services.Implement;
 using FestivalFlatform.Service.Services.Interface;
 using FestivalFlatform.Data.UnitOfWork;
 using System.Security.Claims;
+using Net.payOS;
 
 namespace FF.API
 {
@@ -105,10 +106,21 @@ namespace FF.API
             builder.Services.AddScoped<IQuestionService, QuestionService>();
             builder.Services.AddScoped<IChatSessionService, ChatSessionService>();
             builder.Services.AddScoped<IRoleService, RoleService>();
+            builder.Services.AddScoped<ISchoolAccountRelationService, SchoolAccountRelationService>();
+            builder.Services.AddScoped<IPaymentService, PaymentService>();
+            builder.Services.AddScoped<IWalletService, WalletService>();
 
 
 
+            builder.Services.AddSingleton<PayOS>(sp =>
+            {
+                var configuration = sp.GetRequiredService<IConfiguration>();
+                var clientId = configuration["PayOS:ClientId"];
+                var apiKey = configuration["PayOS:ApiKey"];
+                var checksumKey = configuration["PayOS:ChecksumKey"];
 
+                return new PayOS(clientId, apiKey, checksumKey);
+            });
 
             // Các cấu hình bổ sung
             builder.Services.AddControllers()

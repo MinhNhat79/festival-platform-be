@@ -114,7 +114,7 @@ namespace FestivalFlatform.Service.Services.Implement
             return booths;
         }
 
-        public async Task UpdateBoothStatusToRejected(int boothId)
+        public async Task UpdateBoothStatusToRejected(int boothId, string? rejectReason)
         {
             var booth = await _unitOfWork.Repository<Booth>().GetAll()
                 .FirstOrDefaultAsync(b => b.BoothId == boothId);
@@ -123,7 +123,7 @@ namespace FestivalFlatform.Service.Services.Implement
             {
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy gian hàng", boothId.ToString());
             }
-
+            booth.RejectionReason = rejectReason;
             booth.Status = StatusBooth.Rejected;
             booth.UpdatedAt = DateTime.UtcNow;
 

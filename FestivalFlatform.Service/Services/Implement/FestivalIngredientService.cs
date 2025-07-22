@@ -84,6 +84,7 @@ namespace FestivalFlatform.Service.Services.Implement
             if (ingredientId.HasValue) item.IngredientId = ingredientId.Value;
             if (quantityAvailable.HasValue) item.QuantityAvailable = quantityAvailable.Value;
             if (specialPrice.HasValue) item.SpecialPrice = specialPrice.Value;
+            
             if (!string.IsNullOrWhiteSpace(status)) item.Status = status.Trim();
 
             item.UpdatedAt = DateTime.UtcNow;
@@ -91,7 +92,21 @@ namespace FestivalFlatform.Service.Services.Implement
             await _unitOfWork.CommitAsync();
             return item;
         }
+        public async Task UpdateFestivaIngredientStatusToRejectAsync(int id, string? rejectReason)
+        {
+            var entity = await _unitOfWork.Repository<FestivalIngredient>()
+                .GetAll()
+                .FirstOrDefaultAsync(fs => fs.FestivalIngredientId == id);
 
+            if (entity == null)
+            {
+                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy FestivalSchool", id.ToString());
+            }
+            entity.RejectReason = rejectReason;
+            entity.Status = StatusFestivalIngredient.Rejected;
+            entity.UpdatedAt = DateTime.UtcNow;
+            await _unitOfWork.CommitAsync();
+        }
         public async Task<List<FestivalIngredient>> SearchFestivalIngredientsAsync(
         int? festivalIngredientId, int? festivalId, int? ingredientId,
         string? status, int? pageNumber, int? pageSize)

@@ -20,13 +20,13 @@ namespace FestivalFlatform.Service.DTOs.Request
     }
     public class AccountUpdateRequest
     {
-
+        public string? FullName  { get; set; } = null;
         public string? Email { get; set; } = null;
 
         public string? Pasword { get; set; } = null;
        
         public string? PhoneNumber { get; set; } = null;
-
+        public string? AvatarUrl { get; set; } = null;
         public DateTime? UpdatedAt { get; set; } = null;
 
     }

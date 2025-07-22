@@ -61,7 +61,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             return festival;
         }
-        public async Task<Festival> UpdateFestivalAsync(int festivalId, int? maxFoodBooths, int? maxBeverageBooths, int? registeredFoodBooths, int? registeredBeverageBooths, string? status)
+        public async Task<Festival> UpdateFestivalAsync(int festivalId, int? maxFoodBooths, int? maxBeverageBooths, int? registeredFoodBooths, int? registeredBeverageBooths, string? cancelReason, string? status)
         {
             var festival = await _unitOfWork.Repository<Festival>().FindAsync(f => f.FestivalId == festivalId);
 
@@ -79,6 +79,9 @@ namespace FestivalFlatform.Service.Services.Implement
 
             if (registeredBeverageBooths.HasValue)
                 festival.RegisteredBeverageBooths = registeredBeverageBooths.Value;
+
+            if (!string.IsNullOrWhiteSpace(cancelReason))
+                festival.Status = cancelReason.Trim();
 
             if (!string.IsNullOrWhiteSpace(status))
                 festival.Status = status.Trim();

@@ -19,6 +19,8 @@ namespace FestivalFlatform.Data.Models
         public int SchoolId { get; set; }
 
         public string Status { get; set; } = "pending";
+
+        public string? rejectReason { get; set; }
         public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
         public DateTime? ApprovalDate { get; set; }
 

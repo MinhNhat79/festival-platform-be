@@ -197,7 +197,11 @@ namespace FestivalFlatform.Service.Services.Implement
             {
                 throw new CrudException(HttpStatusCode.Conflict, "so dien thoai đã tồn tại", accountRequest.PhoneNumber.ToString());
             }
-           
+
+
+            if (!string.IsNullOrWhiteSpace(accountRequest.Email))
+                account.FullName = accountRequest.FullName;
+
             if (!string.IsNullOrWhiteSpace(accountRequest.Email))
                 account.Email = accountRequest.Email;
 
@@ -209,6 +213,10 @@ namespace FestivalFlatform.Service.Services.Implement
 
             if (!string.IsNullOrWhiteSpace(accountRequest.PhoneNumber))
                 account.PhoneNumber = accountRequest.PhoneNumber;
+
+            if(!string.IsNullOrWhiteSpace(accountRequest.AvatarUrl))
+                account.AvatarUrl = accountRequest.AvatarUrl;
+
 
             account.UpdatedAt = DateTime.UtcNow;
 

@@ -46,6 +46,8 @@ C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatfo
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\obj\Release\net8.0\PubTmp\Out\Microsoft.OpenApi.dll
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\obj\Release\net8.0\PubTmp\Out\Microsoft.SqlServer.Server.dll
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\obj\Release\net8.0\PubTmp\Out\Microsoft.Win32.SystemEvents.dll
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\obj\Release\net8.0\PubTmp\Out\Newtonsoft.Json.dll
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\obj\Release\net8.0\PubTmp\Out\payos-lib-backend-dotnet.dll
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll

@@ -31,5 +31,6 @@ namespace FestivalFlatform.Data.Models
 
         public virtual ICollection<Festival> Festivals { get; set; } = new List<Festival>();
         public virtual ICollection<FestivalSchool> FestivalSchools { get; set; } = new List<FestivalSchool>();
+        public virtual ICollection<SchoolAccountRelation> SchoolAccountRelations { get; set; } = new List<SchoolAccountRelation>();
     }
 }

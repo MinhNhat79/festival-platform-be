@@ -16,14 +16,14 @@ namespace FestivalManagementFlatformm.Controllers
             _service = service;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateImage([FromBody] CreateImageRequest request)
         {
             var result = await _service.CreateImageAsync(request);
             return Ok(result);
         }
 
-        [HttpPut]
+        [HttpPut("update")]
         public async Task<IActionResult> UpdateImage(
        int imageId,
        int? menuItemId,

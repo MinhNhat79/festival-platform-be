@@ -35,6 +35,10 @@ namespace FestivalFlatform.Data.Models
         public int RegisteredBeverageBooths { get; set; } = 0;
 
         public string Status { get; set; } = "draft";
+
+        public string? Description { get; set; }
+
+        public string? cancellationReason { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
 

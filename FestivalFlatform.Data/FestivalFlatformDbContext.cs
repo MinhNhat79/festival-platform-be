@@ -42,6 +42,10 @@ namespace FestivalFlatform.Data
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<FestivalMenu> FestivalMenus { get; set; }
         public DbSet<BoothMenuItem> BoothMenuItems { get; set; }
+        public DbSet<SchoolAccountRelation> SchoolAccountRelations { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<Wallet> Wallets { get; set; }
+       
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -309,7 +313,29 @@ namespace FestivalFlatform.Data
                 .HasForeignKey(i => i.FestivalId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+           modelBuilder.Entity<SchoolAccountRelation>()
+            .HasOne(r => r.School)
+            .WithMany(s => s.SchoolAccountRelations)
+            .HasForeignKey(r => r.SchoolId)
+            .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<SchoolAccountRelation>()
+                .HasOne(r => r.Account)
+                .WithMany(a => a.SchoolAccountRelations)
+                .HasForeignKey(r => r.AccountId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Payment>()
+     .HasOne(p => p.Order)
+     .WithMany(o => o.Payments)
+     .HasForeignKey(p => p.OrderId)
+     .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Payment>()
+                .HasOne(p => p.Wallet)
+                .WithMany(w => w.Payments)
+                .HasForeignKey(p => p.WalletId)
+                .OnDelete(DeleteBehavior.NoAction);
             // ==== Composite or Unique Keys (if needed) ====
             // Ví dụ: GroupMember => composite key
         }

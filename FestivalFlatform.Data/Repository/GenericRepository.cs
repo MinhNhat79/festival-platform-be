@@ -43,7 +43,11 @@ namespace FestivalFlatform.Data.Repository
             return
                 await Table.SingleOrDefaultAsync(predicate);
         }
-
+        public Task DeleteAsync(T entity)
+        {
+            Table.Remove(entity);
+            return Task.CompletedTask;
+        }
         public IQueryable<T> FindAll(Func<T, bool> predicate)
         {
             return Table.Where(predicate).AsQueryable();
@@ -156,5 +160,6 @@ namespace FestivalFlatform.Data.Repository
         {
             return Table.AsNoTracking();
         }
+
     }
 }

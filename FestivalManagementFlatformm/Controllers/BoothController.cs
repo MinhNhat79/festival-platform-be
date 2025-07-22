@@ -48,9 +48,9 @@ namespace FestivalManagementFlatformm.Controllers
         }
 
         [HttpPut("reject")]
-        public async Task<IActionResult> RejectBooth(int boothId)
+        public async Task<IActionResult> RejectBooth(int boothId, string? rejectReason)
         {
-            await _boothService.UpdateBoothStatusToRejected(boothId);
+            await _boothService.UpdateBoothStatusToRejected(boothId,rejectReason);
             return Ok(new { message = "Booth status updated to Rejected" });
         }
 

@@ -132,7 +132,7 @@ namespace FestivalFlatform.Service.Services.Implement
             _unitOfWork.Repository<FestivalSchool>().Delete(entity);
             await _unitOfWork.CommitAsync();
         }
-        public async Task UpdateFestivalSchoolStatusToRejectAsync(int festivalSchoolId)
+        public async Task UpdateFestivalSchoolStatusToRejectAsync(int festivalSchoolId,string? rejectReason)
         {
             var entity = await _unitOfWork.Repository<FestivalSchool>()
                 .GetAll()
@@ -142,7 +142,7 @@ namespace FestivalFlatform.Service.Services.Implement
             {
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy FestivalSchool", festivalSchoolId.ToString());
             }
-
+            entity.rejectReason = rejectReason;
             entity.Status = StatusFestivalSchool.Rejected;
             entity.ApprovalDate = DateTime.UtcNow;
             await _unitOfWork.CommitAsync();

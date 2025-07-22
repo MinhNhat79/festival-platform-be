@@ -15,7 +15,7 @@ namespace FestivalManagementFlatformm.Controllers
             _festivalMenuService = festivalMenuService;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateFestivalMenu([FromBody] FestivalMenuCreateRequest request)
         {
             var result = await _festivalMenuService.CreateFestivalMenuAsync(request);
@@ -23,7 +23,7 @@ namespace FestivalManagementFlatformm.Controllers
         }
 
       
-        [HttpPut("{menuId}")]
+        [HttpPut("update")]
         public async Task<IActionResult> UpdateFestivalMenu(int menuId, [FromQuery] string? menuName, [FromQuery] string? description)
         {
             var result = await _festivalMenuService.UpdateFestivalMenuAsync(menuId, menuName, description);
@@ -39,7 +39,7 @@ namespace FestivalManagementFlatformm.Controllers
         }
 
         // DELETE: api/festival-menus/{menuId}
-        [HttpDelete("{menuId}")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> DeleteFestivalMenu(int menuId)
         {
             var result = await _festivalMenuService.DeleteFestivalMenuAsync(menuId);

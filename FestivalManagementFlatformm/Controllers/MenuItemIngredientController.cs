@@ -15,7 +15,7 @@ namespace FestivalManagementFlatformm.Controllers
             _service = service;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] CreateMenuItemIngredientRequest request)
         {
             var result = await _service.CreateMenuItemIngredientAsync(request);
@@ -34,7 +34,7 @@ namespace FestivalManagementFlatformm.Controllers
             return Ok(result);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update")]
         public async Task<IActionResult> Update(
          int itemIngredientId,
         int itemId,
@@ -46,7 +46,7 @@ namespace FestivalManagementFlatformm.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> Delete(int id)
         {
             var success = await _service.DeleteMenuItemIngredientAsync(id);

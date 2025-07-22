@@ -15,7 +15,7 @@ namespace FestivalManagementFlatformm.Controllers
             _service = service;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> Create(FestivalSchoolCreateRequest request)
         {
             var result = await _service.CreateFestivalSchoolAsync(request);
@@ -31,9 +31,9 @@ namespace FestivalManagementFlatformm.Controllers
 
 
         [HttpPut("update/reject")]
-        public async Task<IActionResult> Rejected(int id)
+        public async Task<IActionResult> Rejected(int id,string? rejectReason)
         {
-            await _service.UpdateFestivalSchoolStatusToRejectAsync(id);
+            await _service.UpdateFestivalSchoolStatusToRejectAsync(id, rejectReason);
             return Ok("Cập nhật trạng thái 'reject' thành công");
         }
         [HttpPut("update/approve")]

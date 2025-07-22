@@ -29,6 +29,12 @@ namespace FestivalManagementFlatformm.Controllers
             return Ok(result);
         }
 
+        [HttpPut("update/rejected")]
+        public async Task<IActionResult> Rejected(int id, string? rejectReason)
+        {
+            await _festivalIngredientService.UpdateFestivaIngredientStatusToRejectAsync(id, rejectReason);
+            return Ok("Cập nhật trạng thái 'reject' thành công");
+        }
         [HttpGet("search")]
         public async Task<IActionResult> Search(int? festivalIngredientId, int? festivalId, int? ingredientId, string? status, int? pageNumber, int? pageSize)
         {

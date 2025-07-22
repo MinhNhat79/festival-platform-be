@@ -36,10 +36,11 @@ namespace FestivalFlatform.Data.Models
         public DateTime? ApprovalDate { get; set; }
 
         public int PointsBalance { get; set; } = 0;
-
+        public string? Note { get; set; }
+        public string? RejectionReason { get; set; }
         public DateTime? UpdatedAt { get; set; }
 
-        public string? Note { get; set; }
+        
 
         // ✅ Navigation Properties
         public virtual StudentGroup StudentGroup { get; set; } = null!;

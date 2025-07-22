@@ -176,3 +176,5 @@ C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatfo
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\obj\Release\net8.0\FestivalManagementFlatformm.pdb
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\obj\Release\net8.0\FestivalManagementFlatformm.genruntimeconfig.cache
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\obj\Release\net8.0\ref\FestivalManagementFlatformm.dll
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\bin\Release\net8.0\Newtonsoft.Json.dll
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\bin\Release\net8.0\payos-lib-backend-dotnet.dll

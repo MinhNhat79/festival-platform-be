@@ -42,9 +42,10 @@ namespace FestivalManagementFlatformm.Controllers
            [FromQuery] int? maxBeverageBooths,
            [FromQuery] int? registeredFoodBooths,
            [FromQuery] int? registeredBeverageBooths,
+           [FromQuery] string? cancelReason,
            [FromQuery] string? status)
         {
-            var result = await _festivalService.UpdateFestivalAsync(id, maxFoodBooths, maxBeverageBooths, registeredFoodBooths, registeredBeverageBooths, status);
+            var result = await _festivalService.UpdateFestivalAsync(id, maxFoodBooths, maxBeverageBooths, registeredFoodBooths, registeredBeverageBooths,cancelReason, status);
             return Ok(result);
         }
 
