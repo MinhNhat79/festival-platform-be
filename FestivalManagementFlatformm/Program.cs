@@ -109,6 +109,9 @@ namespace FF.API
             builder.Services.AddScoped<ISchoolAccountRelationService, SchoolAccountRelationService>();
             builder.Services.AddScoped<IPaymentService, PaymentService>();
             builder.Services.AddScoped<IWalletService, WalletService>();
+            builder.Services.AddScoped<IAccountFestivalWalletService, AccountFestivalWalletService>();
+            builder.Services.AddScoped<IAccountWalletHistoryService, AccountWalletHistoryService>();
+            builder.Services.AddScoped<IBoothWalletService, BoothWalletService>();
 
 
 
@@ -170,6 +173,29 @@ namespace FF.API
             var app = builder.Build();
 
             // Môi trường phát triển
+            //app.UseDeveloperExceptionPage();
+            //app.UseRouting();
+            //app.UseCors("AllowAll");
+
+
+            //app.Use(async (context, next) =>
+            //{
+            //    if (context.Request.Path.StartsWithSegments("/swagger"))
+            //    {
+               
+            //        context.Response.ContentType = "text/html";
+            //        await context.Response.WriteAsync(@"
+            //            <html>
+            //                <head><title>Service Temporarily Unavailable</title></head>
+            //                <body>
+            //                    <h1>503 - Service Temporarily Unavailable</h1>
+                           
+            //                </body>
+            //            </html>");
+            //        return;
+            //    }
+            //    await next();
+            //});
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FF.API v1"));

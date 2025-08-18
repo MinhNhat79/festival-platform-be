@@ -16,46 +16,130 @@ namespace FestivalManagementFlatformm.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create(FestivalSchoolCreateRequest request)
+        public async Task<IActionResult> Create([FromBody] FestivalSchoolCreateRequest request)
         {
-            var result = await _service.CreateFestivalSchoolAsync(request);
-            return Ok(result);
+            try
+            {
+                var result = await _service.CreateFestivalSchoolAsync(request);
+                return Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi hệ thống", detail = ex.Message });
+            }
         }
 
         [HttpPut("update")]
         public async Task<IActionResult> Update(int id, int? festivalId, int? schoolId)
         {
-            var result = await _service.UpdateFestivalSchoolAsync(id, festivalId, schoolId);
-            return Ok(result);
+            try
+            {
+                var result = await _service.UpdateFestivalSchoolAsync(id, festivalId, schoolId);
+                return Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi hệ thống", detail = ex.Message });
+            }
         }
-
 
         [HttpPut("update/reject")]
-        public async Task<IActionResult> Rejected(int id,string? rejectReason)
+        public async Task<IActionResult> Rejected(int id, string? rejectReason)
         {
-            await _service.UpdateFestivalSchoolStatusToRejectAsync(id, rejectReason);
-            return Ok("Cập nhật trạng thái 'reject' thành công");
+            try
+            {
+                await _service.UpdateFestivalSchoolStatusToRejectAsync(id, rejectReason);
+                return Ok(new { success = true, message = "Cập nhật trạng thái 'reject' thành công" });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi hệ thống", detail = ex.Message });
+            }
         }
+
         [HttpPut("update/approve")]
         public async Task<IActionResult> Approve(int id)
         {
-            await _service.UpdateFestivalSchoolStatusToApproveAsync(id);
-            return Ok("Cập nhật trạng thái 'approve' thành công");
+            try
+            {
+                await _service.UpdateFestivalSchoolStatusToApproveAsync(id);
+                return Ok(new { success = true, message = "Cập nhật trạng thái 'approve' thành công" });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi hệ thống", detail = ex.Message });
+            }
         }
 
         [HttpGet("search")]
-        public async Task<IActionResult> Search(int? festivalSchoolId, int? festivalId, int? schoolId, string? status, int? pageNumber, int? pageSize)
+        public async Task<IActionResult> Search(
+            int? festivalSchoolId,
+            int? festivalId,
+            int? schoolId,
+            string? status,
+            int? pageNumber,
+            int? pageSize)
         {
-            var result = await _service.SearchFestivalSchoolsAsync(festivalSchoolId, festivalId, schoolId, status, pageNumber, pageSize);
-            return Ok(result);
+            try
+            {
+                var result = await _service.SearchFestivalSchoolsAsync(
+                    festivalSchoolId, festivalId, schoolId, status, pageNumber, pageSize);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi khi tìm kiếm", detail = ex.Message });
+            }
         }
 
         [HttpDelete("delete")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _service.DeleteFestivalSchoolAsync(id);
-            return NoContent();
+            try
+            {
+                await _service.DeleteFestivalSchoolAsync(id);
+                return Ok(new { success = true });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi hệ thống", detail = ex.Message });
+            }
         }
-
     }
 }

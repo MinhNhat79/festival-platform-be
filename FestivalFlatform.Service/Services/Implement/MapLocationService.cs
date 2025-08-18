@@ -105,10 +105,10 @@ namespace FestivalFlatform.Service.Services.Implement
             if (!string.IsNullOrWhiteSpace(locationType))
                 query = query.Where(x => x.LocationType != null && x.LocationType.Contains(locationType));
 
-            int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
-            int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
+            //int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
+            //int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
 
-            query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
+            //query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
 
             return await query.ToListAsync();
         }

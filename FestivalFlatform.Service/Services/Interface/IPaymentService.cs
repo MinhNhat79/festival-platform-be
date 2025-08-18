@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FestivalFlatform.Data.Models;
 using FestivalFlatform.Service.DTOs.Request;
 using FestivalFlatform.Service.DTOs.Response;
+using static FestivalFlatform.Service.Helpers.Webhook;
 
 namespace FestivalFlatform.Service.Services.Interface
 {

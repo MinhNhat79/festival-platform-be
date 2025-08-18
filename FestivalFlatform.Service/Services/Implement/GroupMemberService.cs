@@ -100,10 +100,10 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(m => !accountId.HasValue || m.AccountId == accountId.Value)
                 .Where(m => string.IsNullOrWhiteSpace(role) || m.Role != null && m.Role.Contains(role.Trim()));
 
-            int currentPage = pageNumber.GetValueOrDefault(1);
-            int currentSize = pageSize.GetValueOrDefault(10);
+            //int currentPage = pageNumber.GetValueOrDefault(1);
+            //int currentSize = pageSize.GetValueOrDefault(10);
 
-            query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
+            //query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
 
             var result = await query.ToListAsync();
 

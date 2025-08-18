@@ -17,57 +17,114 @@ namespace FestivalManagementFlatformm.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<ActionResult<Booth>> CreateBooth([FromBody] BoothCreateRequest request)
+        public async Task<IActionResult> CreateBooth([FromBody] BoothCreateRequest request)
         {
             try
             {
                 var createdBooth = await _boothService.CreateBoothAsync(request);
                 return Ok(createdBooth);
             }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
             catch (Exception ex)
             {
-                return BadRequest(new { message = "Tạo gian hàng thất bại", detail = ex.Message });
+                return StatusCode(500, new { success = false, message = "Tạo gian hàng thất bại", detail = ex.Message });
             }
         }
 
         [HttpPut("approve")]
         public async Task<IActionResult> ApproveBooth(int id, [FromBody] BoothApproveRequest request)
         {
-            var updatedBooth = await _boothService.UpdateBoothAsync(id, request.ApprovalDate, request.PointsBalance);
-            if (updatedBooth == null)
-                return NotFound();
+            try
+            {
+                var updatedBooth = await _boothService.UpdateBoothAsync(id, request.ApprovalDate, request.PointsBalance);
+                if (updatedBooth == null)
+                    return NotFound(new { success = false, message = "Gian hàng không tồn tại" });
 
-            return Ok(updatedBooth);
+                return Ok(updatedBooth);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Phê duyệt thất bại", detail = ex.Message });
+            }
         }
-        [HttpGet("search")]
-        public async Task<IActionResult> SearchBooths([FromQuery] int? boothId,[FromQuery] int? groupId,[FromQuery] int? festivalId,[FromQuery] int? locationId,[FromQuery] string? boothType,[FromQuery] string? status,[FromQuery] int? pageNumber,[FromQuery] int? pageSize)
-        {
-            var booths = await _boothService.GetBooths(boothId,groupId,festivalId,locationId,boothType,status,pageNumber,pageSize);
 
-            return Ok(booths);
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchBooths(
+            [FromQuery] int? boothId,
+            [FromQuery] int? groupId,
+            [FromQuery] int? festivalId,
+            [FromQuery] int? locationId,
+            [FromQuery] string? boothType,
+            [FromQuery] string? status,
+            [FromQuery] int? pageNumber,
+            [FromQuery] int? pageSize)
+        {
+            try
+            {
+                var booths = await _boothService.GetBooths(boothId, groupId, festivalId, locationId, boothType, status, pageNumber, pageSize);
+                return Ok(booths);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lấy danh sách gian hàng thất bại", detail = ex.Message });
+            }
         }
 
         [HttpPut("reject")]
         public async Task<IActionResult> RejectBooth(int boothId, string? rejectReason)
         {
-            await _boothService.UpdateBoothStatusToRejected(boothId,rejectReason);
-            return Ok(new { message = "Booth status updated to Rejected" });
+            try
+            {
+                await _boothService.UpdateBoothStatusToRejected(boothId, rejectReason);
+                return Ok(new { success = true, message = "Booth status updated to Rejected" });
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(new { success = false, message = "Gian hàng không tồn tại" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Cập nhật trạng thái thất bại", detail = ex.Message });
+            }
         }
 
         [HttpPut("activate")]
         public async Task<IActionResult> ActivateBooth(int boothId)
         {
-            await _boothService.UpdateBoothStatusToActive(boothId);
-            return Ok(new { message = "Booth status updated to Active" });
+            try
+            {
+                await _boothService.UpdateBoothStatusToActive(boothId);
+                return Ok(new { success = true, message = "Booth status updated to Active" });
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(new { success = false, message = "Gian hàng không tồn tại" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Cập nhật trạng thái thất bại", detail = ex.Message });
+            }
         }
 
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteBooth(int boothId)
         {
-            await _boothService.DeleteBoothAsync(boothId);
-            return Ok(new { message = "Xóa gian hàng thành công" });
+            try
+            {
+                await _boothService.DeleteBoothAsync(boothId);
+                return Ok(new { success = true, message = "Xóa gian hàng thành công" });
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(new { success = false, message = "Gian hàng không tồn tại" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Xóa gian hàng thất bại", detail = ex.Message });
+            }
         }
-
-
     }
 }

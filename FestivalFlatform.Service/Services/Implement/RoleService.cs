@@ -61,10 +61,10 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(r => !roleId.HasValue || r.RoleId == roleId.Value)
                 .Where(r => string.IsNullOrWhiteSpace(roleName) || r.RoleName.Contains(roleName.Trim()));
 
-            int currentPage = pageNumber.GetValueOrDefault(1);
-            int currentSize = pageSize.GetValueOrDefault(10);
+            //int currentPage = pageNumber.GetValueOrDefault(1);
+            //int currentSize = pageSize.GetValueOrDefault(10);
 
-            return await query.Skip((currentPage - 1) * currentSize).Take(currentSize).ToListAsync();
+            return await query.ToListAsync();
         }
         public async Task<bool> DeleteRoleAsync(int roleId)
         {

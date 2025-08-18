@@ -54,5 +54,7 @@ namespace FestivalFlatform.Data.Models
         public virtual ICollection<PointsTransaction> PointsTransactions { get; set; } = new List<PointsTransaction>();
         public virtual ICollection<BoothMenuItem> BoothMenuItems { get; set; } = new List<BoothMenuItem>();
 
+        public virtual BoothWallet BoothWallet { get; set; } = null!;
+
     }
 }

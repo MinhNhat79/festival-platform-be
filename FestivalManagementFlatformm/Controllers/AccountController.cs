@@ -25,36 +25,17 @@ namespace FestivalManagementFlatformm.Controllers
         [HttpPost("api/accounts/create-student")]
         public async Task<ActionResult<AccountResponse>> RegisterStudentAccountBySchool([FromBody] RegisterRequest request)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
-               
-
-                // Kiểm tra định dạng số điện thoại
-                var regexPhone = new Regex("^[0-9]+$");
-                if (!regexPhone.IsMatch(request.PhoneNumber))
-                {
-                    return BadRequest("Số điện thoại không hợp lệ");
-                }
-
-                if (request.PhoneNumber.Length < 9 || request.PhoneNumber.Length > 11)
-                {
-                    return BadRequest("Số điện thoại phải có từ 9 đến 11 số");
-                }
-
-                
-                var regexEmail = new Regex(@"^\w+@gmail\.com$");
-                if (!regexEmail.IsMatch(request.Email))
-                {
-                    return BadRequest("Email phải có định dạng @gmail.com");
-                }
-
-              
                 var result = await _accountService.RegisterStudentAccountBySchoolManager(request);
-                return Ok(result);
+                return Ok(new { success = true, result });
             }
             catch (Exception ex)
             {
-                return BadRequest($"Đăng ký thất bại: {ex.Message}");
+                return StatusCode(500, new { success = false, message = $"Đăng ký thất bại: {ex.Message}" });
             }
         }
 
@@ -63,39 +44,33 @@ namespace FestivalManagementFlatformm.Controllers
         {
             try
             {
-       
-                // Kiểm tra định dạng số điện thoại
-                var regexPhone = new Regex("^[0-9]+$");
+                var regexPhone = new Regex(@"^\d{9,11}$");
                 if (!regexPhone.IsMatch(request.PhoneNumber))
-                {
-                    return BadRequest("Số điện thoại không hợp lệ");
-                }
+                    return BadRequest(new { success = false, message = "Số điện thoại không hợp lệ" });
 
-                if (request.PhoneNumber.Length < 9 || request.PhoneNumber.Length > 11)
-                {
-                    return BadRequest("Số điện thoại phải có từ 9 đến 11 số");
-                }
-
-                // Kiểm tra định dạng email (chỉ gmail)
-                var regexEmail = new Regex(@"^\w+@gmail\.com$");
+                var regexEmail = new Regex(@"^[a-zA-Z0-9._%+-]+@gmail\.com$");
                 if (!regexEmail.IsMatch(request.Email))
-                {
-                    return BadRequest("Email phải có định dạng @gmail.com");
-                }
+                    return BadRequest(new { success = false, message = "Email phải có định dạng @gmail.com" });
 
-                // Gọi service
                 var result = await _accountService.RegisterAccount(request);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                return BadRequest($"Đăng ký thất bại: {ex.Message}");
+                return StatusCode(500, new { success = false, message = $"Đăng ký thất bại: {ex.Message}" });
             }
         }
 
+
         //[Authorize(Roles = Roles.SchoolManager, AuthenticationSchemes = "Bearer")]
         [HttpGet("api/accounts/search")]
-        public async Task<ActionResult<IEnumerable<AccountResponse>>> SearchAccountsByFields([FromQuery] int? id, [FromQuery] string? phone, [FromQuery] string? email, [FromQuery] int? role,[FromQuery] int? pageNumber,[FromQuery] int? pageSize)
+        public async Task<ActionResult<IEnumerable<AccountResponse>>> SearchAccountsByFields(
+      [FromQuery] int? id,
+      [FromQuery] string? phone,
+      [FromQuery] string? email,
+      [FromQuery] int? role,
+      [FromQuery] int? pageNumber,
+      [FromQuery] int? pageSize)
         {
             try
             {
@@ -104,54 +79,91 @@ namespace FestivalManagementFlatformm.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Lỗi khi tìm kiếm tài khoản: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    success = false,
+                    message = ex.Message
+                });
             }
-
         }
-
         [HttpDelete("api/accounts/delete")]
         public async Task<IActionResult> DeleteAccount(int id)
         {
             try
             {
                 await _accountService.DeleteAccountAsync(id);
-                return NoContent(); 
+                return Ok(new { success = true, message = "Xóa tài khoản thành công" });
             }
             catch (KeyNotFoundException)
             {
-                return NotFound(new { message = "Tài khoản không tồn tại." });
+                return NotFound(new { success = false, message = "Tài khoản không tồn tại." });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Lỗi server", detail = ex.Message });
+                return StatusCode(500, new { success = false, message = "Lỗi server", detail = ex.Message });
             }
         }
+
 
 
         [HttpPut("api/accounts/update")]
-        public async Task<IActionResult> UpdateAccount(int id, [FromBody] AccountUpdateRequest accountUpdateRequest)
+        public async Task<IActionResult> UpdatePasswordAsyn(int accountId, string oldPassword, string newPassword)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
             try
             {
-                var updatedAccount = await _accountService.UpdateAccount(id, accountUpdateRequest);
-                return Ok(updatedAccount);
-            }
-            catch (CrudException ex)
-            {
-               
-                if (ex.Message.Contains("Không tìm thấy tài khoản"))
-                    return NotFound(new { message = ex.Message });
+                bool result = await _accountService.UpdatePasswordAsync(accountId, oldPassword, newPassword);
 
-                return BadRequest(new { message = ex.Message });
+                if (result)
+                    return Ok(new { success = true, message = "🔑 Cập nhật mật khẩu thành công" });
+
+                return BadRequest(new { success = false, message = "❌ Cập nhật mật khẩu thất bại" });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { success = false, message = ex.Message });
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(new { success = false, message = ex.Message });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Lỗi server", details = ex.Message });
+                return StatusCode(500, new { success = false, message = "Lỗi server", detail = ex.Message });
             }
         }
+        [HttpPost("api/accounts/import-accounts")]
+        public async Task<IActionResult> ImportAccounts([FromForm] ImportAccountsRequest request)
+        {
+            if (request.ExcelFile == null || request.ExcelFile.Length == 0)
+                return BadRequest(new { success = false, message = "File Excel không được để trống." });
 
+            using var stream = request.ExcelFile.OpenReadStream();
+
+            var (createdAccounts, errors) = await _accountService.ImportAccountsFromExcelAsync(request.SchoolId, stream);
+
+            return Ok(new
+            {
+                success = errors.Count == 0,
+                createdAccounts,
+                errors
+            });
+        }
+        [HttpPut("api/accounts/update-password")]
+        public async Task<IActionResult> UpdatePassword(int accountId, string oldPassword, string newPassword)
+        {
+            try
+            {
+                bool result = await _accountService.UpdatePasswordAsync(accountId, oldPassword, newPassword);
+
+                if (result)
+                    return Ok(new { success = true, message = "🔑 Cập nhật mật khẩu thành công" });
+
+                return BadRequest(new { success = false, message = "❌ Cập nhật mật khẩu thất bại" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = $"Lỗi hệ thống: {ex.Message}" });
+            }
+        }
     }
 }

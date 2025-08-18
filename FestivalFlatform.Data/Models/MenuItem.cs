@@ -23,8 +23,11 @@ namespace FestivalFlatform.Data.Models
         [Required]
         public string ItemType { get; set; } = null!; // food, beverage
 
-        [Required]
-        public decimal BasePrice { get; set; }
+
+        public decimal MinPrice { get; set; }
+
+        public decimal MaxPrice { get; set; }
+
 
         public string Status { get; set; } = "active";
 

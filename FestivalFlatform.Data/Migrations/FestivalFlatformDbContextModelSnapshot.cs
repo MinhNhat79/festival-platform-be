@@ -22,6 +22,41 @@ namespace FestivalFlatform.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AccountFestivalWallet", b =>
+                {
+                    b.Property<int>("AccountFestivalWalletId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountFestivalWalletId"));
+
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FestivalId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("AccountFestivalWalletId");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("FestivalId");
+
+                    b.ToTable("AccountFestivalWallets");
+                });
+
             modelBuilder.Entity("FestivalFlatform.Data.Models.Account", b =>
                 {
                     b.Property<int>("AccountId")
@@ -87,6 +122,41 @@ namespace FestivalFlatform.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("AccountPoints");
+                });
+
+            modelBuilder.Entity("FestivalFlatform.Data.Models.AccountWalletHistory", b =>
+                {
+                    b.Property<int>("HistoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HistoryId"));
+
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("HistoryId");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("AccountWalletHistories");
                 });
 
             modelBuilder.Entity("FestivalFlatform.Data.Models.Booth", b =>
@@ -172,6 +242,9 @@ namespace FestivalFlatform.Data.Migrations
                     b.Property<int?>("QuantityLimit")
                         .HasColumnType("int");
 
+                    b.Property<int?>("RemainingQuantity")
+                        .HasColumnType("int");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -184,6 +257,34 @@ namespace FestivalFlatform.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("BoothMenuItems");
+                });
+
+            modelBuilder.Entity("FestivalFlatform.Data.Models.BoothWallet", b =>
+                {
+                    b.Property<int>("BoothWalletId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BoothWalletId"));
+
+                    b.Property<int>("BoothId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("TotalBalance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("BoothWalletId");
+
+                    b.HasIndex("BoothId")
+                        .IsUnique();
+
+                    b.ToTable("boothWallets");
                 });
 
             modelBuilder.Entity("FestivalFlatform.Data.Models.ChatAttachment", b =>
@@ -335,6 +436,9 @@ namespace FestivalFlatform.Data.Migrations
 
                     b.Property<string>("Theme")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalRevenue")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -647,9 +751,6 @@ namespace FestivalFlatform.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemId"));
 
-                    b.Property<decimal>("BasePrice")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -664,8 +765,14 @@ namespace FestivalFlatform.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("MaxPrice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("MenuId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("MinPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -1154,11 +1261,33 @@ namespace FestivalFlatform.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("WalletId");
 
                     b.HasIndex("AccountId");
 
                     b.ToTable("Wallets");
+                });
+
+            modelBuilder.Entity("AccountFestivalWallet", b =>
+                {
+                    b.HasOne("FestivalFlatform.Data.Models.Account", "Account")
+                        .WithMany("AccountFestivalWallets")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FestivalFlatform.Data.Models.Festival", "Festival")
+                        .WithMany("AccountFestivalWallets")
+                        .HasForeignKey("FestivalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("Festival");
                 });
 
             modelBuilder.Entity("FestivalFlatform.Data.Models.Account", b =>
@@ -1177,6 +1306,17 @@ namespace FestivalFlatform.Data.Migrations
                     b.HasOne("FestivalFlatform.Data.Models.Account", "Account")
                         .WithOne("AccountPoints")
                         .HasForeignKey("FestivalFlatform.Data.Models.AccountPoints", "AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("FestivalFlatform.Data.Models.AccountWalletHistory", b =>
+                {
+                    b.HasOne("FestivalFlatform.Data.Models.Account", "Account")
+                        .WithMany("WalletHistories")
+                        .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1227,6 +1367,17 @@ namespace FestivalFlatform.Data.Migrations
                     b.Navigation("Booth");
 
                     b.Navigation("MenuItem");
+                });
+
+            modelBuilder.Entity("FestivalFlatform.Data.Models.BoothWallet", b =>
+                {
+                    b.HasOne("FestivalFlatform.Data.Models.Booth", "Booth")
+                        .WithOne("BoothWallet")
+                        .HasForeignKey("FestivalFlatform.Data.Models.BoothWallet", "BoothId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Booth");
                 });
 
             modelBuilder.Entity("FestivalFlatform.Data.Models.ChatMessage", b =>
@@ -1581,6 +1732,8 @@ namespace FestivalFlatform.Data.Migrations
 
             modelBuilder.Entity("FestivalFlatform.Data.Models.Account", b =>
                 {
+                    b.Navigation("AccountFestivalWallets");
+
                     b.Navigation("AccountPoints");
 
                     b.Navigation("ChatSessions");
@@ -1596,11 +1749,16 @@ namespace FestivalFlatform.Data.Migrations
                     b.Navigation("Schools");
 
                     b.Navigation("Suppliers");
+
+                    b.Navigation("WalletHistories");
                 });
 
             modelBuilder.Entity("FestivalFlatform.Data.Models.Booth", b =>
                 {
                     b.Navigation("BoothMenuItems");
+
+                    b.Navigation("BoothWallet")
+                        .IsRequired();
 
                     b.Navigation("Images");
 
@@ -1618,6 +1776,8 @@ namespace FestivalFlatform.Data.Migrations
 
             modelBuilder.Entity("FestivalFlatform.Data.Models.Festival", b =>
                 {
+                    b.Navigation("AccountFestivalWallets");
+
                     b.Navigation("Booths");
 
                     b.Navigation("FestivalIngredients");

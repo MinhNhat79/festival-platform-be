@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FestivalFlatform.Service.DTOs.Request;
 using FestivalFlatform.Service.DTOs.Response;
+using Microsoft.AspNetCore.Http;
 
 namespace FestivalFlatform.Service.Services.Interface
 {
@@ -16,5 +17,8 @@ namespace FestivalFlatform.Service.Services.Interface
         Task DeleteAccountAsync(int accountId);
 
         Task<AccountResponse> UpdateAccount(int id, AccountUpdateRequest accountRequest);
+
+        Task<(List<AccountResponse> successAccounts, List<string> errors)> ImportAccountsFromExcelAsync(int schoolId, Stream excelStream);
+        Task<bool> UpdatePasswordAsync(int accountId, string oldPassword, string newPassword);
     }
 }

@@ -108,16 +108,16 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(x => !ingredientId.HasValue || x.IngredientId == ingredientId.Value)
                 .Where(x => string.IsNullOrWhiteSpace(unit) || x.Unit.Contains(unit.Trim()));
 
-            int currentPage = pageNumber.GetValueOrDefault(1);
-            int currentSize = pageSize.GetValueOrDefault(10);
+            //int currentPage = pageNumber.GetValueOrDefault(1);
+            //int currentSize = pageSize.GetValueOrDefault(10);
 
-            var result = await query
-                .Skip((currentPage - 1) * currentSize)
-                .Take(currentSize)
-                .ToListAsync();
+            //var result = await query
+            //    .Skip((currentPage - 1) * currentSize)
+            //    .Take(currentSize)
+            //    .ToListAsync();
 
 
-            return result;
+            return await query.ToListAsync();
 
 
         }

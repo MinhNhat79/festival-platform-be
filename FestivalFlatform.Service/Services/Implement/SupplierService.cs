@@ -81,11 +81,11 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(s => string.IsNullOrWhiteSpace(companyName) || s.CompanyName.Contains(companyName.Trim()))
                 .Where(s => string.IsNullOrWhiteSpace(status) || s.Status == status.Trim());
 
-            int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
-            int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
+            //int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
+            //int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
 
-            query = query.Skip((currentPage - 1) * currentSize)
-                         .Take(currentSize);
+            //query = query.Skip((currentPage - 1) * currentSize)
+            //             .Take(currentSize);
 
             var suppliers = await query.ToListAsync();
 

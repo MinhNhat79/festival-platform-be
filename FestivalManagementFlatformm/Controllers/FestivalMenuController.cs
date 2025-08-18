@@ -18,32 +18,85 @@ namespace FestivalManagementFlatformm.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateFestivalMenu([FromBody] FestivalMenuCreateRequest request)
         {
-            var result = await _festivalMenuService.CreateFestivalMenuAsync(request);
-            return Ok(result);
+            try
+            {
+                var result = await _festivalMenuService.CreateFestivalMenuAsync(request);
+                return Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi hệ thống", detail = ex.Message });
+            }
         }
 
-      
         [HttpPut("update")]
-        public async Task<IActionResult> UpdateFestivalMenu(int menuId, [FromQuery] string? menuName, [FromQuery] string? description)
+        public async Task<IActionResult> UpdateFestivalMenu(
+            int menuId,
+            [FromQuery] string? menuName,
+            [FromQuery] string? description)
         {
-            var result = await _festivalMenuService.UpdateFestivalMenuAsync(menuId, menuName, description);
-            return Ok(result);
+            try
+            {
+                var result = await _festivalMenuService.UpdateFestivalMenuAsync(menuId, menuName, description);
+                return Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi hệ thống", detail = ex.Message });
+            }
         }
 
-        // GET: api/festival-menus/search
         [HttpGet("search")]
-        public async Task<IActionResult> SearchFestivalMenus([FromQuery] int? menuId, [FromQuery] int? festivalId, [FromQuery] string? menuName, [FromQuery] int? pageNumber, [FromQuery] int? pageSize)
+        public async Task<IActionResult> SearchFestivalMenus(
+            [FromQuery] int? menuId,
+            [FromQuery] int? festivalId,
+            [FromQuery] string? menuName,
+            [FromQuery] int? pageNumber,
+            [FromQuery] int? pageSize)
         {
-            var result = await _festivalMenuService.SearchFestivalMenusAsync(menuId, festivalId, menuName, pageNumber, pageSize);
-            return Ok(result);
+            try
+            {
+                var result = await _festivalMenuService.SearchFestivalMenusAsync(menuId, festivalId, menuName, pageNumber, pageSize);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi khi tìm kiếm", detail = ex.Message });
+            }
         }
 
-        // DELETE: api/festival-menus/{menuId}
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteFestivalMenu(int menuId)
         {
-            var result = await _festivalMenuService.DeleteFestivalMenuAsync(menuId);
-            return Ok(new { success = result });
+            try
+            {
+                var result = await _festivalMenuService.DeleteFestivalMenuAsync(menuId);
+                return Ok(result);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi hệ thống", detail = ex.Message });
+            }
         }
     }
 }

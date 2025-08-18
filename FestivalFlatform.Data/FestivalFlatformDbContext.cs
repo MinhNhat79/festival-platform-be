@@ -45,7 +45,10 @@ namespace FestivalFlatform.Data
         public DbSet<SchoolAccountRelation> SchoolAccountRelations { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Wallet> Wallets { get; set; }
-       
+        public DbSet<AccountFestivalWallet> AccountFestivalWallets { get; set; }
+        public DbSet<AccountWalletHistory> AccountWalletHistories { get; set; }
+        public DbSet<BoothWallet> boothWallets { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -77,10 +80,10 @@ namespace FestivalFlatform.Data
                 .HasForeignKey<AccountPoints>(ap => ap.AccountId)
                 .OnDelete(DeleteBehavior.Cascade);
             // ==== Account & SchoolAccounts (1-n) ====
-          
+
 
             // ==== School & SchoolAccounts (1-n) ====
-           
+
 
             // ==== Booth - Group (n-1) ====
             modelBuilder.Entity<Booth>()
@@ -313,11 +316,11 @@ namespace FestivalFlatform.Data
                 .HasForeignKey(i => i.FestivalId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-           modelBuilder.Entity<SchoolAccountRelation>()
-            .HasOne(r => r.School)
-            .WithMany(s => s.SchoolAccountRelations)
-            .HasForeignKey(r => r.SchoolId)
-            .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<SchoolAccountRelation>()
+             .HasOne(r => r.School)
+             .WithMany(s => s.SchoolAccountRelations)
+             .HasForeignKey(r => r.SchoolId)
+             .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<SchoolAccountRelation>()
                 .HasOne(r => r.Account)
@@ -336,6 +339,33 @@ namespace FestivalFlatform.Data
                 .WithMany(w => w.Payments)
                 .HasForeignKey(p => p.WalletId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<AccountFestivalWallet>(entity =>
+            {
+                entity.HasOne(afw => afw.Account)
+                    .WithMany(a => a.AccountFestivalWallets)
+                    .HasForeignKey(afw => afw.AccountId)
+                    .OnDelete(DeleteBehavior.Cascade); // hoặc DeleteBehavior.Restrict nếu không muốn xóa dây chuyền
+
+                entity.HasOne(afw => afw.Festival)
+                    .WithMany(f => f.AccountFestivalWallets)
+                    .HasForeignKey(afw => afw.FestivalId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+
+            modelBuilder.Entity<AccountWalletHistory>()
+     .HasOne(h => h.Account)
+     .WithMany(a => a.WalletHistories) // 1 Account - nhiều History
+     .HasForeignKey(h => h.AccountId)
+     .OnDelete(DeleteBehavior.Cascade); // Xóa account sẽ xóa history
+
+
+            modelBuilder.Entity<Booth>()
+      .HasOne(b => b.BoothWallet)
+      .WithOne(w => w.Booth)
+      .HasForeignKey<BoothWallet>(w => w.BoothId)
+      .OnDelete(DeleteBehavior.Cascade);
             // ==== Composite or Unique Keys (if needed) ====
             // Ví dụ: GroupMember => composite key
         }

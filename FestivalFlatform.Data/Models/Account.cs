@@ -41,6 +41,10 @@ namespace FestivalFlatform.Data.Models
         public virtual ICollection<PointsTransaction> PointsTransactions { get; set; } = new List<PointsTransaction>();
         public virtual ICollection<Supplier> Suppliers { get; set; } = new List<Supplier>();
         public virtual ICollection<SchoolAccountRelation> SchoolAccountRelations { get; set; } = new List<SchoolAccountRelation>();
+        public virtual ICollection<AccountFestivalWallet> AccountFestivalWallets { get; set; } = new List<AccountFestivalWallet>();
+
+        public virtual ICollection<AccountWalletHistory> WalletHistories { get; set; } = new List<AccountWalletHistory>();
+
 
     }
 }

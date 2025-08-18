@@ -52,7 +52,8 @@ namespace FestivalFlatform.Service.Services.Implement
                 ItemName = request.ItemName.Trim(),
                 Description = request.Description?.Trim(),
                 ItemType = normalizedType,
-                BasePrice = request.BasePrice,
+                MinPrice = request.MinPrice,
+                MaxPrice = request.MaxPrice,
                 Status = "active",
                 CreatedAt = DateTime.UtcNow
             };
@@ -68,7 +69,8 @@ namespace FestivalFlatform.Service.Services.Implement
         string itemName,
         string? description,
         string itemType,
-        decimal basePrice)
+        decimal minPrice,
+        decimal maxPrice)
         {
             var item = await _unitOfWork.Repository<MenuItem>().GetAll()
                 .FirstOrDefaultAsync(x => x.ItemId == itemId);
@@ -99,7 +101,8 @@ namespace FestivalFlatform.Service.Services.Implement
             item.ItemName = itemName.Trim();
             item.Description = description?.Trim();
             item.ItemType = type;
-            item.BasePrice = basePrice;
+            item.MinPrice = minPrice;
+            item.MaxPrice = maxPrice;
             item.UpdatedAt = DateTime.UtcNow;
 
             await _unitOfWork.CommitAsync();
@@ -116,10 +119,10 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(i => string.IsNullOrWhiteSpace(itemName) || i.ItemName.Contains(itemName.Trim()))
                 .Where(i => string.IsNullOrWhiteSpace(itemType) || i.ItemType == itemType.Trim().ToLower());
 
-            int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
-            int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
+            //int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
+            //int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
 
-            query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
+            //query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
 
             var result = await query.ToListAsync();
 

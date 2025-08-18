@@ -83,10 +83,10 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(x => string.IsNullOrWhiteSpace(mapName) || x.MapName.Contains(mapName))
                 .Where(x => string.IsNullOrWhiteSpace(mapType) || x.MapType.Contains(mapType));
 
-            int currentPage = pageNumber.HasValue && pageNumber > 0 ? pageNumber.Value : 1;
-            int currentSize = pageSize.HasValue && pageSize > 0 ? pageSize.Value : 10;
+            //int currentPage = pageNumber.HasValue && pageNumber > 0 ? pageNumber.Value : 1;
+            //int currentSize = pageSize.HasValue && pageSize > 0 ? pageSize.Value : 10;
 
-            query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
+            //query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
 
             var result = await query.ToListAsync();
 

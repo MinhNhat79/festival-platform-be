@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,23 +51,24 @@ namespace FestivalFlatform.Service.Services.Implement
                 ?? throw new Exception("Wallet not found");
 
             wallet.Balance = balance;
+            wallet.UpdateAt = DateTime.UtcNow;
             await _unitOfWork.CommitAsync();
 
             return wallet;
         }
 
         public async Task<List<Wallet>> SearchWalletsAsync(
-        int? accountid,
+        int? accountId,
         int? pageNumber,
         int? pageSize)
         {
             var query = _unitOfWork.Repository<Wallet>().GetAll()
-                .Where(w => !accountid.HasValue || w.AccountId == accountid);
+                .Where(w => !accountId.HasValue || w.AccountId == accountId.Value);
 
-            int currentPage = pageNumber.GetValueOrDefault(1);
-            int currentSize = pageSize.GetValueOrDefault(10);
+            //int currentPage = pageNumber.GetValueOrDefault(1);
+            //int currentSize = pageSize.GetValueOrDefault(10);
 
-            query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
+            //query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
 
             return await query.ToListAsync();
         }

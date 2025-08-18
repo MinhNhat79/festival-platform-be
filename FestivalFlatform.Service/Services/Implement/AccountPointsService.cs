@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FestivalFlatform.Data.Models;
 using FestivalFlatform.Data.UnitOfWork;
+using FestivalFlatform.Service.DTOs.Request;
 using FestivalFlatform.Service.Services.Interface;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,24 +23,24 @@ namespace FestivalFlatform.Service.Services.Implement
         }
 
 
-        public async Task<AccountPoints> CreateAccountPointsAsync(int accountId)
+        public async Task<AccountPoints> CreateAccountPointsAsync(CreateAccountPointsRequest request)
         {
-          
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
+            int accountId = request.AccountId;
+
             var account = await _unitOfWork.Repository<Account>()
                 .FindAsync(a => a.AccountId == accountId);
 
             if (account == null)
-            {
                 throw new KeyNotFoundException($"Không tìm thấy tài khoản với ID: {accountId}");
-            }
 
             var existingPoints = await _unitOfWork.Repository<AccountPoints>()
                 .FindAsync(ap => ap.AccountId == accountId);
 
             if (existingPoints != null)
-            {
                 throw new InvalidOperationException($"AccountPoints đã tồn tại cho tài khoản ID: {accountId}");
-            }
 
             var accountPoints = new AccountPoints
             {
@@ -54,6 +55,7 @@ namespace FestivalFlatform.Service.Services.Implement
             return accountPoints;
         }
 
+
         public async Task<List<AccountPoints>> SearchAccountPointsAsync( int? accountPointsId, int? accountId, int? pageNumber,int? pageSize)
         {
             var query = _unitOfWork.Repository<AccountPoints>()
@@ -64,15 +66,15 @@ namespace FestivalFlatform.Service.Services.Implement
 
                 );
 
-            int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
-            int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
+            //int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
+            //int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
 
-            var result = await query
-                .Skip((currentPage - 1) * currentSize)
-                .Take(currentSize)
-                .ToListAsync();
+            //var result = await query
+            //    .Skip((currentPage - 1) * currentSize)
+            //    .Take(currentSize)
+            //    .ToListAsync();
 
-            return result;
+            return await query.ToListAsync(); 
         }
 
         public async Task<AccountPoints> UpdateAccountPointsAsync(int accountPointsId, int newPointsBalance)

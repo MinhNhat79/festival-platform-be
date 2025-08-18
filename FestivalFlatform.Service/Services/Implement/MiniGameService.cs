@@ -98,10 +98,10 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(m => string.IsNullOrWhiteSpace(gameType) || m.GameType == gameType.Trim().ToLower())
                 .Where(m => string.IsNullOrWhiteSpace(status) || m.Status == status.Trim().ToLower());
 
-            int currentPage = pageNumber.GetValueOrDefault(1);
-            int currentSize = pageSize.GetValueOrDefault(10);
+            //int currentPage = pageNumber.GetValueOrDefault(1);
+            //int currentSize = pageSize.GetValueOrDefault(10);
 
-            query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
+            //query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
 
             var result = await query.ToListAsync();
 

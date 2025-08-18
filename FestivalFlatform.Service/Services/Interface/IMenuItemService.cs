@@ -22,7 +22,8 @@ namespace FestivalFlatform.Service.Services.Interface
        string itemName,
        string? description,
        string itemType,
-       decimal basePrice);
+       decimal minPrice,
+       decimal maxPrice);
 
     }
 

@@ -29,8 +29,6 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<Order> CreateOrderAsync(CreateOrderRequest request)
         {
-            
-
             // Check account exists
             var accountExists = await _unitOfWork.Repository<Account>()
                 .AnyAsync(a => a.AccountId == request.AccountId);
@@ -43,8 +41,6 @@ namespace FestivalFlatform.Service.Services.Implement
             if (!boothExists)
                 throw new ArgumentException("Booth does not exist");
 
-          
-
             var newOrder = new Order
             {
                 AccountId = request.AccountId,
@@ -53,9 +49,8 @@ namespace FestivalFlatform.Service.Services.Implement
                 PointsUsed = request.PointsUsed,
                 CashAmount = request.CashAmount,
                 Notes = request.Notes,
-                Status = StatusOrder.Pending,
+                Status = request.Status ?? StatusOrder.Pending, // nếu có truyền thì dùng, không thì pending
                 OrderDate = DateTime.UtcNow,
-
             };
 
             await _unitOfWork.Repository<Order>().InsertAsync(newOrder);
@@ -63,6 +58,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             return newOrder;
         }
+
 
         public async Task<Order> UpdateOrderAsync(
         int orderId,
@@ -111,6 +107,8 @@ namespace FestivalFlatform.Service.Services.Implement
        int? pageSize)
         {
             var query = _unitOfWork.Repository<Order>().GetAll()
+                  .Include(o => o.OrderItems) 
+                  .ThenInclude(oi => oi.MenuItem) 
                 .Where(o => !orderId.HasValue || o.OrderId == orderId.Value)
                 .Where(o => !accountId.HasValue || o.AccountId == accountId.Value)
                 .Where(o => !boothId.HasValue || o.BoothId == boothId.Value)
@@ -118,16 +116,16 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(o => !fromDate.HasValue || o.OrderDate >= fromDate.Value)
                 .Where(o => !toDate.HasValue || o.OrderDate <= toDate.Value);
 
-            int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
-            int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
+            //int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
+            //int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
 
-            query = query
-                .Skip((currentPage - 1) * currentSize)
-                .Take(currentSize);
+            //query = query
+            //    .Skip((currentPage - 1) * currentSize)
+            //    .Take(currentSize);
 
             var result = await query.ToListAsync();
 
-           
+
 
             return result;
         }

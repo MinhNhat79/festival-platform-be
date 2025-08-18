@@ -142,11 +142,11 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(x => string.IsNullOrWhiteSpace(imageUrl) || x.ImageUrl.Contains(imageUrl.Trim()))
                 .Where(x => string.IsNullOrWhiteSpace(imageName) || x.ImageName!.Contains(imageName.Trim()));
 
-            int currentPage = pageNumber.GetValueOrDefault(1);
-            int currentSize = pageSize.GetValueOrDefault(10);
+            //int currentPage = pageNumber.GetValueOrDefault(1);
+            //int currentSize = pageSize.GetValueOrDefault(10);
 
-            query = query.Skip((currentPage - 1) * currentSize)
-                         .Take(currentSize);
+            //query = query.Skip((currentPage - 1) * currentSize)
+            //             .Take(currentSize);
 
             var result = await query.ToListAsync();
 

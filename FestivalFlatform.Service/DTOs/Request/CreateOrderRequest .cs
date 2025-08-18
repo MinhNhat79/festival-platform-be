@@ -15,5 +15,6 @@ namespace FestivalFlatform.Service.DTOs.Request
         public int PointsUsed { get; set; }
         public decimal CashAmount { get; set; }
         public string? Notes { get; set; }
+        public string? Status { get; set; } // StatusOrder.Pending by default if not provided
     }
 }

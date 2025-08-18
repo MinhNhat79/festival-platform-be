@@ -18,5 +18,6 @@ namespace FestivalFlatform.Service.DTOs.Request
         public string? Location { get; set; }
         public int MaxFoodBooths { get; set; }
         public int MaxBeverageBooths { get; set; }
+        public string? Description {  get; set; } 
     }
 }

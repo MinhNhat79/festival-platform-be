@@ -64,13 +64,10 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(s => !sessionId.HasValue || s.SessionId == sessionId.Value)
                 .Where(s => !accountId.HasValue || s.AccountId == accountId.Value);
 
-            int currentPage = pageNumber.GetValueOrDefault(1);
-            int currentSize = pageSize.GetValueOrDefault(10);
+            //int currentPage = pageNumber.GetValueOrDefault(1);
+            //int currentSize = pageSize.GetValueOrDefault(10);
 
-            return await query
-                .Skip((currentPage - 1) * currentSize)
-                .Take(currentSize)
-                .ToListAsync();
+            return await query.ToListAsync();
         }
 
         public async Task<bool> DeleteChatSessionAsync(int sessionId)

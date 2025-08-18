@@ -1,8 +1,7 @@
-﻿using FestivalFlatform.Data.Models;
-using FestivalFlatform.Service.DTOs.Request;
+﻿using FestivalFlatform.Service.DTOs.Request;
 using FestivalFlatform.Service.Services.Interface;
-
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace FestivalFlatform.API.Controllers
 {
@@ -17,23 +16,43 @@ namespace FestivalFlatform.API.Controllers
             _service = service;
         }
 
-     
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] PointsTransactionCreateRequest request)
         {
-            var result = await _service.CreatePointsTransactionAsync(request);
-            return Ok(result);
+            try
+            {
+                var result = await _service.CreatePointsTransactionAsync(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = ex.Message });
+            }
         }
 
-       
         [HttpPut("update")]
         public async Task<IActionResult> Update(
             [FromQuery] int pointsTxId,
             [FromQuery] int pointsAmount,
             [FromQuery] string transactionType)
         {
-            var result = await _service.UpdatePointsTransactionAsync(pointsTxId, pointsAmount, transactionType);
-            return Ok(result);
+            try
+            {
+                var result = await _service.UpdatePointsTransactionAsync(pointsTxId, pointsAmount, transactionType);
+                return Ok(result);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { Success = false, Message = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { Success = false, Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = ex.Message });
+            }
         }
 
         [HttpGet("search")]
@@ -45,15 +64,36 @@ namespace FestivalFlatform.API.Controllers
             [FromQuery] int? pageNumber,
             [FromQuery] int? pageSize)
         {
-            var result = await _service.SearchPointsTransactionsAsync(accountId, transactionType, gameId, boothId, pageNumber, pageSize);
-            return Ok(result);
+            try
+            {
+                var result = await _service.SearchPointsTransactionsAsync(accountId, transactionType, gameId, boothId, pageNumber, pageSize);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = ex.Message });
+            }
         }
 
         [HttpDelete("delete")]
         public async Task<IActionResult> Delete(int id)
         {
-            var success = await _service.DeletePointsTransactionAsync(id);
-            return Ok(new { success });
+            try
+            {
+                var success = await _service.DeletePointsTransactionAsync(id);
+                if (!success)
+                    return BadRequest(new { Success = false, Message = "Delete failed" });
+
+                return Ok(new { Success = true, Message = "Deleted successfully" });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { Success = false, Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = ex.Message });
+            }
         }
     }
 }

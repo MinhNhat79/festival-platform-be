@@ -20,8 +20,11 @@ namespace FestivalFlatform.Service.DTOs.Request
         [Required]
         public string ItemType { get; set; } = null!; 
 
-        [Required]
-        public decimal BasePrice { get; set; }
+      
+        public decimal MinPrice { get; set; }
+
+        public decimal MaxPrice { get; set; }
+
     }
 
 }

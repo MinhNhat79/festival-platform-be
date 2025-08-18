@@ -19,6 +19,8 @@ namespace FestivalFlatform.Data.Models
         public decimal Balance { get; set; } = 0;
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime UpdateAt { get; set; } = DateTime.UtcNow;
+        
 
         public virtual Account Account { get; set; } = null!;
         public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();

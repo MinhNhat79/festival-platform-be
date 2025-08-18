@@ -30,13 +30,12 @@ namespace FestivalFlatform.Service.Services.Implement
         public async Task<Booth> CreateBoothAsync(BoothCreateRequest request)
         {
             var groupExists = await _unitOfWork.Repository<StudentGroup>()
-           .AnyAsync(g => g.GroupId == request.GroupId);
+                .AnyAsync(g => g.GroupId == request.GroupId);
             if (!groupExists)
             {
                 throw new CrudException(HttpStatusCode.NotFound, "GroupId không tồn tại", request.GroupId.ToString());
             }
 
-            // 2. Check FestivalId tồn tại
             var festivalExists = await _unitOfWork.Repository<Festival>()
                 .AnyAsync(f => f.FestivalId == request.FestivalId);
             if (!festivalExists)
@@ -44,7 +43,6 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.NotFound, "FestivalId không tồn tại", request.FestivalId.ToString());
             }
 
-            // 3. Check LocationId tồn tại
             var locationExists = await _unitOfWork.Repository<MapLocation>()
                 .AnyAsync(l => l.LocationId == request.LocationId);
             if (!locationExists)
@@ -60,10 +58,11 @@ namespace FestivalFlatform.Service.Services.Implement
                 BoothName = request.BoothName,
                 BoothType = request.BoothType,
                 Description = request.Description,
-                Status = StatusBooth.Pending,  // mặc định
+                Status = StatusBooth.Pending,
                 RegistrationDate = DateTime.UtcNow,
                 PointsBalance = 0,
-                UpdatedAt = null,
+                UpdatedAt = null
+                
             };
 
             await _unitOfWork.Repository<Booth>().InsertAsync(booth);
@@ -102,11 +101,11 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(b => string.IsNullOrWhiteSpace(boothType) || b.BoothType != null && b.BoothType.Contains(boothType.Trim()))
                 .Where(b => string.IsNullOrWhiteSpace(status) || b.Status == status.Trim());
 
-            int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
-            int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
+            //int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
+            //int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
 
-            query = query.Skip((currentPage - 1) * currentSize)
-                         .Take(currentSize);
+            //query = query.Skip((currentPage - 1) * currentSize)
+            //             .Take(currentSize);
 
             var booths = await query.ToListAsync();
 

@@ -89,9 +89,9 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(p => !gameId.HasValue || p.GameId == gameId)
                 .Where(p => !boothId.HasValue || p.BoothId == boothId);
 
-            int currentPage = pageNumber.GetValueOrDefault(1);
-            int currentSize = pageSize.GetValueOrDefault(10);
-            query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
+            //int currentPage = pageNumber.GetValueOrDefault(1);
+            //int currentSize = pageSize.GetValueOrDefault(10);
+            //query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
 
             return await query.ToListAsync();
         }
