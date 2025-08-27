@@ -19,9 +19,12 @@ namespace FestivalFlatform.Data.Models
         [Required]
         public string PasswordHash { get; set; } = null!;
 
+
+        public string? PlainPassword { get; set; }
         [Required]
         public string FullName { get; set; } = null!;
 
+        public string? ClassName { get; set; }
         public string? PhoneNumber { get; set; }
 
         [Required]
@@ -29,6 +32,8 @@ namespace FestivalFlatform.Data.Models
 
         public Role? Role { get; set; }
         public string? AvatarUrl { get; set; }
+
+        public bool Status { get; set; } = false;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
 
@@ -44,6 +49,8 @@ namespace FestivalFlatform.Data.Models
         public virtual ICollection<AccountFestivalWallet> AccountFestivalWallets { get; set; } = new List<AccountFestivalWallet>();
 
         public virtual ICollection<AccountWalletHistory> WalletHistories { get; set; } = new List<AccountWalletHistory>();
+        public virtual ICollection<FestivalParticipant> FestivalParticipants { get; set; } = new List<FestivalParticipant>();
+
 
 
     }

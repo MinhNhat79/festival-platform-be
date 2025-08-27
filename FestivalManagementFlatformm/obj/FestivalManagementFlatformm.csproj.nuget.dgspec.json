@@ -55,6 +55,18 @@
               "target": "Package",
               "version": "[4.0.3, )"
             },
+            "Hangfire.AspNetCore": {
+              "target": "Package",
+              "version": "[1.8.21, )"
+            },
+            "Hangfire.Core": {
+              "target": "Package",
+              "version": "[1.8.21, )"
+            },
+            "Hangfire.SqlServer": {
+              "target": "Package",
+              "version": "[1.8.21, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.16, )"
@@ -179,6 +191,18 @@
               "target": "Package",
               "version": "[3.7.0, )"
             },
+            "Hangfire.AspNetCore": {
+              "target": "Package",
+              "version": "[1.8.21, )"
+            },
+            "Hangfire.Core": {
+              "target": "Package",
+              "version": "[1.8.21, )"
+            },
+            "Hangfire.SqlServer": {
+              "target": "Package",
+              "version": "[1.8.21, )"
+            },
             "Microsoft.AspNetCore.Identity": {
               "target": "Package",
               "version": "[2.3.1, )"
@@ -302,6 +326,18 @@
               "target": "Package",
               "version": "[3.7.0, )"
             },
+            "Hangfire.AspNetCore": {
+              "target": "Package",
+              "version": "[1.8.21, )"
+            },
+            "Hangfire.Core": {
+              "target": "Package",
+              "version": "[1.8.21, )"
+            },
+            "Hangfire.SqlServer": {
+              "target": "Package",
+              "version": "[1.8.21, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[8.0.16, )"
@@ -319,6 +355,10 @@
             "Microsoft.Extensions.DependencyInjection": {
               "target": "Package",
               "version": "[8.0.1, )"
+            },
+            "NETCore.MailKit": {
+              "target": "Package",
+              "version": "[2.1.0, )"
             },
             "NPOI": {
               "target": "Package",

@@ -29,6 +29,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<Booth> CreateBoothAsync(BoothCreateRequest request)
         {
+            // Kiểm tra Group tồn tại
             var groupExists = await _unitOfWork.Repository<StudentGroup>()
                 .AnyAsync(g => g.GroupId == request.GroupId);
             if (!groupExists)
@@ -36,6 +37,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.NotFound, "GroupId không tồn tại", request.GroupId.ToString());
             }
 
+            // Kiểm tra Festival tồn tại
             var festivalExists = await _unitOfWork.Repository<Festival>()
                 .AnyAsync(f => f.FestivalId == request.FestivalId);
             if (!festivalExists)
@@ -43,6 +45,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.NotFound, "FestivalId không tồn tại", request.FestivalId.ToString());
             }
 
+            // Kiểm tra Location tồn tại
             var locationExists = await _unitOfWork.Repository<MapLocation>()
                 .AnyAsync(l => l.LocationId == request.LocationId);
             if (!locationExists)
@@ -50,6 +53,16 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.NotFound, "LocationId không tồn tại", request.LocationId.ToString());
             }
 
+            //  Kiểm tra Group đã có Booth trong Festival này chưa
+            var alreadyRegistered = await _unitOfWork.Repository<Booth>()
+                .AnyAsync(b => b.GroupId == request.GroupId && b.FestivalId == request.FestivalId);
+
+            if (alreadyRegistered)
+            {
+                throw new CrudException(HttpStatusCode.BadRequest, "Nhóm của bạn đã đăng kí tham gia lễ hội này rồi", request.GroupId.ToString());
+            }
+
+            // Tạo booth mới
             var booth = new Booth
             {
                 GroupId = request.GroupId,
@@ -62,7 +75,6 @@ namespace FestivalFlatform.Service.Services.Implement
                 RegistrationDate = DateTime.UtcNow,
                 PointsBalance = 0,
                 UpdatedAt = null
-                
             };
 
             await _unitOfWork.Repository<Booth>().InsertAsync(booth);
@@ -70,6 +82,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             return booth;
         }
+
 
         public async Task<Booth?> UpdateBoothAsync(int boothId, DateTime approvalDate, int pointsBalance)
         {

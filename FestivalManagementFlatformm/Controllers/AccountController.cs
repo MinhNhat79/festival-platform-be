@@ -8,7 +8,9 @@ using FestivalFlatform.Service.Exceptions;
 using FestivalFlatform.Service.Helpers;
 using FestivalFlatform.Service.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
+//using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using NETCore.MailKit.Core;
 
 namespace FestivalManagementFlatformm.Controllers
 {
@@ -16,9 +18,13 @@ namespace FestivalManagementFlatformm.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountService _accountService;
-        public AccountController(IAccountService accountService)
+        private readonly IEmailService _emailService;
+        private readonly IConfiguration _config;
+        public AccountController(IAccountService accountService, IEmailService emailService, IConfiguration config)
         {
             _accountService = accountService;
+            _emailService = emailService;
+            _config = config;
         }
 
         [Authorize(Roles = Roles.SchoolManager, AuthenticationSchemes = "Bearer")]
@@ -48,9 +54,9 @@ namespace FestivalManagementFlatformm.Controllers
                 if (!regexPhone.IsMatch(request.PhoneNumber))
                     return BadRequest(new { success = false, message = "Số điện thoại không hợp lệ" });
 
-                var regexEmail = new Regex(@"^[a-zA-Z0-9._%+-]+@gmail\.com$");
-                if (!regexEmail.IsMatch(request.Email))
-                    return BadRequest(new { success = false, message = "Email phải có định dạng @gmail.com" });
+                //var regexEmail = new Regex(@"^[a-zA-Z0-9._%+-]+@gmail\.com$");
+                //if (!regexEmail.IsMatch(request.Email))
+                //    return BadRequest(new { success = false, message = "Email phải có định dạng @gmail.com" });
 
                 var result = await _accountService.RegisterAccount(request);
                 return Ok(result);
@@ -68,13 +74,14 @@ namespace FestivalManagementFlatformm.Controllers
       [FromQuery] int? id,
       [FromQuery] string? phone,
       [FromQuery] string? email,
+      [FromQuery] string? className,
       [FromQuery] int? role,
       [FromQuery] int? pageNumber,
       [FromQuery] int? pageSize)
         {
             try
             {
-                var result = await _accountService.GetAccount(id, phone, email, role, pageNumber, pageSize);
+                var result = await _accountService.GetAccount(id, phone, email, className, role, pageNumber, pageSize);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -106,15 +113,16 @@ namespace FestivalManagementFlatformm.Controllers
 
 
 
+        
         [HttpPut("api/accounts/update")]
-        public async Task<IActionResult> UpdatePasswordAsyn(int accountId, string oldPassword, string newPassword)
+        public async Task<IActionResult> UpdateAccountAsync(int id, AccountUpdateRequest request)
         {
             try
             {
-                bool result = await _accountService.UpdatePasswordAsync(accountId, oldPassword, newPassword);
+                var account = await _accountService.UpdateAccount(id, request);
 
-                if (result)
-                    return Ok(new { success = true, message = "🔑 Cập nhật mật khẩu thành công" });
+                if (account != null)
+                    return Ok(new { success = true, message = "🔑 Cập nhật thành công", data = account });
 
                 return BadRequest(new { success = false, message = "❌ Cập nhật mật khẩu thất bại" });
             }
@@ -131,6 +139,7 @@ namespace FestivalManagementFlatformm.Controllers
                 return StatusCode(500, new { success = false, message = "Lỗi server", detail = ex.Message });
             }
         }
+
         [HttpPost("api/accounts/import-accounts")]
         public async Task<IActionResult> ImportAccounts([FromForm] ImportAccountsRequest request)
         {
@@ -163,6 +172,41 @@ namespace FestivalManagementFlatformm.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { success = false, message = $"Lỗi hệ thống: {ex.Message}" });
+            }
+        }
+
+
+        [HttpPost("api/accounts/send-email")]
+        public async Task<IActionResult> SendEmail([FromBody] string email)
+        {
+            await _accountService.SendEmailWithButtonAsync(
+                email);
+
+            return Ok(new { Message = $"Email sent to {email}" });
+        }
+
+        [HttpPost("api/accounts/forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.Email))
+                return BadRequest(new { success = false, message = "Email không hợp lệ" });
+
+            try
+            {
+                var success = await _accountService.ForgotPasswordAsync(request.Email);
+
+                if (!success)
+                    return StatusCode(500, new { success = false, message = "Không thể gửi email khôi phục mật khẩu" });
+
+                return Ok(new { success = true, message = "Mật khẩu mới đã được gửi tới email của bạn" });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi hệ thống", detail = ex.Message });
             }
         }
     }

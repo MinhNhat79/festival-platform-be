@@ -30,5 +30,7 @@ namespace FestivalFlatform.Data.Models
 
         public virtual Booth Booth { get; set; } = null!;
         public virtual MenuItem MenuItem { get; set; } = null!;
+
+        public virtual Image? Image { get; set; }
     }
 }

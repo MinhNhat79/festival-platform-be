@@ -129,6 +129,7 @@ namespace FestivalFlatform.Service.Services.Implement
         int? menuItemId,
         int? boothId,
         int? festivalId,
+        int? boothMenueItemid,
         string? imageUrl,
         string? imageName,
         int? pageNumber,
@@ -139,6 +140,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(x => !menuItemId.HasValue || x.MenuItemId == menuItemId.Value)
                 .Where(x => !boothId.HasValue || x.BoothId == boothId.Value)
                 .Where(x => !festivalId.HasValue || x.FestivalId == festivalId.Value)
+                .Where(x => !boothMenueItemid.HasValue || x.BoothMenuItemId == boothMenueItemid.Value)
                 .Where(x => string.IsNullOrWhiteSpace(imageUrl) || x.ImageUrl.Contains(imageUrl.Trim()))
                 .Where(x => string.IsNullOrWhiteSpace(imageName) || x.ImageName!.Contains(imageName.Trim()));
 
@@ -171,31 +173,55 @@ namespace FestivalFlatform.Service.Services.Implement
             if (string.IsNullOrWhiteSpace(request.ImageUrl))
                 throw new CrudException(HttpStatusCode.BadRequest, "ImageUrl không được để trống", nameof(request.ImageUrl));
 
-            if (request.FestivalId is null && request.BoothId is null && request.MenuItemId is null)
-                throw new CrudException(HttpStatusCode.BadRequest, "Cần cung cấp ít nhất một trong FestivalId, BoothId hoặc MenuItemId", "EntityId");
+            if (request.FestivalId is null && request.BoothId is null && request.MenuItemId is null && request.BoothMenuItemId is null)
+                throw new CrudException(HttpStatusCode.BadRequest, "Cần cung cấp ít nhất một trong FestivalId, BoothId, MenuItemId hoặc BoothMenuItemId", "EntityId");
 
-            // Validate đúng loại
+            // Validate FestivalId
             if (request.FestivalId.HasValue)
             {
-                var exists = await _unitOfWork.Repository<Festival>().AnyAsync(x => x.FestivalId == request.FestivalId.Value);
+                var exists = await _unitOfWork.Repository<Festival>()
+                    .AnyAsync(x => x.FestivalId == request.FestivalId.Value);
+
                 if (!exists)
                     throw new CrudException(HttpStatusCode.BadRequest, "Festival không tồn tại", request.FestivalId.Value.ToString());
             }
 
+            // Validate BoothId
             if (request.BoothId.HasValue)
             {
-                var exists = await _unitOfWork.Repository<Booth>().AnyAsync(x => x.BoothId == request.BoothId.Value);
+                var exists = await _unitOfWork.Repository<Booth>()
+                    .AnyAsync(x => x.BoothId == request.BoothId.Value);
+
                 if (!exists)
                     throw new CrudException(HttpStatusCode.BadRequest, "Booth không tồn tại", request.BoothId.Value.ToString());
             }
 
+            // Validate MenuItemId
             if (request.MenuItemId.HasValue)
             {
-                var exists = await _unitOfWork.Repository<MenuItem>().AnyAsync(x => x.ItemId == request.MenuItemId.Value);
+                var exists = await _unitOfWork.Repository<MenuItem>()
+                    .AnyAsync(x => x.ItemId == request.MenuItemId.Value);
+
                 if (!exists)
                     throw new CrudException(HttpStatusCode.BadRequest, "MenuItem không tồn tại", request.MenuItemId.Value.ToString());
             }
 
+            // Validate BoothMenuItemId (1-1 relation)
+            if (request.BoothMenuItemId.HasValue)
+            {
+                var boothMenuItem = await _unitOfWork.Repository<BoothMenuItem>()
+                    .GetAll()
+                    .Include(bmi => bmi.Image)
+                    .FirstOrDefaultAsync(x => x.BoothMenuItemId == request.BoothMenuItemId.Value);
+
+                if (boothMenuItem == null)
+                    throw new CrudException(HttpStatusCode.BadRequest, "BoothMenuItem không tồn tại", request.BoothMenuItemId.Value.ToString());
+
+                if (boothMenuItem.Image != null)
+                    throw new CrudException(HttpStatusCode.BadRequest, "BoothMenuItem này đã có Image rồi", request.BoothMenuItemId.Value.ToString());
+            }
+
+            // ✅ Create Image
             var image = new Image
             {
                 ImageUrl = request.ImageUrl.Trim(),
@@ -203,6 +229,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 FestivalId = request.FestivalId,
                 BoothId = request.BoothId,
                 MenuItemId = request.MenuItemId,
+                BoothMenuItemId = request.BoothMenuItemId,
                 CreatedAt = DateTime.UtcNow
             };
 

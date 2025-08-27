@@ -322,6 +322,11 @@
         "IsRequired": false
       },
       {
+        "Name": "className",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
         "Name": "role",
         "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
@@ -351,26 +356,37 @@
   },
   {
     "ContainingType": "FestivalManagementFlatformm.Controllers.AccountController",
-    "Method": "UpdatePasswordAsyn",
+    "Method": "SendEmail",
+    "RelativePath": "api/accounts/send-email",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FestivalManagementFlatformm.Controllers.AccountController",
+    "Method": "UpdateAccountAsync",
     "RelativePath": "api/accounts/update",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "accountId",
+        "Name": "id",
         "Type": "System.Int32",
         "IsRequired": false
       },
       {
-        "Name": "oldPassword",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "newPassword",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "request",
+        "Type": "FestivalFlatform.Service.DTOs.Request.AccountUpdateRequest",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -1258,6 +1274,85 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "FestivalManagementFlatformm.Controllers.FestivalParticipantsController",
+    "Method": "Create",
+    "RelativePath": "api/festivalparticipants/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FestivalFlatform.Service.DTOs.Request.FestivalParticipantCreateRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FestivalManagementFlatformm.Controllers.FestivalParticipantsController",
+    "Method": "Delete",
+    "RelativePath": "api/festivalparticipants/delete",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FestivalFlatform.Service.DTOs.Request.FestivalParticipantCreateRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FestivalManagementFlatformm.Controllers.FestivalParticipantsController",
+    "Method": "Search",
+    "RelativePath": "api/festivalparticipants/search",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "festivalId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "accountId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FestivalManagementFlatformm.Controllers.FestivalController",
+    "Method": "GetFestivalDetail",
+    "RelativePath": "api/festivals/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "FestivalManagementFlatformm.Controllers.FestivalController",
     "Method": "CalculateCommission",
     "RelativePath": "api/festivals/calculate-commission",
@@ -1403,6 +1498,22 @@
         "Name": "status",
         "Type": "System.String",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FestivalManagementFlatformm.Controllers.FestivalController",
+    "Method": "UpdateFestivalInfo",
+    "RelativePath": "api/festivals/update-info",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FestivalFlatform.Service.DTOs.Request.UpdateFestivalRequest",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -1720,6 +1831,11 @@
       },
       {
         "Name": "festivalId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "boothMenueItemid",
         "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },
@@ -3478,6 +3594,22 @@
         "Name": "balance",
         "Type": "System.Decimal",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FestivalManagementFlatformm.Controllers.AccountController",
+    "Method": "ForgotPassword",
+    "RelativePath": "forgot-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FestivalFlatform.Service.DTOs.Request.ForgotPasswordRequest",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

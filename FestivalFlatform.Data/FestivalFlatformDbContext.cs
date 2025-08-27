@@ -49,6 +49,8 @@ namespace FestivalFlatform.Data
         public DbSet<AccountWalletHistory> AccountWalletHistories { get; set; }
         public DbSet<BoothWallet> boothWallets { get; set; }
 
+        public DbSet<FestivalParticipant> FestivalParticipants { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -279,6 +281,12 @@ namespace FestivalFlatform.Data
                 .HasForeignKey(bmi => bmi.MenuItemId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<BoothMenuItem>()
+                .HasOne(bmi => bmi.Image)
+                .WithOne(i => i.BoothMenuItem)
+                .HasForeignKey<Image>(i => i.BoothMenuItemId)
+                .OnDelete(DeleteBehavior.SetNull);
+
             // ==== Festival - School ====
             modelBuilder.Entity<FestivalModel>()
                 .HasOne(f => f.School)
@@ -366,6 +374,20 @@ namespace FestivalFlatform.Data
       .WithOne(w => w.Booth)
       .HasForeignKey<BoothWallet>(w => w.BoothId)
       .OnDelete(DeleteBehavior.Cascade);
+
+
+            modelBuilder.Entity<FestivalParticipant>()
+      .HasOne(fp => fp.Festival)
+      .WithMany(f => f.FestivalParticipants) // 1 Festival - nhiều Participant
+      .HasForeignKey(fp => fp.FestivalId)
+      .OnDelete(DeleteBehavior.Cascade); // Xóa festival thì xóa participants
+
+            // FestivalParticipant - Account (N-1)
+            modelBuilder.Entity<FestivalParticipant>()
+                .HasOne(fp => fp.Account)
+                .WithMany(a => a.FestivalParticipants) // 1 Account - nhiều FestivalParticipant
+                .HasForeignKey(fp => fp.AccountId)
+                .OnDelete(DeleteBehavior.Cascade); // Xóa account thì xóa participants
             // ==== Composite or Unique Keys (if needed) ====
             // Ví dụ: GroupMember => composite key
         }

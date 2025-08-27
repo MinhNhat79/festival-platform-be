@@ -26,6 +26,8 @@ namespace FestivalFlatform.Service.DTOs.Request
         [MaxLength(15)]
         public string? PhoneNumber { get; set; }
 
+        public string? ClassName { get; set; } = null;
+
     }
     public class RegisterRequestAll
     {
@@ -48,6 +50,8 @@ namespace FestivalFlatform.Service.DTOs.Request
         [Phone]
         [MaxLength(15)]
         public string? PhoneNumber { get; set; }
+
+        public string? ClassName { get; set; } = null;
 
     }
 }

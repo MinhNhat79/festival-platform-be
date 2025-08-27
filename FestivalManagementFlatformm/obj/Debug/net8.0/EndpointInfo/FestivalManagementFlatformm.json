@@ -130,6 +130,13 @@
             }
           },
           {
+            "name": "className",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "role",
             "in": "query",
             "schema": {
@@ -216,28 +223,33 @@
         ],
         "parameters": [
           {
-            "name": "accountId",
+            "name": "id",
             "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
             }
-          },
-          {
-            "name": "oldPassword",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "newPassword",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountUpdateRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountUpdateRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountUpdateRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -313,6 +325,68 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/accounts/send-email": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/forgot-password": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -1679,6 +1753,60 @@
         }
       }
     },
+    "/api/festivals/{id}": {
+      "get": {
+        "tags": [
+          "Festival"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/festivals/update-info": {
+      "put": {
+        "tags": [
+          "Festival"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateFestivalRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateFestivalRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateFestivalRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/festivalingredients/create": {
       "post": {
         "tags": [
@@ -2189,6 +2317,114 @@
         }
       }
     },
+    "/api/festivalparticipants/create": {
+      "post": {
+        "tags": [
+          "FestivalParticipants"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FestivalParticipantCreateRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FestivalParticipantCreateRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FestivalParticipantCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/festivalparticipants/search": {
+      "get": {
+        "tags": [
+          "FestivalParticipants"
+        ],
+        "parameters": [
+          {
+            "name": "festivalId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "accountId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/festivalparticipants/delete": {
+      "delete": {
+        "tags": [
+          "FestivalParticipants"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FestivalParticipantCreateRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FestivalParticipantCreateRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FestivalParticipantCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/festivalschools/create": {
       "post": {
         "tags": [
@@ -2674,6 +2910,14 @@
           },
           {
             "name": "festivalId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "boothMenueItemid",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -5369,6 +5613,183 @@
   },
   "components": {
     "schemas": {
+      "Account": {
+        "required": [
+          "email",
+          "fullName",
+          "passwordHash",
+          "roleId"
+        ],
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "passwordHash": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "plainPassword": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "className": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "roleId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "role": {
+            "$ref": "#/components/schemas/Role"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "accountPoints": {
+            "$ref": "#/components/schemas/AccountPoints"
+          },
+          "schools": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/School"
+            },
+            "nullable": true
+          },
+          "groupMemberships": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GroupMember"
+            },
+            "nullable": true
+          },
+          "chatSessions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatSession"
+            },
+            "nullable": true
+          },
+          "orders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Order"
+            },
+            "nullable": true
+          },
+          "pointsTransactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PointsTransaction"
+            },
+            "nullable": true
+          },
+          "suppliers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Supplier"
+            },
+            "nullable": true
+          },
+          "schoolAccountRelations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SchoolAccountRelation"
+            },
+            "nullable": true
+          },
+          "accountFestivalWallets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountFestivalWallet"
+            },
+            "nullable": true
+          },
+          "walletHistories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountWalletHistory"
+            },
+            "nullable": true
+          },
+          "festivalParticipants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FestivalParticipant"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AccountFestivalWallet": {
+        "type": "object",
+        "properties": {
+          "accountFestivalWalletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "festivalId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "balance": {
+            "type": "number",
+            "format": "double"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "festival": {
+            "$ref": "#/components/schemas/Festival"
+          },
+          "account": {
+            "$ref": "#/components/schemas/Account"
+          }
+        },
+        "additionalProperties": false
+      },
       "AccountFestivalWalletCreateRequest": {
         "type": "object",
         "properties": {
@@ -5387,6 +5808,34 @@
           "balance": {
             "type": "number",
             "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AccountPoints": {
+        "required": [
+          "accountId"
+        ],
+        "type": "object",
+        "properties": {
+          "accountPointsId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pointsBalance": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lastUpdated": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "account": {
+            "$ref": "#/components/schemas/Account"
           }
         },
         "additionalProperties": false
@@ -5410,6 +5859,10 @@
             "type": "string",
             "nullable": true
           },
+          "className": {
+            "type": "string",
+            "nullable": true
+          },
           "phoneNumber": {
             "type": "string",
             "nullable": true
@@ -5421,6 +5874,10 @@
           },
           "avatarUrl": {
             "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "boolean",
             "nullable": true
           },
           "createdAt": {
@@ -5442,6 +5899,85 @@
             "type": "number",
             "format": "double",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AccountUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "pasword": {
+            "type": "string",
+            "nullable": true
+          },
+          "className": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "avatarUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AccountWalletHistory": {
+        "required": [
+          "description"
+        ],
+        "type": "object",
+        "properties": {
+          "historyId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "account": {
+            "$ref": "#/components/schemas/Account"
           }
         },
         "additionalProperties": false
@@ -5471,6 +6007,129 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "boothMenuItemId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Booth": {
+        "required": [
+          "boothName",
+          "festivalId",
+          "groupId",
+          "locationId",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "boothId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "groupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "festivalId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "locationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "boothName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "boothType": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "registrationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "approvalDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "pointsBalance": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "rejectionReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "studentGroup": {
+            "$ref": "#/components/schemas/StudentGroup"
+          },
+          "festival": {
+            "$ref": "#/components/schemas/Festival"
+          },
+          "location": {
+            "$ref": "#/components/schemas/MapLocation"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Image"
+            },
+            "nullable": true
+          },
+          "minigames": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Minigame"
+            },
+            "nullable": true
+          },
+          "orders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Order"
+            },
+            "nullable": true
+          },
+          "pointsTransactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PointsTransaction"
+            },
+            "nullable": true
+          },
+          "boothMenuItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoothMenuItem"
+            },
+            "nullable": true
+          },
+          "boothWallet": {
+            "$ref": "#/components/schemas/BoothWallet"
           }
         },
         "additionalProperties": false
@@ -5519,6 +6178,60 @@
         },
         "additionalProperties": false
       },
+      "BoothMenuItem": {
+        "required": [
+          "boothId",
+          "menuItemId"
+        ],
+        "type": "object",
+        "properties": {
+          "boothMenuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "boothId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "customPrice": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "quantityLimit": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "remainingQuantity": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "booth": {
+            "$ref": "#/components/schemas/Booth"
+          },
+          "menuItem": {
+            "$ref": "#/components/schemas/MenuItem"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          }
+        },
+        "additionalProperties": false
+      },
       "BoothMenuItemCreateRequest": {
         "type": "object",
         "properties": {
@@ -5539,6 +6252,114 @@
             "type": "number",
             "format": "double",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BoothWallet": {
+        "type": "object",
+        "properties": {
+          "boothWalletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "boothId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalBalance": {
+            "type": "number",
+            "format": "double"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "booth": {
+            "$ref": "#/components/schemas/Booth"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChatMessage": {
+        "required": [
+          "messageType",
+          "sessionId"
+        ],
+        "type": "object",
+        "properties": {
+          "messageId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sessionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "messageType": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "contentText": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "chatSession": {
+            "$ref": "#/components/schemas/ChatSession"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChatSession": {
+        "required": [
+          "accountId"
+        ],
+        "type": "object",
+        "properties": {
+          "sessionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "lastMessageAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "messages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatMessage"
+            },
+            "nullable": true
+          },
+          "account": {
+            "$ref": "#/components/schemas/Account"
           }
         },
         "additionalProperties": false
@@ -5769,6 +6590,162 @@
         },
         "additionalProperties": false
       },
+      "Festival": {
+        "required": [
+          "festivalName",
+          "maxBeverageBooths",
+          "maxFoodBooths",
+          "schoolId"
+        ],
+        "type": "object",
+        "properties": {
+          "festivalId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "schoolId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "festivalName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "theme": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "registrationStartDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "registrationEndDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "location": {
+            "type": "string",
+            "nullable": true
+          },
+          "maxFoodBooths": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxBeverageBooths": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "registeredFoodBooths": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "registeredBeverageBooths": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalRevenue": {
+            "type": "number",
+            "format": "double"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancellationReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalRegisteredParticipants": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "school": {
+            "$ref": "#/components/schemas/School"
+          },
+          "accountFestivalWallets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountFestivalWallet"
+            },
+            "nullable": true
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Image"
+            },
+            "nullable": true
+          },
+          "booths": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Booth"
+            },
+            "nullable": true
+          },
+          "festivalIngredients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FestivalIngredient"
+            },
+            "nullable": true
+          },
+          "festivalMaps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FestivalMap"
+            },
+            "nullable": true
+          },
+          "festivalMenus": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FestivalMenu"
+            },
+            "nullable": true
+          },
+          "festivalSchools": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FestivalSchool"
+            },
+            "nullable": true
+          },
+          "festivalParticipants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FestivalParticipant"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "FestivalCreateRequest": {
         "type": "object",
         "properties": {
@@ -5823,6 +6800,64 @@
         },
         "additionalProperties": false
       },
+      "FestivalIngredient": {
+        "required": [
+          "festivalId",
+          "ingredientId"
+        ],
+        "type": "object",
+        "properties": {
+          "festivalIngredientId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "festivalId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ingredientId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantityAvailable": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "specialPrice": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "rejectReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "festival": {
+            "$ref": "#/components/schemas/Festival"
+          },
+          "ingredient": {
+            "$ref": "#/components/schemas/Ingredient"
+          }
+        },
+        "additionalProperties": false
+      },
       "FestivalIngredientCreateRequest": {
         "type": "object",
         "properties": {
@@ -5842,6 +6877,54 @@
             "type": "number",
             "format": "double",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FestivalMap": {
+        "required": [
+          "festivalId"
+        ],
+        "type": "object",
+        "properties": {
+          "mapId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "festivalId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mapName": {
+            "type": "string",
+            "nullable": true
+          },
+          "mapType": {
+            "type": "string",
+            "nullable": true
+          },
+          "mapUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastUpdated": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "locations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MapLocation"
+            },
+            "nullable": true
+          },
+          "festival": {
+            "$ref": "#/components/schemas/Festival"
           }
         },
         "additionalProperties": false
@@ -5868,6 +6951,51 @@
         },
         "additionalProperties": false
       },
+      "FestivalMenu": {
+        "required": [
+          "festivalId",
+          "menuName"
+        ],
+        "type": "object",
+        "properties": {
+          "menuId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "festivalId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "festival": {
+            "$ref": "#/components/schemas/Festival"
+          },
+          "menuItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MenuItem"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "FestivalMenuCreateRequest": {
         "type": "object",
         "properties": {
@@ -5886,6 +7014,98 @@
         },
         "additionalProperties": false
       },
+      "FestivalParticipant": {
+        "required": [
+          "accountId",
+          "festivalId",
+          "registeredAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "festivalId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "registeredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "festival": {
+            "$ref": "#/components/schemas/Festival"
+          },
+          "account": {
+            "$ref": "#/components/schemas/Account"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FestivalParticipantCreateRequest": {
+        "type": "object",
+        "properties": {
+          "festivalId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FestivalSchool": {
+        "required": [
+          "festivalId",
+          "schoolId"
+        ],
+        "type": "object",
+        "properties": {
+          "festivalSchoolId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "festivalId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "schoolId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "rejectReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "registrationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "approvalDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "festival": {
+            "$ref": "#/components/schemas/Festival"
+          },
+          "school": {
+            "$ref": "#/components/schemas/School"
+          }
+        },
+        "additionalProperties": false
+      },
       "FestivalSchoolCreateRequest": {
         "type": "object",
         "properties": {
@@ -5896,6 +7116,162 @@
           "schoolId": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ForgotPasswordRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GroupMember": {
+        "required": [
+          "accountId",
+          "groupId"
+        ],
+        "type": "object",
+        "properties": {
+          "memberId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "groupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "role": {
+            "type": "string",
+            "nullable": true
+          },
+          "joinDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "studentGroup": {
+            "$ref": "#/components/schemas/StudentGroup"
+          },
+          "account": {
+            "$ref": "#/components/schemas/Account"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Image": {
+        "required": [
+          "imageUrl"
+        ],
+        "type": "object",
+        "properties": {
+          "imageId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imageUrl": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "imageName": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "boothId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "festivalId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "boothMenuItemId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "boothMenuItem": {
+            "$ref": "#/components/schemas/BoothMenuItem"
+          },
+          "menuItem": {
+            "$ref": "#/components/schemas/MenuItem"
+          },
+          "booth": {
+            "$ref": "#/components/schemas/Booth"
+          },
+          "festival": {
+            "$ref": "#/components/schemas/Festival"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Ingredient": {
+        "required": [
+          "ingredientName",
+          "pricePerUnit",
+          "supplierId",
+          "unit"
+        ],
+        "type": "object",
+        "properties": {
+          "ingredientId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "supplierId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ingredientName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "unit": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "pricePerUnit": {
+            "type": "number",
+            "format": "double"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "supplier": {
+            "$ref": "#/components/schemas/Supplier"
           }
         },
         "additionalProperties": false
@@ -5940,6 +7316,51 @@
         },
         "additionalProperties": false
       },
+      "MapLocation": {
+        "required": [
+          "locationName",
+          "mapId"
+        ],
+        "type": "object",
+        "properties": {
+          "locationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mapId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "locationName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "locationType": {
+            "type": "string",
+            "nullable": true
+          },
+          "isOccupied": {
+            "type": "boolean"
+          },
+          "coordinates": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "festivalMap": {
+            "$ref": "#/components/schemas/FestivalMap"
+          }
+        },
+        "additionalProperties": false
+      },
       "MapLocationCreateRequest": {
         "type": "object",
         "properties": {
@@ -5961,6 +7382,89 @@
           "coordinates": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MenuItem": {
+        "required": [
+          "itemName",
+          "itemType",
+          "menuId"
+        ],
+        "type": "object",
+        "properties": {
+          "itemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "itemName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "itemType": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "maxPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Image"
+            },
+            "nullable": true
+          },
+          "orderItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderItem"
+            },
+            "nullable": true
+          },
+          "menuItemIngredients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MenuItemIngredient"
+            },
+            "nullable": true
+          },
+          "boothMenuItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoothMenuItem"
+            },
+            "nullable": true
+          },
+          "festivalMenu": {
+            "$ref": "#/components/schemas/FestivalMenu"
           }
         },
         "additionalProperties": false
@@ -6000,6 +7504,105 @@
         },
         "additionalProperties": false
       },
+      "MenuItemIngredient": {
+        "required": [
+          "ingredientId",
+          "itemId",
+          "quantity",
+          "unit"
+        ],
+        "type": "object",
+        "properties": {
+          "itemIngredientId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "itemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ingredientId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantity": {
+            "type": "number",
+            "format": "double"
+          },
+          "unit": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "menuItem": {
+            "$ref": "#/components/schemas/MenuItem"
+          },
+          "ingredient": {
+            "$ref": "#/components/schemas/Ingredient"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Minigame": {
+        "required": [
+          "boothId",
+          "gameName"
+        ],
+        "type": "object",
+        "properties": {
+          "gameId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "boothId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "gameName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "gameType": {
+            "type": "string",
+            "nullable": true
+          },
+          "rules": {
+            "type": "string",
+            "nullable": true
+          },
+          "rewardPoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Question"
+            },
+            "nullable": true
+          },
+          "booth": {
+            "$ref": "#/components/schemas/Booth"
+          }
+        },
+        "additionalProperties": false
+      },
       "MinigameCreateRequest": {
         "type": "object",
         "properties": {
@@ -6023,6 +7626,120 @@
         },
         "additionalProperties": false
       },
+      "Order": {
+        "required": [
+          "accountId",
+          "boothId",
+          "totalAmount"
+        ],
+        "type": "object",
+        "properties": {
+          "orderId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "boothId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "pointsUsed": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cashAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "orderItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderItem"
+            },
+            "nullable": true
+          },
+          "account": {
+            "$ref": "#/components/schemas/Account"
+          },
+          "booth": {
+            "$ref": "#/components/schemas/Booth"
+          },
+          "payments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Payment"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderItem": {
+        "required": [
+          "menuItemId",
+          "orderId",
+          "quantity",
+          "subtotal",
+          "unitPrice"
+        ],
+        "type": "object",
+        "properties": {
+          "orderItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "subtotal": {
+            "type": "number",
+            "format": "double"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "order": {
+            "$ref": "#/components/schemas/Order"
+          },
+          "menuItem": {
+            "$ref": "#/components/schemas/MenuItem"
+          }
+        },
+        "additionalProperties": false
+      },
       "OrderItemCreateRequest": {
         "type": "object",
         "properties": {
@@ -6041,6 +7758,109 @@
           "unitPrice": {
             "type": "number",
             "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Payment": {
+        "required": [
+          "paymentMethod"
+        ],
+        "type": "object",
+        "properties": {
+          "paymentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "walletId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "paymentMethod": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "paymentType": {
+            "type": "string",
+            "nullable": true
+          },
+          "paymentDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "amountPaid": {
+            "type": "number",
+            "format": "double"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "order": {
+            "$ref": "#/components/schemas/Order"
+          },
+          "wallet": {
+            "$ref": "#/components/schemas/Wallet"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PointsTransaction": {
+        "required": [
+          "accountId",
+          "pointsAmount",
+          "transactionType"
+        ],
+        "type": "object",
+        "properties": {
+          "pointsTxId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "boothId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "gameId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "pointsAmount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "transactionType": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "transactionDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "account": {
+            "$ref": "#/components/schemas/Account"
+          },
+          "booth": {
+            "$ref": "#/components/schemas/Booth"
+          },
+          "minigame": {
+            "$ref": "#/components/schemas/Minigame"
           }
         },
         "additionalProperties": false
@@ -6069,6 +7889,49 @@
           "transactionType": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Question": {
+        "required": [
+          "correctAnswer",
+          "gameId",
+          "options",
+          "questionText"
+        ],
+        "type": "object",
+        "properties": {
+          "questionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "gameId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "questionText": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "options": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "correctAnswer": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "points": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "game": {
+            "$ref": "#/components/schemas/Minigame"
           }
         },
         "additionalProperties": false
@@ -6123,6 +7986,10 @@
             "type": "string",
             "format": "tel",
             "nullable": true
+          },
+          "className": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -6160,6 +8027,42 @@
             "type": "string",
             "format": "tel",
             "nullable": true
+          },
+          "className": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Role": {
+        "required": [
+          "roleName"
+        ],
+        "type": "object",
+        "properties": {
+          "roleId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "roleName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "permissions": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "accounts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Account"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -6174,6 +8077,115 @@
           "permissions": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "School": {
+        "required": [
+          "account",
+          "accountId"
+        ],
+        "type": "object",
+        "properties": {
+          "schoolId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "schoolName": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "contactInfo": {
+            "type": "string",
+            "nullable": true
+          },
+          "logoUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "account": {
+            "$ref": "#/components/schemas/Account"
+          },
+          "festivals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Festival"
+            },
+            "nullable": true
+          },
+          "festivalSchools": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FestivalSchool"
+            },
+            "nullable": true
+          },
+          "schoolAccountRelations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SchoolAccountRelation"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SchoolAccountRelation": {
+        "required": [
+          "accountId",
+          "relationType",
+          "schoolId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "schoolId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "relationType": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "school": {
+            "$ref": "#/components/schemas/School"
+          },
+          "account": {
+            "$ref": "#/components/schemas/Account"
           }
         },
         "additionalProperties": false
@@ -6208,6 +8220,72 @@
         },
         "additionalProperties": false
       },
+      "StudentGroup": {
+        "required": [
+          "accountId",
+          "className",
+          "groupName",
+          "schoolId"
+        ],
+        "type": "object",
+        "properties": {
+          "groupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "schoolId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "className": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "groupName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "groupBudget": {
+            "type": "number",
+            "format": "double"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "account": {
+            "$ref": "#/components/schemas/Account"
+          },
+          "groupMembers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GroupMember"
+            },
+            "nullable": true
+          },
+          "booths": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Booth"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "StudentGroupCreateRequest": {
         "type": "object",
         "properties": {
@@ -6230,6 +8308,73 @@
           "groupBudget": {
             "type": "number",
             "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Supplier": {
+        "required": [
+          "accountId",
+          "companyName"
+        ],
+        "type": "object",
+        "properties": {
+          "supplierId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "companyName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "businessLicense": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "contactInfo": {
+            "type": "string",
+            "nullable": true
+          },
+          "rating": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Ingredient"
+            },
             "nullable": true
           }
         },
@@ -6269,6 +8414,146 @@
           },
           "contactInfo": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateFestivalRequest": {
+        "type": "object",
+        "properties": {
+          "festivalId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "schoolId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "festivalName": {
+            "type": "string",
+            "nullable": true
+          },
+          "theme": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "registrationStartDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "registrationEndDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "location": {
+            "type": "string",
+            "nullable": true
+          },
+          "maxFoodBooths": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "maxBeverageBooths": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "registeredFoodBooths": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "registeredBeverageBooths": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancellationReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Image"
+            },
+            "nullable": true
+          },
+          "festivalMaps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FestivalMap"
+            },
+            "nullable": true
+          },
+          "festivalMenus": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FestivalMenu"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Wallet": {
+        "required": [
+          "accountId",
+          "balance"
+        ],
+        "type": "object",
+        "properties": {
+          "walletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "balance": {
+            "type": "number",
+            "format": "double"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updateAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "account": {
+            "$ref": "#/components/schemas/Account"
+          },
+          "payments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Payment"
+            },
             "nullable": true
           }
         },

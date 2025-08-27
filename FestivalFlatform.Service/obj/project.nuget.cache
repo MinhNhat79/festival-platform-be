@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "xWmspH16fik=",
+  "dgSpecHash": "YYgKDX6i5sg=",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\FestivalFlatform.Service.csproj",
   "expectedPackageFiles": [
@@ -16,6 +16,10 @@
     "C:\\Users\\Admin\\.nuget\\packages\\exceldatareader\\3.7.0\\exceldatareader.3.7.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\exceldatareader.dataset\\3.7.0\\exceldatareader.dataset.3.7.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\extendednumerics.bigdecimal\\2025.1001.2.129\\extendednumerics.bigdecimal.2025.1001.2.129.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\hangfire.aspnetcore\\1.8.21\\hangfire.aspnetcore.1.8.21.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\hangfire.core\\1.8.21\\hangfire.core.1.8.21.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\hangfire.netcore\\1.8.21\\hangfire.netcore.1.8.21.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\hangfire.sqlserver\\1.8.21\\hangfire.sqlserver.1.8.21.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\mathnet.numerics.signed\\5.0.0\\mathnet.numerics.signed.5.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.3.0\\microsoft.aspnetcore.authentication.2.3.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.3.0\\microsoft.aspnetcore.authentication.abstractions.2.3.0.nupkg.sha512",

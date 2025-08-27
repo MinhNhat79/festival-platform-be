@@ -1,4 +1,6 @@
-﻿using FestivalFlatform.Service.DTOs.Request;
+﻿using FestivalFlatform.Data.Models;
+using System.Net;
+using FestivalFlatform.Service.DTOs.Request;
 using FestivalFlatform.Service.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -130,6 +132,39 @@ namespace FestivalManagementFlatformm.Controllers
                     success = false,
                     message = ex.Message
                 });
+            }
+        }
+
+        [HttpGet("{id}")]
+     
+        public async Task<IActionResult> GetFestivalDetail(int id)
+        {
+            var festival = await _festivalService.GetFestivalDetailAsync(id);
+            return Ok(festival);
+        }
+
+        //[HttpGet("test")]
+        //public async Task<IActionResult> Test()
+        //{
+        //    await _festivalService.UpdateFestivalStatusDailyAsync(); // ✅ chạy xong task
+        //    return Ok("Festival status updated");
+        //}
+
+        [HttpPut("update-info")]
+        public async Task<IActionResult> UpdateFestivalInfo([FromBody] UpdateFestivalRequest request)
+        {
+            try
+            {
+                var result = await _festivalService.UpdateFestivalInfoAsync(request);
+                return Ok(new { success = true, data = result });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi hệ thống", detail = ex.Message });
             }
         }
     }

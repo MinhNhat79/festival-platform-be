@@ -17,6 +17,11 @@ namespace FestivalFlatform.Service.Services.Interface
         int? pageNumber, int? pageSize);
         Task DeleteFestivalAsync(int festivalId);
         Task<bool> DistributeCommissionAsync(DistributeCommissionRequest request);
+        Task<Festival?> GetFestivalDetailAsync(int festivalId);
+        Task testdate();
+        Task UpdateFestivalStatusDailyAsync();
+
+        Task<Festival> UpdateFestivalInfoAsync(UpdateFestivalRequest request);
 
     }  
 }

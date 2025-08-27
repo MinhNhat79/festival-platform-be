@@ -45,6 +45,17 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.BadRequest, "Không tìm thấy Account", request.AccountId.ToString());
             }
 
+            // ✅ Kiểm tra account đã trong group chưa
+            var alreadyInGroup = await _unitOfWork.Repository<GroupMember>()
+                .AnyAsync(gm => gm.GroupId == request.GroupId && gm.AccountId == request.AccountId);
+
+            if (alreadyInGroup)
+            {
+                throw new CrudException(HttpStatusCode.BadRequest,
+                    "Tài khoản này đã là thành viên của nhóm",
+                    $"{request.GroupId}-{request.AccountId}");
+            }
+
             var newMember = new GroupMember
             {
                 GroupId = request.GroupId,
@@ -58,6 +69,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             return newMember;
         }
+
 
         public async Task<GroupMember> UpdateGroupMemberAsync(
         int memberId,

@@ -39,7 +39,7 @@ namespace FestivalFlatform.Data.Models
         public string? Description { get; set; }
 
         public string? cancellationReason { get; set; }
-
+        public int TotalRegisteredParticipants { get; set; } = 0;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
 
@@ -54,7 +54,10 @@ namespace FestivalFlatform.Data.Models
         public virtual ICollection<Booth> Booths { get; set; } = new List<Booth>();
         public virtual ICollection<FestivalIngredient> FestivalIngredients { get; set; } = new List<FestivalIngredient>();
         public virtual ICollection<FestivalMap> FestivalMaps { get; set; } = new List<FestivalMap>();
+        public virtual ICollection<FestivalMenu> FestivalMenus { get; set; } = new List<FestivalMenu>();
         public virtual ICollection<FestivalSchool> FestivalSchools { get; set; } = new List<FestivalSchool>();
+        public virtual ICollection<FestivalParticipant> FestivalParticipants { get; set; } = new List<FestivalParticipant>();
+
 
     }
 }

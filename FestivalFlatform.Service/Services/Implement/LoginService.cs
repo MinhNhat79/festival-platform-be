@@ -74,13 +74,25 @@ namespace FestivalFlatform.Service.Services.Implement
                     };
                 }
 
-                var claims = new List<Claim>
-{
-    new Claim(ClaimTypes.Name, account.Email),
-    new Claim(ClaimTypes.Role, account.Role?.RoleName ?? ""), // đảm bảo null-safe
-    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) // 👈 thêm dòng này
-};
+                // ✅ Kiểm tra role school và status
+                if (account.Role != null && account.Role.RoleName.Equals("SchoolManager", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (!account.Status)
+                    {
+                        return new LoginResponse
+                        {
+                            Success = false,
+                            Message = "Tài khoản trường học chưa được kích hoạt, không thể đăng nhập."
+                        };
+                    }
+                }
 
+                var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, account.Email),
+            new Claim(ClaimTypes.Role, account.Role?.RoleName ?? ""),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
 
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtAuth:Key"]));
                 var credentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
@@ -115,7 +127,6 @@ namespace FestivalFlatform.Service.Services.Implement
                 };
             }
         }
-
     }
 
 
