@@ -23,5 +23,7 @@ namespace FestivalFlatform.Service.Services.Interface
 
         Task SendEmailWithButtonAsync(string toEmail);
         Task<bool> ForgotPasswordAsync(string email);
+        Task<bool> ConfirmOtpAsync(string email, string otp);
+        Task<bool> SendOtpAsync(string email);
     }
 }

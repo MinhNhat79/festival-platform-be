@@ -32,6 +32,7 @@ namespace FestivalFlatform.Data.Models
 
         public Role? Role { get; set; }
         public string? AvatarUrl { get; set; }
+        public string? OtpVerify { get; set; }
 
         public bool Status { get; set; } = false;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
@@ -50,7 +51,7 @@ namespace FestivalFlatform.Data.Models
 
         public virtual ICollection<AccountWalletHistory> WalletHistories { get; set; } = new List<AccountWalletHistory>();
         public virtual ICollection<FestivalParticipant> FestivalParticipants { get; set; } = new List<FestivalParticipant>();
-
+        public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
 
     }

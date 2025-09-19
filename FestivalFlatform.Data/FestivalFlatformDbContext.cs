@@ -388,6 +388,27 @@ namespace FestivalFlatform.Data
                 .WithMany(a => a.FestivalParticipants) // 1 Account - nhiều FestivalParticipant
                 .HasForeignKey(fp => fp.AccountId)
                 .OnDelete(DeleteBehavior.Cascade); // Xóa account thì xóa participants
+
+
+            modelBuilder.Entity<Review>()
+        .HasOne(r => r.Account)
+        .WithMany(a => a.Reviews)
+        .HasForeignKey(r => r.AccountId)
+        .OnDelete(DeleteBehavior.Cascade);
+
+            // Festival - Review (1-N)
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.Festival)
+                .WithMany(f => f.Reviews)
+                .HasForeignKey(r => r.FestivalId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Festival>()
+    .HasOne(f => f.FestivalCommission)
+    .WithOne(fc => fc.Festival)
+    .HasForeignKey<FestivalCommission>(fc => fc.FestivalId)
+    .OnDelete(DeleteBehavior.Cascade);
+
             // ==== Composite or Unique Keys (if needed) ====
             // Ví dụ: GroupMember => composite key
         }

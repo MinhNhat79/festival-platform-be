@@ -12,7 +12,12 @@ namespace FestivalFlatform.Service.Services.Interface
     {
         Task<FestivalParticipant> CreateAsync(FestivalParticipantCreateRequest request);
 
-        Task<List<FestivalParticipant>> SearchAsync(int? festivalId, int? accountId, int pageNumber, int pageSize);
+        Task<List<FestivalParticipant>> SearchFestivalParticipantsAsync(
+      int? participantId,
+      int? festivalId,
+      int? accountId,
+      int? pageNumber,
+      int? pageSize);
         Task<bool> DeleteAsync(FestivalParticipantCreateRequest request);
     }
 }

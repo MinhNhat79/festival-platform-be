@@ -209,5 +209,34 @@ namespace FestivalManagementFlatformm.Controllers
                 return StatusCode(500, new { success = false, message = "Lỗi hệ thống", detail = ex.Message });
             }
         }
+
+
+        [HttpPost("api/accounts/send-otp")]
+        public async Task<IActionResult> SendOtp([FromBody] string email)
+        {
+            try
+            {
+                var success = await _accountService.SendOtpAsync(email);
+                return Ok(new { success, message = "OTP đã được gửi đến email" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost("api/accounts/confirm-otp")]
+        public async Task<IActionResult> ConfirmOtp([FromBody] ConfirmOtpRequest request)
+        {
+            try
+            {
+                var success = await _accountService.ConfirmOtpAsync(request.Email, request.Otp);
+                return Ok(new { success, message = "Mật khẩu mới đã được gửi đến email" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message });
+            }
+        }
     }
 }

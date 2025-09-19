@@ -115,6 +115,9 @@ namespace FF.API
             builder.Services.AddScoped<IAccountWalletHistoryService, AccountWalletHistoryService>();
             builder.Services.AddScoped<IBoothWalletService, BoothWalletService>();
             builder.Services.AddScoped<IFestivalParticipantService, FestivalParticipantService>();
+            builder.Services.AddScoped<IReviewService, ReviewService>();
+            builder.Services.AddScoped<IFestivalCommissionService, FestivalCommissionService>();
+            builder.Services.AddScoped<IStatisticsService, StatisticsService>();
 
             builder.Services.AddSingleton<PayOS>(sp =>
             {

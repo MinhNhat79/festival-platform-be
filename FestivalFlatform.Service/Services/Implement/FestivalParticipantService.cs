@@ -65,24 +65,37 @@ namespace FestivalFlatform.Service.Services.Implement
 
 
 
-        public async Task<List<FestivalParticipant>> SearchAsync(int? festivalId, int? accountId, int pageNumber, int pageSize)
+        public async Task<List<FestivalParticipant>> SearchFestivalParticipantsAsync(
+     int? participantId,
+     int? festivalId,
+     int? accountId,
+     int? pageNumber,
+     int? pageSize)
         {
             var query = _unitOfWork.Repository<FestivalParticipant>()
                 .GetAll()
                 .Include(fp => fp.Account)
+                .Include(fp => fp.Festival)
                 .AsQueryable();
 
-            if (festivalId.HasValue)
-                query = query.Where(fp => fp.FestivalId == festivalId.Value);
+            // filter
+            query = query
+                .Where(fp => !participantId.HasValue || participantId == 0 || fp.Id == participantId.Value)
+                .Where(fp => !festivalId.HasValue || festivalId == 0 || fp.FestivalId == festivalId.Value)
+                .Where(fp => !accountId.HasValue || accountId == 0 || fp.AccountId == accountId.Value);
 
-            if (accountId.HasValue)
-                query = query.Where(fp => fp.AccountId == accountId.Value);
+            // phân trang
+            //int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
+            //int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
 
-            return await query
+            //query = query.Skip((currentPage - 1) * currentSize)
+            //             .Take(currentSize);
+
+            var participants = await query
                 .OrderByDescending(fp => fp.RegisteredAt)
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
                 .ToListAsync();
+
+            return participants;
         }
 
 

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FestivalFlatform.Data.Migrations
 {
     [DbContext(typeof(FestivalFlatformDbContext))]
-    [Migration("20250823153018_InitialCreate")]
+    [Migration("20250918152547_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -83,6 +83,9 @@ namespace FestivalFlatform.Data.Migrations
 
                     b.Property<string>("FullName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OtpVerify")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
@@ -402,6 +405,9 @@ namespace FestivalFlatform.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FestivalId"));
 
+                    b.Property<double>("Avr_Rating")
+                        .HasColumnType("float");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -466,6 +472,34 @@ namespace FestivalFlatform.Data.Migrations
                     b.HasIndex("SchoolId");
 
                     b.ToTable("Festivals");
+                });
+
+            modelBuilder.Entity("FestivalFlatform.Data.Models.FestivalCommission", b =>
+                {
+                    b.Property<int>("CommissionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommissionId"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<double>("CommissionRate")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FestivalId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CommissionId");
+
+                    b.HasIndex("FestivalId")
+                        .IsUnique();
+
+                    b.ToTable("FestivalCommission");
                 });
 
             modelBuilder.Entity("FestivalFlatform.Data.Models.FestivalIngredient", b =>
@@ -1106,6 +1140,44 @@ namespace FestivalFlatform.Data.Migrations
                     b.ToTable("Questions");
                 });
 
+            modelBuilder.Entity("FestivalFlatform.Data.Models.Review", b =>
+                {
+                    b.Property<int>("ReviewId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewId"));
+
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FestivalId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsEdit")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ReviewId");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("FestivalId");
+
+                    b.ToTable("Review");
+                });
+
             modelBuilder.Entity("FestivalFlatform.Data.Models.Role", b =>
                 {
                     b.Property<int>("RoleId")
@@ -1461,6 +1533,17 @@ namespace FestivalFlatform.Data.Migrations
                     b.Navigation("School");
                 });
 
+            modelBuilder.Entity("FestivalFlatform.Data.Models.FestivalCommission", b =>
+                {
+                    b.HasOne("FestivalFlatform.Data.Models.Festival", "Festival")
+                        .WithOne("FestivalCommission")
+                        .HasForeignKey("FestivalFlatform.Data.Models.FestivalCommission", "FestivalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Festival");
+                });
+
             modelBuilder.Entity("FestivalFlatform.Data.Models.FestivalIngredient", b =>
                 {
                     b.HasOne("FestivalFlatform.Data.Models.Festival", "Festival")
@@ -1743,6 +1826,25 @@ namespace FestivalFlatform.Data.Migrations
                     b.Navigation("Game");
                 });
 
+            modelBuilder.Entity("FestivalFlatform.Data.Models.Review", b =>
+                {
+                    b.HasOne("FestivalFlatform.Data.Models.Account", "Account")
+                        .WithMany("Reviews")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FestivalFlatform.Data.Models.Festival", "Festival")
+                        .WithMany("Reviews")
+                        .HasForeignKey("FestivalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("Festival");
+                });
+
             modelBuilder.Entity("FestivalFlatform.Data.Models.School", b =>
                 {
                     b.HasOne("FestivalFlatform.Data.Models.Account", "Account")
@@ -1820,6 +1922,8 @@ namespace FestivalFlatform.Data.Migrations
 
                     b.Navigation("PointsTransactions");
 
+                    b.Navigation("Reviews");
+
                     b.Navigation("SchoolAccountRelations");
 
                     b.Navigation("Schools");
@@ -1861,6 +1965,8 @@ namespace FestivalFlatform.Data.Migrations
 
                     b.Navigation("Booths");
 
+                    b.Navigation("FestivalCommission");
+
                     b.Navigation("FestivalIngredients");
 
                     b.Navigation("FestivalMaps");
@@ -1872,6 +1978,8 @@ namespace FestivalFlatform.Data.Migrations
                     b.Navigation("FestivalSchools");
 
                     b.Navigation("Images");
+
+                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("FestivalFlatform.Data.Models.FestivalMap", b =>

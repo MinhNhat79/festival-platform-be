@@ -573,7 +573,7 @@ namespace FestivalFlatform.Service.Services.Implement
             return account;
         }
 
-      
+
 
         private string GenerateRandomPassword()
         {
@@ -605,7 +605,7 @@ namespace FestivalFlatform.Service.Services.Implement
             account.PlainPassword = newPassword; // để gửi mail
             account.UpdatedAt = DateTime.UtcNow;
 
-           
+
             await _unitOfWork.CommitAsync();
 
             // 5. Lấy config SMTP
@@ -678,5 +678,127 @@ namespace FestivalFlatform.Service.Services.Implement
             return true;
         }
 
+
+        private string GenerateOtp()
+        {
+            var random = new Random();
+            return random.Next(100000, 999999).ToString(); // 6 chữ số
+        }
+
+        public async Task<bool> SendOtpAsync(string email)
+        {
+            var account = await _unitOfWork.Repository<Account>()
+                .GetAll()
+                .FirstOrDefaultAsync(a => a.Email == email);
+
+            if (account == null)
+                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy tài khoản", email);
+
+            // Generate OTP
+            var otp = GenerateOtp();
+
+            // Lưu vào DB
+            account.OtpVerify = otp;
+            account.UpdatedAt = DateTime.UtcNow;
+            await _unitOfWork.CommitAsync();
+
+            // SMTP config
+            var smtpSection = _config.GetSection("Smtp");
+            var host = smtpSection["Host"];
+            var port = int.Parse(smtpSection["Port"]);
+            var user = smtpSection["User"];
+            var pass = smtpSection["Pass"];
+            var enableSsl = bool.Parse(smtpSection["EnableSsl"]);
+
+            // HTML template OTP
+            var htmlBody = @"
+<!DOCTYPE html
+    PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<meta http-equiv='Content-Type' content='text/html charset=UTF-8' />
+<html lang='en'>
+
+<body style='background-color:#ffffff;font-family:HelveticaNeue,Helvetica,Arial,sans-serif'>
+    <table align='center' role='presentation' cellSpacing='0' cellPadding='0' border='0' width='100%'
+        style='max-width:37.5em;background-color:#ffffff;border:1px solid #eee;border-radius:5px;
+               box-shadow:0 5px 10px rgba(20,50,70,.2);margin-top:20px;width:360px;margin:0 auto;padding:68px 0 68px'>
+        <tr style='width:100%'>
+            <td>
+                <img alt='FestivalPlatform' src='https://live.staticflickr.com/65535/54733176285_f474a3aaed_n.jpg'
+                    width='200' height='auto'
+                    style='display:block;outline:none;border:none;text-decoration:none;margin:0 auto' />
+
+                <p style='font-size:11px;line-height:16px;margin:16px 8px 8px 8px;color:#0a85ea;font-weight:700;
+                          font-family:HelveticaNeue,Helvetica,Arial,sans-serif;height:16px;text-align:center'>
+                    Xác thực Email
+                </p>
+
+                <h1 style='color:#000;font-family:HelveticaNeue-Medium,Helvetica,Arial,sans-serif;font-size:20px;
+                           font-weight:500;line-height:24px;margin:0;text-align:center'>
+                    Xin chào <b>" + account.FullName + @"</b>, đây là mã OTP để hoàn thành việc xác thực email của bạn
+                </h1>
+
+                <table style='background:rgba(0,0,0,.05);border-radius:4px;margin:16px auto 14px;
+                               vertical-align:middle;width:280px' align='center'>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p style='font-size:32px;line-height:40px;margin:0 auto;color:#000;
+                                          font-family:HelveticaNeue-Bold;font-weight:700;letter-spacing:6px;
+                                          padding:8px 0;text-align:center'>
+                                    " + otp + @"
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p style='font-size:15px;line-height:23px;margin:0;color:#444;font-family:HelveticaNeue,Helvetica,Arial,sans-serif;
+                          padding:0 40px;text-align:center'>
+                    Liên hệ <a target='_blank' style='color:#444;text-decoration:underline'
+                        href='mailto:festivalplatform@gmail.com'>festivalplatform@gmail.com</a> 
+                    nếu bạn không yêu cầu chuyện này!
+                </p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>";
+
+            using var smtp = new SmtpClient(host, port)
+            {
+                Credentials = new NetworkCredential(user, pass),
+                EnableSsl = enableSsl
+            };
+
+            using var mail = new MailMessage(user, account.Email, "Xác thực OTP", htmlBody)
+            {
+                IsBodyHtml = true
+            };
+
+            await smtp.SendMailAsync(mail);
+            return true;
+        }
+        public async Task<bool> ConfirmOtpAsync(string email, string otp)
+        {
+            var account = await _unitOfWork.Repository<Account>()
+                .GetAll()
+                .FirstOrDefaultAsync(a => a.Email == email);
+
+            if (account == null)
+                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy tài khoản", email);
+
+            if (account.OtpVerify == null || account.OtpVerify != otp)
+                throw new CrudException(HttpStatusCode.BadRequest, "OTP không hợp lệ", otp);
+
+            // Reset OTP sau khi xác nhận thành công
+            account.OtpVerify = null;
+            account.UpdatedAt = DateTime.UtcNow;
+            await _unitOfWork.CommitAsync();
+
+            // ✅ Gọi luôn forgot password để gửi mật khẩu mới
+            return await ForgotPasswordAsync(email);
+        }
+
     }
+
 }

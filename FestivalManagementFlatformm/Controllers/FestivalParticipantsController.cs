@@ -39,19 +39,31 @@ namespace FestivalManagementFlatformm.Controllers
         }
 
         [HttpGet("search")]
-        public async Task<IActionResult> Search([FromQuery] int? festivalId, [FromQuery] int? accountId,
-            [FromQuery] int pageNumber, [FromQuery] int pageSize )
+        public async Task<IActionResult> SearchFestivalParticipants(
+     [FromQuery] int? participantId,
+     [FromQuery] int? festivalId,
+     [FromQuery] int? accountId,
+     [FromQuery] int? pageNumber,
+     [FromQuery] int? pageSize)
         {
             try
             {
-                var result = await _service.SearchAsync(festivalId, accountId, pageNumber, pageSize);
+                var result = await _service.SearchFestivalParticipantsAsync(
+                    participantId, festivalId, accountId, pageNumber, pageSize);
+
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { success = false, message = "Lỗi khi tìm kiếm participant", detail = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    success = false,
+                    message = "Lỗi khi tìm kiếm FestivalParticipants",
+                    detail = ex.Message
+                });
             }
         }
+
 
         [HttpDelete("delete")]
         public async Task<IActionResult> Delete([FromBody] FestivalParticipantCreateRequest request)

@@ -69,6 +69,7 @@ namespace FestivalFlatform.Service.Services.Implement
         public async Task<List<School>> SearchSchoolsAsync(int? schoolId, int? accountId, string? schoolName, int? pageNumber, int? pageSize)
         {
             var query = _unitOfWork.Repository<School>().GetAll()
+                .Include(s => s.Account)
                 .Where(s => !schoolId.HasValue || schoolId == 0 || s.SchoolId == schoolId.Value)
                 .Where(s => string.IsNullOrWhiteSpace(schoolName) || s.SchoolName.Contains(schoolName.Trim()));
 

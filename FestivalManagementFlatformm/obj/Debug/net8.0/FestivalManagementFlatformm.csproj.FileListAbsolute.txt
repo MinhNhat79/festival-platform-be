@@ -15,7 +15,6 @@ C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatfo
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\obj\Debug\net8.0\FestivalManagementFlatformm.AssemblyInfoInputs.cache
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\obj\Debug\net8.0\FestivalManagementFlatformm.AssemblyInfo.cs
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\obj\Debug\net8.0\FestivalManagementFlatformm.csproj.CoreCompileInputs.cache
-C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\obj\Debug\net8.0\FestivalManagementFlatformm.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\obj\Debug\net8.0\FestivalManagementFlatformm.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\obj\Debug\net8.0\scopedcss\bundle\FestivalManagementFlatformm.styles.css
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\obj\Debug\net8.0\staticwebassets.build.json
