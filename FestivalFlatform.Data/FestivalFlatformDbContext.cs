@@ -67,104 +67,101 @@ namespace FestivalFlatform.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // ==== Account & Role ====
+           
             modelBuilder.Entity<Account>()
                 .HasOne(a => a.Role)
                 .WithMany(r => r.Accounts)
                 .HasForeignKey(a => a.RoleId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // ==== Account & AccountPoints (1-1) ====
+           
 
             modelBuilder.Entity<Account>()
                 .HasOne(a => a.AccountPoints)
                 .WithOne(ap => ap.Account)
                 .HasForeignKey<AccountPoints>(ap => ap.AccountId)
                 .OnDelete(DeleteBehavior.Cascade);
-            // ==== Account & SchoolAccounts (1-n) ====
+           
+
+         
 
 
-            // ==== School & SchoolAccounts (1-n) ====
-
-
-            // ==== Booth - Group (n-1) ====
+          
             modelBuilder.Entity<Booth>()
                 .HasOne(b => b.StudentGroup)
                 .WithMany(g => g.Booths)
                 .HasForeignKey(b => b.GroupId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // ==== Booth - Festival (n-1) ====
+            
             modelBuilder.Entity<Booth>()
                 .HasOne(b => b.Festival)
                 .WithMany(f => f.Booths)
                 .HasForeignKey(b => b.FestivalId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // ==== Booth - MapLocation (n-1) ====
+         
             modelBuilder.Entity<Booth>()
                 .HasOne(b => b.Location)
                 .WithMany()
                 .HasForeignKey(b => b.LocationId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // ==== ChatMessage - ChatSession ====
             modelBuilder.Entity<ChatMessage>()
                 .HasOne(cm => cm.ChatSession)
                 .WithMany(cs => cs.Messages)
                 .HasForeignKey(cm => cm.SessionId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // ==== ChatSession - Account ====
+        
             modelBuilder.Entity<ChatSession>()
                 .HasOne(cs => cs.Account)
                 .WithMany(a => a.ChatSessions)
                 .HasForeignKey(cs => cs.AccountId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // ==== FestivalIngredient - Festival ====
+            
             modelBuilder.Entity<FestivalIngredient>()
                 .HasOne(fi => fi.Festival)
                 .WithMany(f => f.FestivalIngredients)
                 .HasForeignKey(fi => fi.FestivalId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // ==== FestivalIngredient - Ingredient ====
+           
             modelBuilder.Entity<FestivalIngredient>()
                 .HasOne(fi => fi.Ingredient)
                 .WithMany()
                 .HasForeignKey(fi => fi.IngredientId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // ==== FestivalMap - Festival ====
+           
             modelBuilder.Entity<FestivalMap>()
                 .HasOne(fm => fm.Festival)
                 .WithMany(f => f.FestivalMaps)
                 .HasForeignKey(fm => fm.FestivalId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // ==== MapLocation - FestivalMap ====
+            
             modelBuilder.Entity<MapLocation>()
                 .HasOne(ml => ml.FestivalMap)
                 .WithMany(fm => fm.Locations)
                 .HasForeignKey(ml => ml.MapId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // ==== FestivalSchool - Festival ====
+           
             modelBuilder.Entity<FestivalSchool>()
                 .HasOne(fs => fs.Festival)
                 .WithMany(f => f.FestivalSchools)
                 .HasForeignKey(fs => fs.FestivalId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // ==== FestivalSchool - School ====
             modelBuilder.Entity<FestivalSchool>()
                 .HasOne(fs => fs.School)
                 .WithMany(s => s.FestivalSchools)
                 .HasForeignKey(fs => fs.SchoolId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // ==== GroupMember - Group & Account ====
+           
             modelBuilder.Entity<GroupMember>()
                 .HasOne(gm => gm.StudentGroup)
                 .WithMany(g => g.GroupMembers)
@@ -177,21 +174,20 @@ namespace FestivalFlatform.Data
                 .HasForeignKey(gm => gm.AccountId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // ==== Ingredient - Supplier ====
             modelBuilder.Entity<Ingredient>()
                 .HasOne(i => i.Supplier)
                 .WithMany(s => s.Ingredients)
                 .HasForeignKey(i => i.SupplierId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // ==== MenuItem - Booth ====
+          
             modelBuilder.Entity<MenuItem>()
                 .HasOne(mi => mi.FestivalMenu)
                 .WithMany(b => b.MenuItems)
                 .HasForeignKey(mi => mi.MenuId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // ==== MenuItemIngredient - MenuItem & Ingredient ====
+           
             modelBuilder.Entity<MenuItemIngredient>()
                 .HasOne(mii => mii.MenuItem)
                 .WithMany(mi => mi.MenuItemIngredients)
@@ -204,21 +200,21 @@ namespace FestivalFlatform.Data
                 .HasForeignKey(mii => mii.IngredientId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // ==== Minigame - Booth ====
+         
             modelBuilder.Entity<Minigame>()
                 .HasOne(mg => mg.Booth)
                 .WithMany(b => b.Minigames)
                 .HasForeignKey(mg => mg.BoothId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // ==== Question - Minigame ====
+       
             modelBuilder.Entity<Question>()
                 .HasOne(q => q.Game)
                 .WithMany(mg => mg.Questions)
                 .HasForeignKey(q => q.GameId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // ==== Order - Account & Booth ====
+       
             modelBuilder.Entity<Order>()
                 .HasOne(o => o.Account)
                 .WithMany(a => a.Orders)
@@ -231,7 +227,7 @@ namespace FestivalFlatform.Data
                 .HasForeignKey(o => o.BoothId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // ==== OrderItem - Order & MenuItem ====
+           
             modelBuilder.Entity<OrderItem>()
                 .HasOne(oi => oi.Order)
                 .WithMany(o => o.OrderItems)
@@ -244,7 +240,6 @@ namespace FestivalFlatform.Data
                 .HasForeignKey(oi => oi.MenuItemId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // ==== PointsTransaction - Account & Minigame ====
             modelBuilder.Entity<PointsTransaction>()
                 .HasOne(pt => pt.Account)
                 .WithMany(a => a.PointsTransactions)
@@ -257,17 +252,17 @@ namespace FestivalFlatform.Data
                 .HasForeignKey(pt => pt.GameId)
                 .OnDelete(DeleteBehavior.SetNull);
 
-            // ==== Image - MenuItem (optional only) ====
+           
             modelBuilder.Entity<Image>()
                 .HasOne(i => i.MenuItem)
                 .WithMany(mi => mi.Images)
                 .HasForeignKey(i => i.MenuItemId)
                 .OnDelete(DeleteBehavior.SetNull);
 
-            // ==== BoothMenuItem - Unique Constraint ====
+            
             modelBuilder.Entity<BoothMenuItem>()
                  .HasIndex(b => new { b.BoothId, b.MenuItemId })
-                    .IsUnique(); // nếu muốn mỗi Booth chỉ bán 1 loại MenuItem một lần
+                    .IsUnique(); 
 
             modelBuilder.Entity<BoothMenuItem>()
                 .HasOne(bmi => bmi.Booth)
@@ -287,24 +282,23 @@ namespace FestivalFlatform.Data
                 .HasForeignKey<Image>(i => i.BoothMenuItemId)
                 .OnDelete(DeleteBehavior.SetNull);
 
-            // ==== Festival - School ====
+            
             modelBuilder.Entity<FestivalModel>()
                 .HasOne(f => f.School)
                 .WithMany(s => s.Festivals)
                 .HasForeignKey(f => f.SchoolId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // ==== StudentGroup - Teacher (Account) ====
             modelBuilder.Entity<StudentGroup>()
                 .HasOne(sg => sg.Account)
-                .WithMany() // hoặc WithMany(a => a.AdvisedGroups) nếu có
+                .WithMany() 
                 .HasForeignKey(sg => sg.AccountId)
                 .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<School>()
             .HasOne(s => s.Account)
             .WithMany(a => a.Schools)
             .HasForeignKey(s => s.AccountId)
-            .OnDelete(DeleteBehavior.Restrict); // hoặc Cascade nếu bạn muốn xoá account xoá luôn school
+            .OnDelete(DeleteBehavior.Restrict); 
 
             modelBuilder.Entity<Image>()
             .HasOne(i => i.MenuItem)
@@ -353,7 +347,7 @@ namespace FestivalFlatform.Data
                 entity.HasOne(afw => afw.Account)
                     .WithMany(a => a.AccountFestivalWallets)
                     .HasForeignKey(afw => afw.AccountId)
-                    .OnDelete(DeleteBehavior.Cascade); // hoặc DeleteBehavior.Restrict nếu không muốn xóa dây chuyền
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(afw => afw.Festival)
                     .WithMany(f => f.AccountFestivalWallets)
@@ -364,9 +358,9 @@ namespace FestivalFlatform.Data
 
             modelBuilder.Entity<AccountWalletHistory>()
      .HasOne(h => h.Account)
-     .WithMany(a => a.WalletHistories) // 1 Account - nhiều History
+     .WithMany(a => a.WalletHistories) 
      .HasForeignKey(h => h.AccountId)
-     .OnDelete(DeleteBehavior.Cascade); // Xóa account sẽ xóa history
+     .OnDelete(DeleteBehavior.Cascade); 
 
 
             modelBuilder.Entity<Booth>()
@@ -378,16 +372,15 @@ namespace FestivalFlatform.Data
 
             modelBuilder.Entity<FestivalParticipant>()
       .HasOne(fp => fp.Festival)
-      .WithMany(f => f.FestivalParticipants) // 1 Festival - nhiều Participant
+      .WithMany(f => f.FestivalParticipants) 
       .HasForeignKey(fp => fp.FestivalId)
-      .OnDelete(DeleteBehavior.Cascade); // Xóa festival thì xóa participants
+      .OnDelete(DeleteBehavior.Cascade); 
 
-            // FestivalParticipant - Account (N-1)
             modelBuilder.Entity<FestivalParticipant>()
                 .HasOne(fp => fp.Account)
-                .WithMany(a => a.FestivalParticipants) // 1 Account - nhiều FestivalParticipant
+                .WithMany(a => a.FestivalParticipants) 
                 .HasForeignKey(fp => fp.AccountId)
-                .OnDelete(DeleteBehavior.Cascade); // Xóa account thì xóa participants
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             modelBuilder.Entity<Review>()
@@ -396,7 +389,7 @@ namespace FestivalFlatform.Data
         .HasForeignKey(r => r.AccountId)
         .OnDelete(DeleteBehavior.Cascade);
 
-            // Festival - Review (1-N)
+           
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.Festival)
                 .WithMany(f => f.Reviews)
@@ -409,8 +402,26 @@ namespace FestivalFlatform.Data
     .HasForeignKey<FestivalCommission>(fc => fc.FestivalId)
     .OnDelete(DeleteBehavior.Cascade);
 
-            // ==== Composite or Unique Keys (if needed) ====
-            // Ví dụ: GroupMember => composite key
+            modelBuilder.Entity<Comment>()
+    .HasOne(c => c.Review)
+    .WithMany(r => r.Comments)
+    .HasForeignKey(c => c.ReviewId)
+    .OnDelete(DeleteBehavior.Cascade); 
+
+            
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Account)
+                .WithMany(a => a.Comments)
+                .HasForeignKey(c => c.AccountId)
+                .OnDelete(DeleteBehavior.Restrict); 
+
+           
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.ParentComment)
+                .WithMany(c => c.Replies)
+                .HasForeignKey(c => c.ParentCommentId)
+                .OnDelete(DeleteBehavior.Restrict); 
+
         }
     }
 }

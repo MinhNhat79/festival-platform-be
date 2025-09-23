@@ -19,7 +19,7 @@ namespace FestivalFlatform.Data.Models
         public string QuestionText { get; set; } = null!;
 
         [Required]
-        public string Options { get; set; } = null!; // JSON string
+        public string Options { get; set; } = null!;
 
         [Required]
         public string CorrectAnswer { get; set; } = null!;

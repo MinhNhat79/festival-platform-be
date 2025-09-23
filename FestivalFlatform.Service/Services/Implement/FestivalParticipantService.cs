@@ -22,7 +22,6 @@ namespace FestivalFlatform.Service.Services.Implement
             _unitOfWork = unitOfWork;
         }
 
-        // Create
         public async Task<FestivalParticipant> CreateAsync(FestivalParticipantCreateRequest request)
         {
             var fest = await _unitOfWork.Repository<Festival>()
@@ -32,13 +31,13 @@ namespace FestivalFlatform.Service.Services.Implement
             if (fest == null)
                 throw new CrudException(HttpStatusCode.NotFound, "Festival không tồn tại", request.FestivalId.ToString());
 
-            // Check Account tồn tại
+          
             var accExists = await _unitOfWork.Repository<Account>()
                 .AnyAsync(a => a.AccountId == request.AccountId);
             if (!accExists)
                 throw new CrudException(HttpStatusCode.NotFound, "Account không tồn tại", request.AccountId.ToString());
 
-            // Check trùng
+          
             var existed = await _unitOfWork.Repository<FestivalParticipant>()
                 .AnyAsync(fp => fp.FestivalId == request.FestivalId && fp.AccountId == request.AccountId);
             if (existed)
@@ -53,7 +52,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             await _unitOfWork.Repository<FestivalParticipant>().InsertAsync(participant);
 
-            // ✅ Tăng totalRegisteredParticipants
+           
             fest.TotalRegisteredParticipants += 1;
             fest.UpdatedAt = DateTime.UtcNow;
 
@@ -78,13 +77,13 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Include(fp => fp.Festival)
                 .AsQueryable();
 
-            // filter
+       
             query = query
                 .Where(fp => !participantId.HasValue || participantId == 0 || fp.Id == participantId.Value)
                 .Where(fp => !festivalId.HasValue || festivalId == 0 || fp.FestivalId == festivalId.Value)
                 .Where(fp => !accountId.HasValue || accountId == 0 || fp.AccountId == accountId.Value);
 
-            // phân trang
+      
             //int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
             //int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
 
@@ -101,7 +100,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<bool> DeleteAsync(FestivalParticipantCreateRequest request)
         {
-            // Tìm participant theo FestivalId + AccountId
+          
             var participant = await _unitOfWork.Repository<FestivalParticipant>()
                 .GetAll()
                 .FirstOrDefaultAsync(fp => fp.FestivalId == request.FestivalId && fp.AccountId == request.AccountId);
@@ -111,18 +110,18 @@ namespace FestivalFlatform.Service.Services.Implement
                     "FestivalParticipant không tồn tại",
                     $"FestivalId={request.FestivalId}, AccountId={request.AccountId}");
 
-            // Lấy festival liên quan
+     
             var fest = await _unitOfWork.Repository<Festival>()
                 .GetAll()
                 .FirstOrDefaultAsync(f => f.FestivalId == participant.FestivalId);
 
             if (fest != null && fest.TotalRegisteredParticipants > 0)
             {
-                fest.TotalRegisteredParticipants -= 1; // ✅ Giảm số lượng
+                fest.TotalRegisteredParticipants -= 1;
                 fest.UpdatedAt = DateTime.UtcNow;
             }
 
-            // Xóa participant
+           
             _unitOfWork.Repository<FestivalParticipant>().Delete(participant);
 
             await _unitOfWork.CommitAsync();

@@ -29,7 +29,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<MapLocation> CreateMapLocationAsync(MapLocationCreateRequest request)
         {
-            // Kiểm tra MapId có tồn tại không
+           
             var mapExists =  _unitOfWork.Repository<FestivalMap>()
                 .GetAll()
                 .Any(fm => fm.MapId == request.MapId);

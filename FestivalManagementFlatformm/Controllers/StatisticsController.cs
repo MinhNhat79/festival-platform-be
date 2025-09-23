@@ -70,7 +70,7 @@ namespace FestivalManagementFlatformm.Controllers
 
         [HttpGet("school/summary")]
         public async Task<IActionResult> GetSchoolSummary(
-    [FromQuery] int schoolId,
+    [FromQuery] int? schoolId,
     [FromQuery] string? range,
     [FromQuery] DateTime? startDate,
     [FromQuery] DateTime? endDate)
@@ -110,7 +110,7 @@ namespace FestivalManagementFlatformm.Controllers
 
         [HttpGet("school/festival-performance")]
         public async Task<IActionResult> GetFestivalPerformance(
-    [FromQuery] int schoolId,
+    [FromQuery] int? schoolId,
     [FromQuery] string? range,
     [FromQuery] DateTime? startDate,
     [FromQuery] DateTime? endDate)

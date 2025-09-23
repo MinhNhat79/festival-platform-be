@@ -19,14 +19,14 @@ namespace FestivalFlatform.Service.DTOs.Response
         public decimal Commission { get; set; }    
     }
 
-    // PaymentMixDto.cs
+    
     public class PaymentMixResponse
     {
         public string Method { get; set; } = null!;
         public int Count { get; set; }
     }
 
-    // TopFestivalDto.cs
+  
     public class TopFestivalResponse
     {
         public int FestivalId { get; set; }

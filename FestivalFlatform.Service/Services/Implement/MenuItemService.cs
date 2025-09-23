@@ -29,7 +29,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<MenuItem> CreateMenuItemAsync(MenuItemCreateRequest request)
         {
-            // Validate MenuId tồn tại
+       
             var menuExists = await _unitOfWork.Repository<FestivalMenu>()
                 .GetAll()
                 .AnyAsync(m => m.MenuId == request.MenuId);
@@ -39,7 +39,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.BadRequest, "Không tìm thấy FestivalMenu", request.MenuId.ToString());
             }
 
-            // Validate ItemType bằng enum-like
+          
             var normalizedType = request.ItemType.Trim().ToLower();
             if (normalizedType != StatusMenuItem.food && normalizedType != StatusMenuItem.beverage)
             {
@@ -80,7 +80,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy MenuItem", itemId.ToString());
             }
 
-            // Kiểm tra tồn tại FestivalMenu
+       
             var menuExists = await _unitOfWork.Repository<FestivalMenu>()
                 .GetAll()
                 .AnyAsync(f => f.MenuId == menuId);
@@ -90,7 +90,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.BadRequest, "Không tìm thấy FestivalMenu", menuId.ToString());
             }
 
-            // Kiểm tra ItemType hợp lệ
+           
             var type = itemType.Trim().ToLower();
             if (type != StatusMenuItem.food && type != StatusMenuItem.beverage)
             {

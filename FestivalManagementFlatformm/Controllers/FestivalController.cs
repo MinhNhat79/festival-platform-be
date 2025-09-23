@@ -114,7 +114,7 @@ namespace FestivalManagementFlatformm.Controllers
         {
             try
             {
-                // Lấy ID của admin đang đăng nhập (từ JWT hoặc Claims)
+                
                
 
                 await _festivalService.DistributeCommissionAsync(request);
@@ -143,12 +143,7 @@ namespace FestivalManagementFlatformm.Controllers
             return Ok(festival);
         }
 
-        //[HttpGet("test")]
-        //public async Task<IActionResult> Test()
-        //{
-        //    await _festivalService.UpdateFestivalStatusDailyAsync(); // ✅ chạy xong task
-        //    return Ok("Festival status updated");
-        //}
+
 
         [HttpPut("update-info")]
         public async Task<IActionResult> UpdateFestivalInfo([FromBody] UpdateFestivalRequest request)

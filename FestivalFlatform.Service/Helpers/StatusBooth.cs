@@ -12,5 +12,7 @@ namespace FestivalFlatform.Service.Helpers
         public const string Approved = "approved";
         public const string Rejected = "rejected";
         public const string Active = "active";
+        public const string Closed = "closed";
+        
     }
 }

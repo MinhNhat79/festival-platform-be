@@ -61,7 +61,7 @@ namespace FestivalFlatform.Service.Services.Implement
             var supplier = await _unitOfWork.Repository<Supplier>().FindAsync(s => s.SupplierId == supplierId);
             if (supplier == null)
             {
-                return false; // Không tìm thấy supplier
+                return false; 
             }
 
             supplier.Status = status;

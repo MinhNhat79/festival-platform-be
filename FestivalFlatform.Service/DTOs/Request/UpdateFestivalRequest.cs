@@ -18,7 +18,7 @@ namespace FestivalFlatform.Service.DTOs.Request
         public int? MaxFoodBooths { get; set; }
         public int? MaxBeverageBooths { get; set; }
 
-        // 👇 thêm 2 field còn thiếu
+   
         public int? RegisteredFoodBooths { get; set; }
         public int? RegisteredBeverageBooths { get; set; }
 
@@ -26,7 +26,6 @@ namespace FestivalFlatform.Service.DTOs.Request
         public string? Description { get; set; }
         public string? CancellationReason { get; set; }
 
-        // Nếu có update con thì truyền thêm
         public List<Image>? Images { get; set; }
         public List<FestivalMap>? FestivalMaps { get; set; }
         public List<FestivalMenu>? FestivalMenus { get; set; }

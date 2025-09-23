@@ -25,7 +25,7 @@ namespace FestivalFlatform.Service.Services.Implement
         }
         public async Task<AccountFestivalWallet> CreateAccountFestivalWalletAsync(AccountFestivalWalletCreateRequest request)
         {
-            // Kiểm tra Festival tồn tại
+         
             var festival = await _unitOfWork.Repository<Festival>()
                 .FindAsync(f => f.FestivalId == request.FestivalId);
 
@@ -34,7 +34,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy Festival", request.FestivalId.ToString());
             }
 
-            // Kiểm tra Account tồn tại
+         
             var account = await _unitOfWork.Repository<Account>()
                 .FindAsync(a => a.AccountId == request.AccountId);
 
@@ -43,7 +43,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy tài khoản", request.AccountId.ToString());
             }
 
-            // Kiểm tra ví đã tồn tại chưa
+           
             var existed = await _unitOfWork.Repository<AccountFestivalWallet>()
                 .GetAll()
                 .FirstOrDefaultAsync(x => x.AccountId == request.AccountId && x.FestivalId == request.FestivalId);

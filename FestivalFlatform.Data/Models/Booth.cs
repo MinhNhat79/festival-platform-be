@@ -29,7 +29,7 @@ namespace FestivalFlatform.Data.Models
         public string? Description { get; set; }
 
         [Required]
-        public string Status { get; set; } // pending, approved, rejected, active
+        public string Status { get; set; } 
 
         public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
 
@@ -42,7 +42,7 @@ namespace FestivalFlatform.Data.Models
 
         
 
-        // ✅ Navigation Properties
+        
         public virtual StudentGroup StudentGroup { get; set; } = null!;
         public virtual Festival Festival { get; set; } = null!;
         public virtual MapLocation Location { get; set; } = null!;

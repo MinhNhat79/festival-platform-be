@@ -42,7 +42,7 @@ namespace FestivalFlatform.Service.Services.Implement
             await _unitOfWork.Repository<Review>().InsertAsync(review);
             await _unitOfWork.CommitAsync();
 
-            // ⭐ Sau khi lưu review, update lại Avr_Rating cho festival
+         
             var reviews = await _unitOfWork.Repository<Review>().GetAll()
                 .Where(r => r.FestivalId == request.FestivalId)
                 .ToListAsync();
@@ -74,7 +74,7 @@ namespace FestivalFlatform.Service.Services.Implement
             if (!string.IsNullOrWhiteSpace(comment))
                 review.Comment = comment;
 
-            review.IsEdit = true; // khi update thì flag = true
+            review.IsEdit = true; 
             review.UpdatedAt = DateTime.UtcNow;
 
             await _unitOfWork.CommitAsync();
@@ -89,7 +89,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(r => !accountId.HasValue || r.AccountId == accountId.Value)
                 .Where(r => !rating.HasValue || r.Rating == rating.Value);
 
-            // Nếu muốn phân trang
+            
             // int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
             // int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
             // query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);

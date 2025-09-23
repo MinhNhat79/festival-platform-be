@@ -28,28 +28,28 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<StudentGroup> CreateStudentGroupAsync(StudentGroupCreateRequest request)
         {
-            // ✅ Validate SchoolId tồn tại
+           
             var schoolExists = await _unitOfWork.Repository<School>()
                 .AnyAsync(s => s.SchoolId == request.SchoolId);
 
             if (!schoolExists)
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy trường tương ứng", request.SchoolId.ToString());
 
-            // ✅ Validate AccountId tồn tại
+            
             var accountExists = await _unitOfWork.Repository<Account>()
                 .AnyAsync(a => a.AccountId == request.AccountId);
 
             if (!accountExists)
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy Account tương ứng", request.AccountId.ToString());
 
-            // ✅ Check trùng GroupName trong cùng 1 trường
+           
             var duplicateGroup = await _unitOfWork.Repository<StudentGroup>()
                 .AnyAsync(g => g.SchoolId == request.SchoolId && g.GroupName == request.GroupName);
 
             if (duplicateGroup)
                 throw new CrudException(HttpStatusCode.Conflict, "Tên nhóm đã tồn tại trong trường này", request.GroupName);
 
-            // ✅ Tạo StudentGroup mới
+           
             var group = new StudentGroup
             {
                 SchoolId = request.SchoolId,

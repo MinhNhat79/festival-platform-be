@@ -29,8 +29,6 @@ namespace FestivalFlatform.Service.Services.Implement
         public async Task<School> CreateSchoolAsync(SchoolCreateRequest request)
         { 
          
-
-
             var school = new School
             {
                 SchoolName = request.SchoolName,

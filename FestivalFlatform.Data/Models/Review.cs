@@ -34,5 +34,7 @@ namespace FestivalFlatform.Data.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
+       
+        public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }

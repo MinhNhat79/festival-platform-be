@@ -28,7 +28,7 @@ namespace FestivalManagementFlatformm.Controllers
             }
         }
 
-        // UPDATE
+    
         [HttpPut("update")]
         public async Task<IActionResult> UpdateReview(
             int reviewId,
@@ -50,7 +50,7 @@ namespace FestivalManagementFlatformm.Controllers
             }
         }
 
-        // SEARCH
+     
         [HttpGet("search")]
         public async Task<IActionResult> SearchReviews(
             [FromQuery] int? reviewId,
@@ -71,7 +71,7 @@ namespace FestivalManagementFlatformm.Controllers
             }
         }
 
-        // DELETE
+        
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteReview(int reviewId)
         {

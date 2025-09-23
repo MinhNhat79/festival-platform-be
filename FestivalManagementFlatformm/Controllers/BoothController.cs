@@ -39,7 +39,7 @@ namespace FestivalManagementFlatformm.Controllers
         {
             try
             {
-                var updatedBooth = await _boothService.UpdateBoothAsync(id, request.ApprovalDate, request.PointsBalance);
+                var updatedBooth = await _boothService.UpdateBoothApproveAsync(id, request.ApprovalDate, request.PointsBalance);
                 if (updatedBooth == null)
                     return NotFound(new { success = false, message = "Gian hàng không tồn tại" });
 
@@ -124,6 +124,25 @@ namespace FestivalManagementFlatformm.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { success = false, message = "Xóa gian hàng thất bại", detail = ex.Message });
+            }
+        }
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateBooth(int boothId, [FromBody] BoothUpdateRequest request)
+        {
+            if (request == null)
+                return BadRequest(new { success = false, message = "Request body không hợp lệ" });
+
+            try
+            {
+                var booth = await _boothService.UpdateBoothAsync(boothId, request);
+                if (booth == null)
+                    return NotFound(new { success = false, message = "Không tìm thấy booth" });
+
+                return Ok(new { success = true, message = "Cập nhật booth thành công", data = booth });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi hệ thống", detail = ex.Message });
             }
         }
     }

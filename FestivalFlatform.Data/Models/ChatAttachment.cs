@@ -16,10 +16,10 @@ namespace FestivalFlatform.Data.Models
         public int MessageId { get; set; }
 
         [Required]
-        public string AttachmentType { get; set; } = null!; // user_upload, ai_generated
+        public string AttachmentType { get; set; } = null!; 
 
         [Required]
-        public string FileType { get; set; } = null!; // image, document
+        public string FileType { get; set; } = null!;
 
         public string? FileName { get; set; }
 

@@ -52,6 +52,7 @@ namespace FestivalFlatform.Data.Models
         public virtual ICollection<AccountWalletHistory> WalletHistories { get; set; } = new List<AccountWalletHistory>();
         public virtual ICollection<FestivalParticipant> FestivalParticipants { get; set; } = new List<FestivalParticipant>();
         public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+        public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
 
     }

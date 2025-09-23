@@ -29,7 +29,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<Booth> CreateBoothAsync(BoothCreateRequest request)
         {
-            // Kiểm tra Group tồn tại
+           
             var groupExists = await _unitOfWork.Repository<StudentGroup>()
                 .AnyAsync(g => g.GroupId == request.GroupId);
             if (!groupExists)
@@ -37,7 +37,18 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.NotFound, "GroupId không tồn tại", request.GroupId.ToString());
             }
 
-            // Kiểm tra Festival tồn tại
+           
+            var hasHomeroomTeacher = await _unitOfWork.Repository<GroupMember>()
+                .AnyAsync(gm => gm.GroupId == request.GroupId && gm.Role == "homeroom_teacher");
+
+            if (!hasHomeroomTeacher)
+            {
+                throw new CrudException(HttpStatusCode.BadRequest,
+                    "Nhóm này chưa có giáo viên chủ nhiệm (homeroom_teacher), không thể đăng ký gian hàng",
+                    request.GroupId.ToString());
+            }
+
+           
             var festivalExists = await _unitOfWork.Repository<Festival>()
                 .AnyAsync(f => f.FestivalId == request.FestivalId);
             if (!festivalExists)
@@ -45,7 +56,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.NotFound, "FestivalId không tồn tại", request.FestivalId.ToString());
             }
 
-            // Kiểm tra Location tồn tại
+           
             var locationExists = await _unitOfWork.Repository<MapLocation>()
                 .AnyAsync(l => l.LocationId == request.LocationId);
             if (!locationExists)
@@ -53,7 +64,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.NotFound, "LocationId không tồn tại", request.LocationId.ToString());
             }
 
-            //  Kiểm tra Group đã có Booth trong Festival này chưa
+            
             var alreadyRegistered = await _unitOfWork.Repository<Booth>()
                 .AnyAsync(b => b.GroupId == request.GroupId && b.FestivalId == request.FestivalId);
 
@@ -62,7 +73,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.BadRequest, "Nhóm của bạn đã đăng kí tham gia lễ hội này rồi", request.GroupId.ToString());
             }
 
-            // Tạo booth mới
+            
             var booth = new Booth
             {
                 GroupId = request.GroupId,
@@ -84,7 +95,8 @@ namespace FestivalFlatform.Service.Services.Implement
         }
 
 
-        public async Task<Booth?> UpdateBoothAsync(int boothId, DateTime approvalDate, int pointsBalance)
+
+        public async Task<Booth?> UpdateBoothApproveAsync(int boothId, DateTime approvalDate, int pointsBalance)
         {
             var booth = await _unitOfWork.Repository<Booth>().FindAsync(b => b.BoothId == boothId);
 
@@ -97,23 +109,38 @@ namespace FestivalFlatform.Service.Services.Implement
             booth.UpdatedAt = DateTime.UtcNow;
             booth.Status = StatusBooth.Approved;
 
-            // EF Core tự tracking, chỉ cần Commit
+            
             await _unitOfWork.CommitAsync();
 
             return booth;
         }
 
-        public async Task<List<Booth>> GetBooths(int? boothId, int? groupId, int? festivalId, int? locationId, string? boothType, string? status, int? pageNumber, int? pageSize)
+        public async Task<List<Booth>> GetBooths(
+            int? boothId,
+            int? groupId,
+            int? festivalId,
+            int? locationId,
+            string? boothType,
+            string? status,
+            int? pageNumber,
+            int? pageSize)
         {
             var query = _unitOfWork.Repository<Booth>().GetAll()
+                .Include(b => b.Location)           
+                .Include(b => b.BoothMenuItems)      
+                .AsQueryable();
 
+            
+            query = query
                 .Where(b => !boothId.HasValue || boothId == 0 || b.BoothId == boothId.Value)
                 .Where(b => !groupId.HasValue || groupId == 0 || b.GroupId == groupId.Value)
                 .Where(b => !festivalId.HasValue || festivalId == 0 || b.FestivalId == festivalId.Value)
                 .Where(b => !locationId.HasValue || locationId == 0 || b.LocationId == locationId.Value)
-                .Where(b => string.IsNullOrWhiteSpace(boothType) || b.BoothType != null && b.BoothType.Contains(boothType.Trim()))
+                .Where(b => string.IsNullOrWhiteSpace(boothType) ||
+                            (b.BoothType != null && b.BoothType.Contains(boothType.Trim())))
                 .Where(b => string.IsNullOrWhiteSpace(status) || b.Status == status.Trim());
 
+           
             //int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
             //int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
 
@@ -122,7 +149,6 @@ namespace FestivalFlatform.Service.Services.Implement
 
             var booths = await query.ToListAsync();
 
-       
             return booths;
         }
 
@@ -173,5 +199,95 @@ namespace FestivalFlatform.Service.Services.Implement
             _unitOfWork.Repository<Booth>().Delete(booth);
             await _unitOfWork.CommitAsync();
         }
+
+        public async Task<Booth?> UpdateBoothAsync(int boothId, BoothUpdateRequest request)
+        {
+            var booth = await _unitOfWork.Repository<Booth>()
+                .GetAll()
+                .Include(b => b.Location)
+                .Include(b => b.BoothMenuItems)
+                .FirstOrDefaultAsync(b => b.BoothId == boothId);
+
+            if (booth == null)
+                return null;
+
+          
+            if (!string.IsNullOrWhiteSpace(request.BoothName))
+                booth.BoothName = request.BoothName;
+            if (!string.IsNullOrWhiteSpace(request.BoothType))
+                booth.BoothType = request.BoothType;
+            if (!string.IsNullOrWhiteSpace(request.Description))
+                booth.Description = request.Description;
+            booth.UpdatedAt = DateTime.UtcNow;
+
+           
+            if (request.Location != null)
+            {
+                var location = await _unitOfWork.Repository<MapLocation>()
+                                .GetAll()
+                                .FirstOrDefaultAsync(l => l.LocationId == request.Location.LocationId);
+
+
+                if (location != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(request.Location.LocationName))
+                        location.LocationName = request.Location.LocationName;
+                    if (!string.IsNullOrWhiteSpace(request.Location.LocationType))
+                        location.LocationType = request.Location.LocationType;
+                    if (!string.IsNullOrWhiteSpace(request.Location.Coordinates))
+                        location.Coordinates = request.Location.Coordinates;
+                    if (request.Location.IsOccupied.HasValue)
+                        location.IsOccupied = request.Location.IsOccupied.Value;
+
+                    location.UpdatedAt = DateTime.UtcNow;
+                    booth.LocationId = location.LocationId;
+                }
+            }
+
+           
+            if (request.BoothMenuItems != null && request.BoothMenuItems.Any())
+            {
+                foreach (var itemReq in request.BoothMenuItems)
+                {
+                    var boothMenuItem = booth.BoothMenuItems
+                        .FirstOrDefault(bmi => bmi.BoothMenuItemId == itemReq.BoothMenuItemId);
+
+                    if (boothMenuItem != null)
+                    {
+                        if (itemReq.CustomPrice.HasValue)
+                            boothMenuItem.CustomPrice = itemReq.CustomPrice.Value;
+                        if (itemReq.QuantityLimit.HasValue)
+                            boothMenuItem.QuantityLimit = itemReq.QuantityLimit.Value;
+                        if (!string.IsNullOrWhiteSpace(itemReq.Status))
+                            boothMenuItem.Status = itemReq.Status;
+                        if (!string.IsNullOrWhiteSpace(itemReq.ImageUrl))
+                        {
+                           
+                            boothMenuItem.Image = new Image
+                            {
+                                ImageUrl = itemReq.ImageUrl,
+                                BoothId = booth.BoothId,
+                                CreatedAt = DateTime.UtcNow
+                            };
+                        }
+                    }
+                }
+            }
+
+            await _unitOfWork.CommitAsync();
+
+          
+            var updatedBooth = await _unitOfWork.Repository<Booth>()
+                .GetAll()
+                .Include(b => b.Location)
+                .Include(b => b.BoothMenuItems)
+                .ThenInclude(bmi => bmi.Image)
+                .FirstOrDefaultAsync(b => b.BoothId == boothId);
+
+            return updatedBooth;
+        }
+
+
+
     }
 }

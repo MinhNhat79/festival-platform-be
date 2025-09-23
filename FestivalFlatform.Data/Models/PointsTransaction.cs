@@ -23,7 +23,7 @@ namespace FestivalFlatform.Data.Models
         public int PointsAmount { get; set; }
 
         [Required]
-        public string TransactionType { get; set; } = null!; // earned, spent
+        public string TransactionType { get; set; } = null!;
 
         public DateTime TransactionDate { get; set; } = DateTime.UtcNow;
 

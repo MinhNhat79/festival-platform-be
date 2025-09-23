@@ -45,7 +45,7 @@ namespace FestivalFlatform.Service.DTOs.Request
         public string FullName { get; set; } = null!;
         [Required]
         public int RoleId { get; set; } = 0;
-
+        public bool? Status { get; set; }
 
         [Phone]
         [MaxLength(15)]

@@ -30,7 +30,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<FestivalIngredient> CreateFestivalIngredientAsync(FestivalIngredientCreateRequest request)
         {
-            // Validate Festival
+          
             var festival = await _unitOfWork.Repository<Festival>()
                 .FindAsync(f => f.FestivalId == request.FestivalId);
             if (festival == null)
@@ -38,7 +38,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy Festival", request.FestivalId.ToString());
             }
 
-            // Validate Ingredient
+       
             var ingredient = await _unitOfWork.Repository<Ingredient>()
                 .FindAsync(i => i.IngredientId == request.IngredientId);
             if (ingredient == null)
@@ -46,7 +46,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy Ingredient", request.IngredientId.ToString());
             }
 
-            // Check duplicate
+           
             var exists = await _unitOfWork.Repository<FestivalIngredient>().GetAll()
                 .AnyAsync(fi => fi.FestivalId == request.FestivalId && fi.IngredientId == request.IngredientId);
             if (exists)

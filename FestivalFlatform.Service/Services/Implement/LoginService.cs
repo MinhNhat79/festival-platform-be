@@ -64,7 +64,7 @@ namespace FestivalFlatform.Service.Services.Implement
                     };
                 }
 
-                // So sánh mật khẩu trực tiếp (hoặc dùng hàm verify nếu hash)
+              
                 if (!BCrypt.Net.BCrypt.Verify(password, account.PasswordHash))
                 {
                     return new LoginResponse
@@ -74,19 +74,17 @@ namespace FestivalFlatform.Service.Services.Implement
                     };
                 }
 
-                // ✅ Kiểm tra role school và status
-                if (account.Role != null && account.Role.RoleName.Equals("SchoolManager", StringComparison.OrdinalIgnoreCase))
+           
+                if (!account.Status)
                 {
-                    if (!account.Status)
+                    return new LoginResponse
                     {
-                        return new LoginResponse
-                        {
-                            Success = false,
-                            Message = "Tài khoản trường học chưa được kích hoạt, không thể đăng nhập."
-                        };
-                    }
+                        Success = false,
+                        Message = "Tài khoản của bạn đang bị khóa hoặc chưa được kích hoạt."
+                    };
                 }
 
+        
                 var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, account.Email),
@@ -127,6 +125,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 };
             }
         }
+
     }
 
 

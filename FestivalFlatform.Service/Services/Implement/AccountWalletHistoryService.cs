@@ -76,7 +76,7 @@ namespace FestivalFlatform.Service.Services.Implement
                     (string.IsNullOrEmpty(type) || h.Type == type)
                 );
 
-            // Nếu muốn phân trang
+           
             // int currentPage = pageNumber ?? 1;
             // int currentSize = pageSize ?? 10;
             // query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);

@@ -29,7 +29,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<Ingredient> CreateIngredientAsync(IngredientCreateRequest request)
         {
-            // Kiểm tra Supplier có tồn tại không
+      
             var supplier = await _unitOfWork.Repository<Supplier>().FindAsync(s => s.SupplierId == request.SupplierId);
             if (supplier == null)
             {

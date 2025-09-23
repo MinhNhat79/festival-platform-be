@@ -28,21 +28,21 @@ namespace FestivalFlatform.Service.Services.Implement
         }
         public async Task<FestivalSchool> CreateFestivalSchoolAsync(FestivalSchoolCreateRequest request)
         {
-            // Validate Festival
+            
             var festival = await _unitOfWork.Repository<Festival>().FindAsync(f => f.FestivalId == request.FestivalId);
             if (festival == null)
             {
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy Festival", request.FestivalId.ToString());
             }
 
-            // Validate School
+          
             var school = await _unitOfWork.Repository<School>().FindAsync(s => s.SchoolId == request.SchoolId);
             if (school == null)
             {
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy School", request.SchoolId.ToString());
             }
 
-            // Check if already exists
+      
             var existing = await _unitOfWork.Repository<FestivalSchool>().GetAll()
                 .AnyAsync(fs => fs.FestivalId == request.FestivalId && fs.SchoolId == request.SchoolId);
 
@@ -94,7 +94,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
 
             entity.ApprovalDate = DateTime.UtcNow;
-            entity.RegistrationDate = entity.RegistrationDate; // giữ nguyên
+            entity.RegistrationDate = entity.RegistrationDate; 
 
             await _unitOfWork.CommitAsync();
 

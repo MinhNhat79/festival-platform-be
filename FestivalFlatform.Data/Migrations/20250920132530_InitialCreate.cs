@@ -660,6 +660,43 @@ namespace FestivalFlatform.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Comment",
+                columns: table => new
+                {
+                    CommentId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReviewId = table.Column<int>(type: "int", nullable: false),
+                    AccountId = table.Column<int>(type: "int", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsEdit = table.Column<bool>(type: "bit", nullable: false),
+                    ParentCommentId = table.Column<int>(type: "int", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comment", x => x.CommentId);
+                    table.ForeignKey(
+                        name: "FK_Comment_Accounts_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "Accounts",
+                        principalColumn: "AccountId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comment_Comment_ParentCommentId",
+                        column: x => x.ParentCommentId,
+                        principalTable: "Comment",
+                        principalColumn: "CommentId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comment_Review_ReviewId",
+                        column: x => x.ReviewId,
+                        principalTable: "Review",
+                        principalColumn: "ReviewId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Booths",
                 columns: table => new
                 {
@@ -1074,6 +1111,21 @@ namespace FestivalFlatform.Data.Migrations
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comment_AccountId",
+                table: "Comment",
+                column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_ParentCommentId",
+                table: "Comment",
+                column: "ParentCommentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_ReviewId",
+                table: "Comment",
+                column: "ReviewId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_FestivalCommission_FestivalId",
                 table: "FestivalCommission",
                 column: "FestivalId",
@@ -1299,6 +1351,9 @@ namespace FestivalFlatform.Data.Migrations
                 name: "ChatMessages");
 
             migrationBuilder.DropTable(
+                name: "Comment");
+
+            migrationBuilder.DropTable(
                 name: "FestivalCommission");
 
             migrationBuilder.DropTable(
@@ -1332,13 +1387,13 @@ namespace FestivalFlatform.Data.Migrations
                 name: "Questions");
 
             migrationBuilder.DropTable(
-                name: "Review");
-
-            migrationBuilder.DropTable(
                 name: "SchoolAccountRelations");
 
             migrationBuilder.DropTable(
                 name: "ChatSessions");
+
+            migrationBuilder.DropTable(
+                name: "Review");
 
             migrationBuilder.DropTable(
                 name: "BoothMenuItems");

@@ -29,11 +29,11 @@ namespace FestivalFlatform.Service.Services.Implement
                     case "7d":
                     case "7days":
                     case "7":
-                        start = nowUtc.Date.AddDays(-6); // include today -> 7 days
+                        start = nowUtc.Date.AddDays(-6); 
                         break;
                     case "1m":
                     case "1month":
-                        start = nowUtc.Date.AddMonths(-1).AddDays(1); // last 1 month approximation
+                        start = nowUtc.Date.AddMonths(-1).AddDays(1);
                         break;
                     case "3m":
                     case "3month":
@@ -44,7 +44,7 @@ namespace FestivalFlatform.Service.Services.Implement
                         start = nowUtc.Date.AddYears(-1).AddDays(1);
                         break;
                     default:
-                        // unknown -> no filter
+                        
                         return (null, null);
                 }
                 var end = nowUtc; // up to now
@@ -56,14 +56,14 @@ namespace FestivalFlatform.Service.Services.Implement
                 DateTime? s = startDate?.ToUniversalTime();
                 DateTime? e = endDate?.ToUniversalTime();
 
-                // If only one provided, make reasonable default
+               
                 if (s.HasValue && !e.HasValue) e = DateTime.UtcNow;
                 if (!s.HasValue && e.HasValue) s = DateTime.MinValue;
 
                 return (s, e);
             }
 
-            // no filter
+            
             return (null, null);
         }
         public async Task<AdminSummaryResponse> GetAdminSummaryAsync(
@@ -73,16 +73,16 @@ namespace FestivalFlatform.Service.Services.Implement
         {
             var (startUtc, endUtc) = NormalizeRange(range, startDate, endDate);
 
-            // Schools
+           
             var totalSchools = await _unitOfWork.Repository<School>().GetAll().CountAsync();
 
-            // Festivals ongoing
+          
             var festivalsQuery = _unitOfWork.Repository<Festival>().GetAll();
             var festivalsOngoing = await festivalsQuery
                 .Where(f => f.Status != null && f.Status.ToLower() == "ongoing")
                 .CountAsync();
 
-            // Orders (Completed)
+            
             var ordersQuery = _unitOfWork.Repository<Order>().GetAll()
                 .Where(o => o.Status != null && o.Status.ToLower() == "completed");
 
@@ -98,19 +98,19 @@ namespace FestivalFlatform.Service.Services.Implement
 
             decimal aov = paidOrdersCount > 0 ? (gmv / paidOrdersCount) : 0m;
 
-            // Booths active
+           
             var boothsQuery = _unitOfWork.Repository<Booth>().GetAll();
             var boothsActive = await boothsQuery
                 .Where(b => b.Status != null && b.Status.ToLower() == "active")
                 .CountAsync();
 
-            // Users active (exclude admin roleId == 1)
+            
             var usersActive = await _unitOfWork.Repository<Account>()
                 .GetAll()
                 .Where(a => a.RoleId != 1)
                 .CountAsync();
 
-            // Wallet topups
+       
             var awh = _unitOfWork.Repository<AccountWalletHistory>().GetAll()
                 .Where(h => h.Type != null && h.Type.ToLower() == "topup");
 
@@ -119,10 +119,10 @@ namespace FestivalFlatform.Service.Services.Implement
 
             var walletTopup = await awh.SumAsync(h => (decimal?)h.Amount) ?? 0m;
 
-            // Commission sum
+     
             var commQuery = _unitOfWork.Repository<FestivalCommission>()
      .GetAll()
-     .AsQueryable(); // ✅ ép kiểu IQueryable
+     .AsQueryable(); 
 
             if (startUtc.HasValue)
                 commQuery = commQuery.Where(c => c.CreatedAt >= startUtc.Value);
@@ -157,26 +157,26 @@ namespace FestivalFlatform.Service.Services.Implement
             var (startUtc, endUtc) = NormalizeRange(range, startDate, endDate);
 
             var paymentsQuery = _unitOfWork.Repository<Payment>().GetAll()
-                .Include(p => p.Order) // để lọc qua Order nếu cần
+                .Include(p => p.Order) 
                 .AsQueryable();
 
-            // lọc theo thời gian
+           
             if (startUtc.HasValue) paymentsQuery = paymentsQuery.Where(p => p.PaymentDate >= startUtc.Value);
             if (endUtc.HasValue) paymentsQuery = paymentsQuery.Where(p => p.PaymentDate <= endUtc.Value);
 
-            // lọc theo festival
+           
             if (festivalId.HasValue)
             {
                 paymentsQuery = paymentsQuery.Where(p => p.Order != null && p.Order.Booth.FestivalId == festivalId.Value);
             }
 
-            // lọc theo school
+           
             if (schoolId.HasValue)
             {
                 paymentsQuery = paymentsQuery.Where(p => p.Order != null && p.Order.Booth.Festival.SchoolId == schoolId.Value);
             }
 
-            // gom theo phương thức thanh toán
+            
             var grouped = await paymentsQuery
                 .GroupBy(p => p.PaymentMethod.ToLower())
                 .Select(g => new PaymentMixResponse
@@ -198,7 +198,7 @@ namespace FestivalFlatform.Service.Services.Implement
         {
             var (startUtc, endUtc) = NormalizeRange(range, startDate, endDate);
 
-            // lấy festival theo schoolId (nếu có)
+
             var festivalsQuery = _unitOfWork.Repository<Festival>().GetAll()
                 .Include(f => f.School)
                 .AsQueryable();
@@ -208,7 +208,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             var festivals = await festivalsQuery.ToListAsync();
 
-            // lấy tất cả orders
+          
             var ordersQuery = _unitOfWork.Repository<Order>().GetAll()
                 .Include(o => o.Booth)
                 .ThenInclude(b => b.Festival)
@@ -232,7 +232,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 })
                 .ToListAsync();
 
-            // join festivals + grouped orders
+           
             var result = festivals
                 .Select(f =>
                 {
@@ -257,16 +257,17 @@ namespace FestivalFlatform.Service.Services.Implement
 
 
         public async Task<SchoolSummaryResponse> GetSchoolSummaryAsync(
-    int schoolId,
-    string? range = null,
-    DateTime? startDate = null,
-    DateTime? endDate = null)
+      int? schoolId,
+      string? range = null,
+      DateTime? startDate = null,
+      DateTime? endDate = null)
         {
             var (startUtc, endUtc) = NormalizeRange(range, startDate, endDate);
 
-            // Festivals
-            var festivalsQuery = _unitOfWork.Repository<Festival>().GetAll()
-                .Where(f => f.SchoolId == schoolId);
+         
+            IQueryable<Festival> festivalsQuery = _unitOfWork.Repository<Festival>().GetAll();
+            if (schoolId.HasValue && schoolId.Value > 0)
+                festivalsQuery = festivalsQuery.Where(f => f.SchoolId == schoolId.Value);
 
             if (startUtc.HasValue) festivalsQuery = festivalsQuery.Where(f => f.CreatedAt >= startUtc.Value);
             if (endUtc.HasValue) festivalsQuery = festivalsQuery.Where(f => f.CreatedAt <= endUtc.Value);
@@ -276,35 +277,48 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(f => f.Status != null && f.Status.ToLower() == "ongoing")
                 .CountAsync();
 
-            // Booths
+          
             var boothsQuery = _unitOfWork.Repository<Booth>().GetAll()
-                .Where(b => b.Festival.SchoolId == schoolId);
+                .Include(b => b.Festival)
+                .AsQueryable();
+
+            if (schoolId.HasValue && schoolId.Value > 0)
+                boothsQuery = boothsQuery.Where(b => b.Festival.SchoolId == schoolId.Value);
 
             var totalBooths = await boothsQuery.CountAsync();
             var boothsActive = await boothsQuery
                 .Where(b => b.Status != null && b.Status.ToLower() == "active")
                 .CountAsync();
 
-            // Groups & Members
-            var groupsQuery = _unitOfWork.Repository<StudentGroup>().GetAll()
-                .Where(g => g.SchoolId == schoolId);
-
+      
+            IQueryable<StudentGroup> groupsQuery = _unitOfWork.Repository<StudentGroup>().GetAll();
+            if (schoolId.HasValue && schoolId.Value > 0)
+                groupsQuery = groupsQuery.Where(g => g.SchoolId == schoolId.Value);
             var totalGroups = await groupsQuery.CountAsync();
-            var totalMembers = await _unitOfWork.Repository<GroupMember>().GetAll()
-                .Where(m => m.StudentGroup.SchoolId == schoolId)
-                .CountAsync();
 
-            // Orders (Completed)
+            var membersQuery = _unitOfWork.Repository<GroupMember>().GetAll()
+                .Include(m => m.StudentGroup)
+                .AsQueryable();
+            if (schoolId.HasValue && schoolId.Value > 0)
+                membersQuery = membersQuery.Where(m => m.StudentGroup.SchoolId == schoolId.Value);
+            var totalMembers = await membersQuery.CountAsync();
+
+  
             var ordersQuery = _unitOfWork.Repository<Order>().GetAll()
-                .Where(o => o.Booth.Festival.SchoolId == schoolId &&
-                            o.Status.ToLower() == "completed");
+                .Include(o => o.Booth)
+                    .ThenInclude(b => b.Festival)
+                .Where(o => o.Status != null && o.Status.ToLower() == "completed")
+                .AsQueryable();
+
+            if (schoolId.HasValue && schoolId.Value > 0)
+                ordersQuery = ordersQuery.Where(o => o.Booth.Festival.SchoolId == schoolId.Value);
 
             if (startUtc.HasValue) ordersQuery = ordersQuery.Where(o => o.OrderDate >= startUtc.Value);
             if (endUtc.HasValue) ordersQuery = ordersQuery.Where(o => o.OrderDate <= endUtc.Value);
 
             var paidOrders = await ordersQuery.CountAsync();
             var gmv = await ordersQuery.SumAsync(o => (decimal?)o.TotalAmount) ?? 0m;
-            var aov = paidOrders > 0 ? gmv / paidOrders : 0;
+            var aov = paidOrders > 0 ? gmv / paidOrders : 0m;
 
             return new SchoolSummaryResponse
             {
@@ -319,6 +333,8 @@ namespace FestivalFlatform.Service.Services.Implement
                 Aov = decimal.Round(aov, 2)
             };
         }
+
+
         public async Task<List<MenuMixResponse>> GetMenuMixAsync(
      int? schoolId = null,
      int? festivalId = null,
@@ -335,7 +351,7 @@ namespace FestivalFlatform.Service.Services.Implement
                             on fm.FestivalId equals f.FestivalId
                         select new { mi, f };
 
-            // Ưu tiên festivalId
+         
             if (festivalId.HasValue && festivalId.Value > 0)
             {
                 query = query.Where(x => x.f.FestivalId == festivalId.Value);
@@ -345,7 +361,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 query = query.Where(x => x.f.SchoolId == schoolId.Value);
             }
 
-            // lọc theo ngày (nếu có)
+       
             if (startUtc.HasValue)
                 query = query.Where(x => x.mi.CreatedAt >= startUtc.Value);
             if (endUtc.HasValue)
@@ -367,14 +383,14 @@ namespace FestivalFlatform.Service.Services.Implement
 
 
         public async Task<List<FestivalPerformanceResponse>> GetFestivalPerformanceAsync(
-    int schoolId,
+    int? schoolId,
     string? range = null,
     DateTime? startDate = null,
     DateTime? endDate = null)
         {
             var (startUtc, endUtc) = NormalizeRange(range, startDate, endDate);
 
-            // Lấy festivals thuộc school
+           
             var festivalsQuery = _unitOfWork.Repository<Festival>().GetAll()
                 .Where(f => f.SchoolId == schoolId);
 
@@ -414,7 +430,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Include(b => b.Festival)
                 .AsQueryable();
 
-            // Ưu tiên festivalId
+          
             if (festivalId.HasValue && festivalId.Value > 0)
             {
                 query = query.Where(b => b.FestivalId == festivalId.Value);
@@ -424,7 +440,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 query = query.Where(b => b.Festival.SchoolId == schoolId.Value);
             }
 
-            // lọc thời gian (nếu có)
+          
             if (startUtc.HasValue)
                 query = query.Where(b => b.ApprovalDate >= startUtc.Value);
             if (endUtc.HasValue)
@@ -459,11 +475,11 @@ namespace FestivalFlatform.Service.Services.Implement
                     .ThenInclude(b => b.Festival)
                 .Where(o => o.Status.ToLower() == "completed");
 
-            // filter time
+            
             if (startUtc.HasValue) ordersQuery = ordersQuery.Where(o => o.OrderDate >= startUtc.Value);
             if (endUtc.HasValue) ordersQuery = ordersQuery.Where(o => o.OrderDate <= endUtc.Value);
 
-            // filter festival/school
+       
             if (festivalId.HasValue && festivalId.Value > 0)
             {
                 ordersQuery = ordersQuery.Where(o => o.Booth.FestivalId == festivalId.Value);
@@ -576,11 +592,11 @@ namespace FestivalFlatform.Service.Services.Implement
                     .ThenInclude(b => b.Festival)
                 .Where(o => o.Status.ToLower() == "completed");
 
-            // filter time
+           
             if (startUtc.HasValue) ordersQuery = ordersQuery.Where(o => o.OrderDate >= startUtc.Value);
             if (endUtc.HasValue) ordersQuery = ordersQuery.Where(o => o.OrderDate <= endUtc.Value);
 
-            // filter school
+            
             if (schoolId.HasValue && schoolId.Value > 0)
                 ordersQuery = ordersQuery.Where(o => o.Booth.Festival.SchoolId == schoolId.Value);
 
@@ -623,11 +639,11 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Include(o => o.Account)
                 .AsQueryable();
 
-            // lọc school
+          
             if (schoolId.HasValue && schoolId.Value > 0)
                 query = query.Where(o => o.Booth.Festival.SchoolId == schoolId.Value);
 
-            // lọc festival
+         
             if (festivalId.HasValue && festivalId.Value > 0)
                 query = query.Where(o => o.Booth.FestivalId == festivalId.Value);
 

@@ -29,7 +29,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<GroupMember> CreateGroupMemberAsync(CreateGroupMemberRequest request)
         {
-            // Kiểm tra tồn tại StudentGroup
+         
             var groupExists = await _unitOfWork.Repository<StudentGroup>()
                 .AnyAsync(g => g.GroupId == request.GroupId);
             if (!groupExists)
@@ -37,7 +37,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.BadRequest, "Không tìm thấy StudentGroup", request.GroupId.ToString());
             }
 
-            // Kiểm tra tồn tại Account
+       
             var accountExists = await _unitOfWork.Repository<Account>()
                 .AnyAsync(a => a.AccountId == request.AccountId);
             if (!accountExists)
@@ -45,7 +45,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.BadRequest, "Không tìm thấy Account", request.AccountId.ToString());
             }
 
-            // ✅ Kiểm tra account đã trong group chưa
+          
             var alreadyInGroup = await _unitOfWork.Repository<GroupMember>()
                 .AnyAsync(gm => gm.GroupId == request.GroupId && gm.AccountId == request.AccountId);
 
@@ -56,6 +56,32 @@ namespace FestivalFlatform.Service.Services.Implement
                     $"{request.GroupId}-{request.AccountId}");
             }
 
+         
+            var joinedGroups = await _unitOfWork.Repository<GroupMember>()
+                .GetAll()
+                .Where(gm => gm.AccountId == request.AccountId)
+                .Select(gm => gm.GroupId)
+                .ToListAsync();
+
+            if (joinedGroups.Any())
+            {
+               
+                var hasOngoingBooth = await _unitOfWork.Repository<Booth>()
+                    .GetAll()
+                    .Include(b => b.Festival)
+                    .AnyAsync(b =>
+                        joinedGroups.Contains(b.GroupId) &&
+                        b.Festival.Status.ToLower() == "ongoing");
+
+                if (hasOngoingBooth)
+                {
+                    throw new CrudException(HttpStatusCode.BadRequest,
+                        "Tài khoản này đang tham gia nhóm có booth trong festival đang diễn ra (ongoing)",
+                        request.AccountId.ToString());
+                }
+            }
+
+           
             var newMember = new GroupMember
             {
                 GroupId = request.GroupId,
@@ -83,13 +109,13 @@ namespace FestivalFlatform.Service.Services.Implement
             if (member == null)
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy GroupMember", memberId.ToString());
 
-            // Check group tồn tại
+         
             var groupExists = await _unitOfWork.Repository<StudentGroup>()
                 .AnyAsync(g => g.GroupId == groupId);
             if (!groupExists)
                 throw new CrudException(HttpStatusCode.BadRequest, "Không tìm thấy StudentGroup", groupId.ToString());
 
-            // Check account tồn tại
+          
             var accountExists = await _unitOfWork.Repository<Account>()
                 .AnyAsync(a => a.AccountId == accountId);
             if (!accountExists)

@@ -111,7 +111,7 @@ namespace FestivalFlatform.Service.Services.Implement
             {
                 var order = await _unitOfWork.Repository<Order>()
                     .GetAll()
-                    .FirstOrDefaultAsync(o => o.OrderId == orderCode);
+                    .FirstOrDefaultAsync(o => o.OrderId == request.OrderId.Value);
 
                 if (order != null)
                 {
@@ -122,19 +122,23 @@ namespace FestivalFlatform.Service.Services.Implement
                     if (booth != null)
                     {
                         int groupId = booth.GroupId;
-                        string groupPath = $"/app/groups/{groupId}/orders";
+                        int boothId = booth.BoothId;
+
+                        string groupPath = $"/app/groups/{groupId}/booth/{boothId}/orders";
                         cancelUrl = baseUrl + groupPath;
                         returnUrl = baseUrl + groupPath;
                     }
                 }
             }
+
+
             else if (description?.Contains("Nap vi", StringComparison.OrdinalIgnoreCase) == true)
             {
                 int ExtractWalletId(string descText)
                 {
                     var parts = descText.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-                    // Nếu phần đầu không phải "Nap" => bỏ nó đi (có thể là mã giao dịch)
+                  
                     if (parts.Length > 0 &&
                         !parts[0].Equals("nap", StringComparison.OrdinalIgnoreCase))
                     {
@@ -234,7 +238,7 @@ namespace FestivalFlatform.Service.Services.Implement
             string? desc = payload.Desc;
 
 
-            // Các giá trị nằm trong payload.Data
+        
             long? orderCode = payload.Data?.OrderCode;
             long? amount = payload.Data?.Amount;
             string? description = payload.Data?.Description;
@@ -276,14 +280,14 @@ namespace FestivalFlatform.Service.Services.Implement
                         payment.PaymentDate = DateTime.UtcNow;
                     }
 
-                    // 🔹 Lấy BoothWallet tương ứng từ BoothId trong order
+                 
                     var boothWallet = await _unitOfWork.Repository<BoothWallet>()
                         .GetAll()
                         .FirstOrDefaultAsync(w => w.BoothId == order.BoothId);
 
                     if (boothWallet != null)
                     {
-                        boothWallet.TotalBalance += amount.Value; // hoặc AmountPaid tùy theo schema DB
+                        boothWallet.TotalBalance += amount.Value;
                         boothWallet.UpdatedAt = DateTime.UtcNow;
                         _logger.LogInformation($"💰 Đã cộng {amount.Value} vào BoothWallet ID={boothWallet.BoothWalletId}");
                     }
@@ -358,11 +362,11 @@ namespace FestivalFlatform.Service.Services.Implement
 
                     if (description?.Contains("Hoa don", StringComparison.OrdinalIgnoreCase) == true)
                     {
-                        // Tìm payment theo OrderId
+                      
                         payment = await _unitOfWork.Repository<Payment>().GetAll()
                             .FirstOrDefaultAsync(p => p.OrderId == orderCode);
 
-                        // Hủy đơn hàng
+                       
                         var order = await _unitOfWork.Repository<Order>().GetAll()
                             .FirstOrDefaultAsync(o => o.OrderId == orderCode);
 
@@ -375,7 +379,7 @@ namespace FestivalFlatform.Service.Services.Implement
                     }
                     else
                     {
-                        // Lấy WalletId từ mô tả
+                        
                         int walletIdFromDesc = 0;
                         var parts = description?.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
 
@@ -384,7 +388,7 @@ namespace FestivalFlatform.Service.Services.Implement
                             walletIdFromDesc = parsedId;
                         }
 
-                        // Tìm payment theo WalletId
+                       
                         payment = await _unitOfWork.Repository<Payment>().GetAll()
                             .FirstOrDefaultAsync(p => p.WalletId == walletIdFromDesc);
                     }
@@ -409,11 +413,11 @@ namespace FestivalFlatform.Service.Services.Implement
 
                     if (description?.Contains("Hoa don", StringComparison.OrdinalIgnoreCase) == true)
                     {
-                        // Tìm payment theo OrderId
+                       
                         payment = await _unitOfWork.Repository<Payment>().GetAll()
                             .FirstOrDefaultAsync(p => p.OrderId == orderCode);
 
-                        // Hủy đơn hàng
+                        
                         var order = await _unitOfWork.Repository<Order>().GetAll()
                             .FirstOrDefaultAsync(o => o.OrderId == orderCode);
 
@@ -426,7 +430,7 @@ namespace FestivalFlatform.Service.Services.Implement
                     }
                     else
                     {
-                        // Lấy WalletId từ mô tả
+                        
                         int walletIdFromDesc = 0;
                         var parts = description?.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
 
@@ -435,7 +439,7 @@ namespace FestivalFlatform.Service.Services.Implement
                             walletIdFromDesc = parsedId;
                         }
 
-                        // Tìm payment theo WalletId
+                        
                         payment = await _unitOfWork.Repository<Payment>().GetAll()
                             .FirstOrDefaultAsync(p => p.WalletId == walletIdFromDesc);
                     }
@@ -456,13 +460,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
 
 
-        // hàm  handle payos webhook cho bên thứ 3 call vô => tạo API
-        // => sửa lý để lấy data từ body truyền vào
-        //sửa lý khúc    if (payload != null && payload.code =="00" || payload.status == "PAID" ) lồng thêm 1 if {payload.description contains=="Hoa don" thì ordercode là orderid} ngược lại
-        //ordercode sẽ là walletid 
-        //nếu là orderid thì sẽ chỏ vô bảng order kiếm cái order nào có id trùng đó thì chuyển status thành completed
-        //sau đó dựa vô dùng ordercode để so sánh với orderid trong bảng payment rồi chuyển status payment thành success
-        //nếu là wallet thì tăng balance thành amount tương như như trên nhưng dùng ordercode để so sánh với walletid.
+      
 
 
         public async Task<Payment> UpdatePaymentAsync(int id, string status, string? description)

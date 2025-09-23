@@ -41,7 +41,7 @@ namespace FestivalFlatform.Service.Services.Implement
         }
 
 
-        //HashPAss
+       
         private void CreatePasswordHash(string password, out string passwordHash)
         {
             passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
@@ -49,17 +49,16 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<AccountResponse> RegisterAccount(RegisterRequestAll request)
         {
-            // Kiểm tra email
+          
             var emailExisted = _unitOfWork.Repository<Account>().Find(x => x.Email == request.Email);
             if (emailExisted != null)
                 throw new CrudException(HttpStatusCode.Conflict, "Email đã tồn tại", request.Email);
 
-            // Kiểm tra số điện thoại
             var phoneNumberExisted = _unitOfWork.Repository<Account>().Find(x => x.PhoneNumber == request.PhoneNumber);
             if (phoneNumberExisted != null)
                 throw new CrudException(HttpStatusCode.Conflict, "Số điện thoại đã tồn tại", request.PhoneNumber);
 
-            // Hash password
+          
             CreatePasswordHash(request.Password, out string passwordHash);
 
             var account = new Account
@@ -68,16 +67,17 @@ namespace FestivalFlatform.Service.Services.Implement
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber,
                 RoleId = request.RoleId,
+                Status = request.Status ?? false,
                 ClassName = string.IsNullOrWhiteSpace(request.ClassName) ? null : request.ClassName.Trim(),
                 PasswordHash = passwordHash,
-                PlainPassword = request.Password, // 🔑 lưu plain password để gửi email
+                PlainPassword = request.Password, 
                 CreatedAt = DateTime.UtcNow
             };
 
             await _unitOfWork.Repository<Account>().InsertAsync(account);
             await _unitOfWork.CommitAsync();
 
-            // Tạo Wallet
+            
             var wallet = new Wallet
             {
                 AccountId = account.AccountId,
@@ -105,21 +105,21 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<AccountResponse> RegisterStudentAccountBySchoolManager(RegisterRequest request)
         {
-            // Check trùng Email
+            
             var emailExisted = _unitOfWork.Repository<Account>().Find(x => x.Email == request.Email);
             if (emailExisted != null)
             {
                 throw new CrudException(HttpStatusCode.Conflict, "Email đã tồn tại", request.Email.ToString());
             }
 
-            // Check trùng Phone
+           
             var phoneNumberExisted = _unitOfWork.Repository<Account>().Find(x => x.PhoneNumber == request.PhoneNumber);
             if (phoneNumberExisted != null)
             {
                 throw new CrudException(HttpStatusCode.Conflict, "Số điện thoại đã tồn tại");
             }
 
-            // Lấy role Student
+          
             var studentRole = await _unitOfWork.Repository<Role>()
                 .GetAll()
                 .FirstOrDefaultAsync(r => r.RoleName.ToLower() == "student");
@@ -129,10 +129,10 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.BadRequest, "Không tìm thấy role 'student'");
             }
 
-            // Hash password
+           
             CreatePasswordHash(request.Password, out string passwordHash);
 
-            // Tạo account
+          
             var account = new Account
             {
                 FullName = request.FullName,
@@ -140,7 +140,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 PhoneNumber = request.PhoneNumber,
                 RoleId = studentRole.RoleId,
                 PasswordHash = passwordHash,
-                PlainPassword = request.Password,   // 🔑 lưu mật khẩu gốc để gửi mail
+                PlainPassword = request.Password,  
                 ClassName = string.IsNullOrWhiteSpace(request.ClassName) ? null : request.ClassName.Trim(),
                 CreatedAt = DateTime.UtcNow
             };
@@ -152,14 +152,13 @@ namespace FestivalFlatform.Service.Services.Implement
             {
                 Id = account.AccountId,
                 Email = account.Email,
-                Pasword = account.PasswordHash,   // trả về hash để bảo mật
                 FullName = account.FullName,
                 ClassName = account.ClassName,
                 PhoneNumber = account.PhoneNumber,
                 RoleId = account.RoleId,
                 Status = account.Status,
                 CreatedAt = account.CreatedAt,
-                // ❌ KHÔNG trả PlainPassword trong response (chỉ dùng nội bộ để gửi mail)
+                
             };
         }
 
@@ -299,14 +298,14 @@ namespace FestivalFlatform.Service.Services.Implement
             IWorkbook workbook = new XSSFWorkbook(excelStream);
             ISheet sheet = workbook.GetSheetAt(0);
 
-            for (int rowIndex = 1; rowIndex <= sheet.LastRowNum; rowIndex++) // Bỏ header dòng 0
+            for (int rowIndex = 1; rowIndex <= sheet.LastRowNum; rowIndex++) 
             {
                 IRow? row = sheet.GetRow(rowIndex);
                 if (row == null) continue;
 
                 string? fullName = row.GetCell(0)?.ToString()?.Trim();
                 string? phoneNumber = row.GetCell(1)?.ToString()?.Trim();
-                string? className = row.GetCell(2)?.ToString()?.Trim();   // ✅ cột mới thêm
+                string? className = row.GetCell(2)?.ToString()?.Trim();   
                 string? email = row.GetCell(3)?.ToString()?.Trim();
                 string? password = row.GetCell(4)?.ToString()?.Trim();
                 string? roleName = row.GetCell(5)?.ToString()?.Trim();
@@ -360,17 +359,17 @@ namespace FestivalFlatform.Service.Services.Implement
                     FullName = fullName,
                     Email = email,
                     PhoneNumber = phoneNumber,
-                    ClassName = string.IsNullOrWhiteSpace(className) ? null : className, // ✅ thêm field
+                    ClassName = string.IsNullOrWhiteSpace(className) ? null : className,
                     RoleId = role.RoleId,
                     PasswordHash = passwordHash,
                     CreatedAt = DateTime.UtcNow,
-                    Status = false // mặc định false
+                    Status = true 
                 };
 
                 await _unitOfWork.Repository<Account>().InsertAsync(account);
                 await _unitOfWork.CommitAsync();
 
-                // ✅ Tạo Wallet ngay sau khi tạo Account
+               
                 var wallet = new Wallet
                 {
                     AccountId = account.AccountId,
@@ -386,7 +385,7 @@ namespace FestivalFlatform.Service.Services.Implement
                     Email = account.Email,
                     FullName = account.FullName,
                     PhoneNumber = account.PhoneNumber,
-                    ClassName = account.ClassName,   // ✅ trả về
+                    ClassName = account.ClassName,   
                     RoleId = account.RoleId,
                     CreatedAt = account.CreatedAt,
                     Status = account.Status,
@@ -394,7 +393,7 @@ namespace FestivalFlatform.Service.Services.Implement
                     Balance = wallet.Balance
                 });
 
-                // Tạo SchoolAccountRelation
+               
                 var relation = new SchoolAccountRelation
                 {
                     SchoolId = schoolId,
@@ -409,16 +408,15 @@ namespace FestivalFlatform.Service.Services.Implement
         }
 
 
-        // Nếu muốn lấy relationType đã đọc lúc tạo account, bạn có thể lưu lại map accountId -> relationType ở trên và dùng
         private async Task<string> GetRelationTypeForAccountAsync(int accountId)
         {
-            // TODO: tùy bạn lưu relationType như nào, hoặc truyền param vào
-            return "student"; // placeholder
+            
+            return "student"; 
         }
         public async Task<bool> UpdatePasswordAsync(int accountId, string oldPassword, string newPassword)
         {
             {
-                // Lấy account từ DB
+                
                 var account = await _unitOfWork.Repository<Account>()
                     .GetAll()
                     .FirstOrDefaultAsync(a => a.AccountId == accountId);
@@ -426,15 +424,15 @@ namespace FestivalFlatform.Service.Services.Implement
                 if (account == null)
                     throw new Exception("❌ Tài khoản không tồn tại");
 
-                // Kiểm tra mật khẩu cũ
+             
                 bool isOldPasswordCorrect = BCrypt.Net.BCrypt.Verify(oldPassword, account.PasswordHash);
                 if (!isOldPasswordCorrect)
                     throw new Exception("❌ Mật khẩu cũ không đúng");
 
-                // Hash mật khẩu mới
+               
                 string hashedNewPassword = BCrypt.Net.BCrypt.HashPassword(newPassword);
 
-                // Cập nhật vào DB
+                
                 account.PasswordHash = hashedNewPassword;
                 await _unitOfWork.SaveChangesAsync();
 
@@ -459,11 +457,10 @@ namespace FestivalFlatform.Service.Services.Implement
             if (account == null)
                 throw new Exception($"Account with email {toEmail} not found");
 
-            // Link xác nhận
+          
             var uriBuilder = new UriBuilder(defaultLink);
             var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-            query["id"] = account.AccountId.ToString();
-            query["status"] = "true";
+            query["id"] = account.AccountId.ToString();           
             uriBuilder.Query = query.ToString();
             var buttonLink = uriBuilder.ToString();
             var htmlBody = @"
@@ -541,7 +538,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             await smtp.SendMailAsync(mail);
             account.PlainPassword = null;
-            account.Status = true; // nếu muốn kích hoạt luôn ở đây
+            account.Status = true;
             account.UpdatedAt = DateTime.UtcNow;
             await _unitOfWork.CommitAsync();
         }
@@ -559,11 +556,11 @@ namespace FestivalFlatform.Service.Services.Implement
             if (account == null)
                 throw new CrudException(HttpStatusCode.NotFound, "Account không tồn tại", accountId.ToString());
 
-            // Chỉ áp dụng cho role SchoolManager
+           
             if (account.Role == null || account.Role.RoleName != Roles.SchoolManager)
                 throw new CrudException(HttpStatusCode.BadRequest, "Chỉ account có role SchoolManager mới được cập nhật status", accountId.ToString());
 
-            // Nếu status null → mặc định true
+            
             account.Status = status ?? true;
             account.UpdatedAt = DateTime.UtcNow;
 
@@ -579,14 +576,14 @@ namespace FestivalFlatform.Service.Services.Implement
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             var random = new Random();
-            return new string(Enumerable.Repeat(chars, 6) // ✅ cố định 6 ký tự
+            return new string(Enumerable.Repeat(chars, 6) 
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
 
         public async Task<bool> ForgotPasswordAsync(string email)
         {
-            // 1. Tìm account theo email
+           
             var account = await _unitOfWork.Repository<Account>()
                 .GetAll()
                 .FirstOrDefaultAsync(a => a.Email == email);
@@ -594,21 +591,21 @@ namespace FestivalFlatform.Service.Services.Implement
             if (account == null)
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy tài khoản với email này", email);
 
-            // 2. Generate mật khẩu mới (6 ký tự)
+            
             var newPassword = GenerateRandomPassword();
 
-            // 3. Hash mật khẩu
+           
             CreatePasswordHash(newPassword, out string passwordHash);
 
-            // 4. Update vào DB
+          
             account.PasswordHash = passwordHash;
-            account.PlainPassword = newPassword; // để gửi mail
+            account.PlainPassword = newPassword;
             account.UpdatedAt = DateTime.UtcNow;
 
 
             await _unitOfWork.CommitAsync();
 
-            // 5. Lấy config SMTP
+           
             var smtpSection = _config.GetSection("Smtp");
             var host = smtpSection["Host"];
             var port = int.Parse(smtpSection["Port"]);
@@ -616,7 +613,7 @@ namespace FestivalFlatform.Service.Services.Implement
             var pass = smtpSection["Pass"];
             var enableSsl = bool.Parse(smtpSection["EnableSsl"]);
 
-            // 6. Tạo nội dung email (theme đẹp)
+           
             var htmlBody = @"
 <!DOCTYPE html>
 <html lang='en'>
@@ -661,7 +658,7 @@ namespace FestivalFlatform.Service.Services.Implement
 </body>
 </html>";
 
-            // 7. Gửi email
+           
             using var smtp = new SmtpClient(host, port)
             {
                 Credentials = new NetworkCredential(user, pass),
@@ -682,7 +679,7 @@ namespace FestivalFlatform.Service.Services.Implement
         private string GenerateOtp()
         {
             var random = new Random();
-            return random.Next(100000, 999999).ToString(); // 6 chữ số
+            return random.Next(100000, 999999).ToString(); 
         }
 
         public async Task<bool> SendOtpAsync(string email)
@@ -694,15 +691,14 @@ namespace FestivalFlatform.Service.Services.Implement
             if (account == null)
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy tài khoản", email);
 
-            // Generate OTP
             var otp = GenerateOtp();
 
-            // Lưu vào DB
+           
             account.OtpVerify = otp;
             account.UpdatedAt = DateTime.UtcNow;
             await _unitOfWork.CommitAsync();
 
-            // SMTP config
+            
             var smtpSection = _config.GetSection("Smtp");
             var host = smtpSection["Host"];
             var port = int.Parse(smtpSection["Port"]);
@@ -710,7 +706,7 @@ namespace FestivalFlatform.Service.Services.Implement
             var pass = smtpSection["Pass"];
             var enableSsl = bool.Parse(smtpSection["EnableSsl"]);
 
-            // HTML template OTP
+           
             var htmlBody = @"
 <!DOCTYPE html
     PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
@@ -790,12 +786,12 @@ namespace FestivalFlatform.Service.Services.Implement
             if (account.OtpVerify == null || account.OtpVerify != otp)
                 throw new CrudException(HttpStatusCode.BadRequest, "OTP không hợp lệ", otp);
 
-            // Reset OTP sau khi xác nhận thành công
+            
             account.OtpVerify = null;
             account.UpdatedAt = DateTime.UtcNow;
             await _unitOfWork.CommitAsync();
 
-            // ✅ Gọi luôn forgot password để gửi mật khẩu mới
+            
             return await ForgotPasswordAsync(email);
         }
 

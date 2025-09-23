@@ -41,7 +41,7 @@ namespace FestivalFlatform.Service.DTOs.Response
 
     public class RevenueSeriesPoint
     {
-        public string Label { get; set; } = string.Empty; // hiển thị (01/09, 09/2025,...)
+        public string Label { get; set; } = string.Empty; 
         public DateTime Date { get; set; }
         public decimal Revenue { get; set; }
         public int Orders { get; set; }

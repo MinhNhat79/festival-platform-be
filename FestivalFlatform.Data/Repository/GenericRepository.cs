@@ -121,7 +121,7 @@ namespace FestivalFlatform.Data.Repository
             return Table.Remove(entity);
         }
 
-        //async
+      
         public async Task InsertAsync(T entity)
         {
             await Table.AddAsync(entity);

@@ -83,7 +83,6 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Include(fc => fc.Festival)
                 .AsQueryable();
 
-            // filter
             query = query
                 .Where(fc => !commissionId.HasValue || commissionId == 0 || fc.CommissionId == commissionId.Value)
                 .Where(fc => !festivalId.HasValue || festivalId == 0 || fc.FestivalId == festivalId.Value);

@@ -21,7 +21,7 @@ namespace FestivalFlatform.Data.Models
         public string? Description { get; set; }
 
         [Required]
-        public string ItemType { get; set; } = null!; // food, beverage
+        public string ItemType { get; set; } = null!; 
 
 
         public decimal MinPrice { get; set; }

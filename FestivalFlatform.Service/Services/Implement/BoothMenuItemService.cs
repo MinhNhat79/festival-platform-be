@@ -51,7 +51,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy MenuItem", request.MenuItemId.ToString());
             }
 
-            // Kiểm tra custom price nếu được truyền vào
+         
             decimal customPrice = request.CustomPrice ?? menuItem.MinPrice;
 
             if (customPrice < menuItem.MinPrice || customPrice > menuItem.MaxPrice)

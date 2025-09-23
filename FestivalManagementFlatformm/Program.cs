@@ -29,7 +29,7 @@ namespace FF.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Lấy cấu hình JWT từ appsettings.json
+           
             var jwtSettings = builder.Configuration.GetSection("JwtAuth");
             var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
 
@@ -56,7 +56,7 @@ namespace FF.API
             });
             #endregion
 
-            // Authorization với Roles
+           
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy(Roles.Admin, policy => policy.RequireRole(Roles.Admin));
@@ -71,16 +71,15 @@ namespace FF.API
                 config.UseMailKit(builder.Configuration.GetSection("Smtp").Get<MailKitOptions>());
             });
 
-            // DbContext
+            
             builder.Services.AddDbContext<FestivalFlatformDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            // Identity
             builder.Services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<FestivalFlatformDbContext>()
                 .AddDefaultTokenProviders();
 
-            // UnitOfWork + Services
+            
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<ILoginService, LoginService>();
             builder.Services.AddScoped<IAccountService, AccountService>();
@@ -118,6 +117,7 @@ namespace FF.API
             builder.Services.AddScoped<IReviewService, ReviewService>();
             builder.Services.AddScoped<IFestivalCommissionService, FestivalCommissionService>();
             builder.Services.AddScoped<IStatisticsService, StatisticsService>();
+            builder.Services.AddScoped<ICommentService, CommentService>();
 
             builder.Services.AddSingleton<PayOS>(sp =>
             {
@@ -128,7 +128,7 @@ namespace FF.API
                 return new PayOS(clientId, apiKey, checksumKey);
             });
 
-            // Hangfire config
+            
             builder.Services.AddHangfire(config =>
                 config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                       .UseSimpleAssemblyNameTypeSerializer()
@@ -137,7 +137,7 @@ namespace FF.API
 
             builder.Services.AddHangfireServer();
 
-            // Controllers + Swagger
+            
             builder.Services.AddControllers()
                 .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
@@ -173,7 +173,7 @@ namespace FF.API
 
             var app = builder.Build();
 
-            // Swagger
+            
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FF.API v1"));
 
@@ -185,10 +185,10 @@ namespace FF.API
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            // Hangfire Dashboard
+         
             app.UseHangfireDashboard();
 
-            // 🔥 RecurringJob đặt sau khi app chạy
+           
             RecurringJob.AddOrUpdate<IFestivalService>(
                  "update-festival-status",
                  service => service.UpdateFestivalStatusDailyAsync(),

@@ -26,7 +26,7 @@ namespace FestivalFlatform.Service.Services.Interface
     int? schoolId = null);
 
         Task<SchoolSummaryResponse> GetSchoolSummaryAsync(
-    int schoolId,
+    int? schoolId,
     string? range = null,
     DateTime? startDate = null,
     DateTime? endDate = null);
@@ -39,7 +39,7 @@ namespace FestivalFlatform.Service.Services.Interface
       DateTime? endDate = null);
 
         Task<List<FestivalPerformanceResponse>> GetFestivalPerformanceAsync(
-    int schoolId,
+    int? schoolId,
     string? range = null,
     DateTime? startDate = null,
     DateTime? endDate = null);

@@ -16,7 +16,7 @@ namespace FestivalFlatform.Data.Models
         public int SessionId { get; set; }
 
         [Required]
-        public string MessageType { get; set; } = null!; // user_text, ai_text, etc
+        public string MessageType { get; set; } = null!; 
 
         public string? ContentText { get; set; }
 

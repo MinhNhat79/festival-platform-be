@@ -15,7 +15,7 @@ public class AccountFestivalWallet
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
-    // Navigation properties
+  
     public virtual Festival Festival { get; set; } = null!;
     public virtual Account Account { get; set; } = null!;
 }

@@ -21,7 +21,6 @@ namespace FestivalFlatform.Data.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
-        // Navigation
         public virtual Account Account { get; set; } = null!;
     }
 }

@@ -32,13 +32,13 @@ namespace FestivalFlatform.Service.Services.Implement
         }
         public async Task<Festival> CreateFestivalAsync(FestivalCreateRequest request)
         {
-            // ✅ Validate school
+           
             var schoolExists = await _unitOfWork.Repository<School>()
                 .AnyAsync(g => g.SchoolId == request.OrganizerSchoolId);
             if (!schoolExists)
                 throw new CrudException(HttpStatusCode.NotFound, "SchoolId không tồn tại", request.OrganizerSchoolId.ToString());
 
-            // ✅ Khởi tạo festival
+           
             var festival = new Festival
             {
                 SchoolId = request.OrganizerSchoolId,
@@ -60,10 +60,10 @@ namespace FestivalFlatform.Service.Services.Implement
                 Description = request.Description
             };
 
-            // ✅ Insert Festival
+           
             await _unitOfWork.Repository<Festival>().InsertAsync(festival);
 
-            // ✅ Commit
+           
             await _unitOfWork.CommitAsync();
 
             return festival;
@@ -109,7 +109,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
                 if (string.Equals(status.Trim(), "completed", StringComparison.OrdinalIgnoreCase))
                 {
-                    // Lấy tất cả booth theo festivalId
+                   
                     var booths = await _unitOfWork.Repository<Booth>()
                         .GetAll()
                         .Where(b => b.FestivalId == festivalId)
@@ -121,13 +121,13 @@ namespace FestivalFlatform.Service.Services.Implement
                     {
                         foreach (var booth in booths)
                         {
-                            // Tính doanh thu của booth
+                           
                             var boothRevenue = await _unitOfWork.Repository<Order>()
                                 .GetAll()
-                                .Where(o => o.BoothId == booth.BoothId)
-                                .SumAsync(o => o.TotalAmount);
+                                .Where(o => o.BoothId == booth.BoothId && o.Status.ToLower() == "completed")
+                                .SumAsync(o => (decimal?)o.TotalAmount) ?? 0m;
 
-                            // Lấy BoothWallet tương ứng
+                           
                             var boothWallet = await _unitOfWork.Repository<BoothWallet>()
                                 .FindAsync(w => w.BoothId == booth.BoothId);
 
@@ -137,12 +137,14 @@ namespace FestivalFlatform.Service.Services.Implement
                                 boothWallet.UpdatedAt = DateTime.UtcNow;
                             }
 
-                            // Cộng dồn doanh thu vào festival
+                           
+                            booth.Status = StatusBooth.Closed;
+                            booth.UpdatedAt = DateTime.UtcNow;
+
                             totalRevenue += boothRevenue;
                         }
                     }
 
-                    // Gán vào festival
                     festival.TotalRevenue = totalRevenue;
                 }
             }
@@ -197,7 +199,7 @@ namespace FestivalFlatform.Service.Services.Implement
             if (festival == null)
                 throw new CrudException(HttpStatusCode.NotFound, "Festival không tồn tại", festivalId.ToString());
 
-            // Xoá con trước
+            
             if (festival.Images.Any())
                 _unitOfWork.Repository<Image>().DeleteRange(festival.Images.AsQueryable());
 
@@ -234,7 +236,6 @@ namespace FestivalFlatform.Service.Services.Implement
                 _unitOfWork.Repository<AccountFestivalWallet>().DeleteRange(festival.AccountFestivalWallets.AsQueryable());
 
 
-            // Cuối cùng xoá Festival
             _unitOfWork.Repository<Festival>().Delete(festival);
 
             await _unitOfWork.CommitAsync();
@@ -242,7 +243,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<bool> DistributeCommissionAsync(DistributeCommissionRequest request)
         {
-            // 1. Kiểm tra festival tồn tại và status = Completed
+           
             var festival = await _unitOfWork.Repository<Festival>()
                 .GetAll()
                 .FirstOrDefaultAsync(f => f.FestivalId == request.FestivalId);
@@ -253,7 +254,7 @@ namespace FestivalFlatform.Service.Services.Implement
             if (festival.Status != StatusFestival.Completed)
                 throw new InvalidOperationException("Festival must be completed before distributing commission");
 
-            // 2. Lấy tất cả BoothWallet thuộc các Booth của festival
+            
             var boothWallets = await _unitOfWork.Repository<BoothWallet>()
                 .GetAll()
                 .Include(bw => bw.Booth)
@@ -263,13 +264,12 @@ namespace FestivalFlatform.Service.Services.Implement
             if (!boothWallets.Any())
                 throw new InvalidOperationException("No booth wallets found for this festival");
 
-            // 3. Tính tổng doanh thu
+            
             decimal totalRevenue = boothWallets.Sum(bw => bw.TotalBalance);
 
-            // 4. Tính tiền hoa hồng admin nhận
+            
             decimal commissionAmount = totalRevenue * (request.CommissionRate / 100);
 
-            // 5. Lấy Wallet của admin (RoleId = 1)
             var adminWallet = await _unitOfWork.Repository<Wallet>()
                 .GetAll()
                 .Include(w => w.Account)
@@ -278,11 +278,11 @@ namespace FestivalFlatform.Service.Services.Implement
             if (adminWallet == null)
                 throw new InvalidOperationException("Admin wallet not found");
 
-            // Cộng hoa hồng vào Wallet của admin
+            
             adminWallet.Balance += commissionAmount;
             adminWallet.UpdateAt = DateTime.UtcNow;
 
-            // 6. Trừ tiền từ BoothWallets (chia đều)
+          
             int boothCount = boothWallets.Count;
             decimal deductionPerBooth = commissionAmount / boothCount;
 
@@ -294,7 +294,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 boothWallet.UpdatedAt = DateTime.UtcNow;
             }
 
-            // 7. Lưu thay đổi
+           
             await _unitOfWork.CommitAsync();
 
             return true;
@@ -313,7 +313,7 @@ namespace FestivalFlatform.Service.Services.Implement
             {
                 var vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
 
-                // Giờ hiện tại theo VN
+               
                 var vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, vietnamTimeZone);
                 var todayVN = vietnamTime.Date;
 
@@ -330,7 +330,7 @@ namespace FestivalFlatform.Service.Services.Implement
                         if (fest.Status == StatusFestival.Published && startVN == todayVN)
                         {
                             fest.Status = StatusFestival.Ongoing;
-                            fest.UpdatedAt = DateTime.UtcNow; // lưu UTC
+                            fest.UpdatedAt = DateTime.UtcNow; 
                         }
                     }
 
@@ -340,7 +340,7 @@ namespace FestivalFlatform.Service.Services.Implement
                         if (fest.Status == StatusFestival.Ongoing && endVN == todayVN)
                         {
                             fest.Status = StatusFestival.Completed;
-                            fest.UpdatedAt = DateTime.UtcNow; // lưu UTC
+                            fest.UpdatedAt = DateTime.UtcNow; 
                         }
                     }
                 }
@@ -389,7 +389,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new KeyNotFoundException("Festival không tồn tại");
             if (!string.Equals(festival.Status, "draft", StringComparison.OrdinalIgnoreCase))
                 throw new InvalidOperationException("Chỉ có thể cập nhật festival khi đang ở trạng thái draft");
-            // 🎯 Update Festival fields
+          
             festival.SchoolId = request.SchoolId ?? festival.SchoolId;
             festival.FestivalName = request.FestivalName ?? festival.FestivalName;
             festival.Theme = request.Theme ?? festival.Theme;
@@ -408,7 +408,7 @@ namespace FestivalFlatform.Service.Services.Implement
             festival.cancellationReason = request.CancellationReason;
             festival.UpdatedAt = DateTime.UtcNow;
 
-            // 🎯 Update Images
+           
             if (request.Images != null)
             {
                 // Xóa image không còn trong request
@@ -418,7 +418,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 foreach (var img in removeImages)
                     _unitOfWork.Repository<Image>().Delete(img);
 
-                // Update / Insert
+              
                 foreach (var imgReq in request.Images)
                 {
                     var existing = festival.Images.FirstOrDefault(i => i.ImageId == imgReq.ImageId);
@@ -436,7 +436,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 }
             }
 
-            // 🎯 Update FestivalMaps + Locations
+          
             if (request.FestivalMaps != null)
             {
                 var removeMaps = festival.FestivalMaps
@@ -455,7 +455,7 @@ namespace FestivalFlatform.Service.Services.Implement
                         existingMap.MapUrl = mapReq.MapUrl;
                         existingMap.LastUpdated = DateTime.UtcNow;
 
-                        // Update locations
+                    
                         var removeLocs = existingMap.Locations
                             .Where(l => !mapReq.Locations.Any(rl => rl.LocationId == l.LocationId))
                             .ToList();
@@ -488,7 +488,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 }
             }
 
-            // 🎯 Update FestivalMenus + MenuItems
+         
             if (request.FestivalMenus != null)
             {
                 var removeMenus = festival.FestivalMenus
@@ -506,7 +506,7 @@ namespace FestivalFlatform.Service.Services.Implement
                         existingMenu.Description = menuReq.Description;
                         existingMenu.UpdatedAt = DateTime.UtcNow;
 
-                        // Update menu items
+                       
                         var removeItems = existingMenu.MenuItems
                             .Where(i => !menuReq.MenuItems.Any(ri => ri.ItemId == i.ItemId))
                             .ToList();

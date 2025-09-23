@@ -30,7 +30,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<Minigame> CreateMinigameAsync(MinigameCreateRequest request)
         {
-            // Validate Booth
+           
             var boothExists = await _unitOfWork.Repository<Booth>()
                 .AnyAsync(b => b.BoothId == request.BoothId);
 
@@ -70,7 +70,7 @@ namespace FestivalFlatform.Service.Services.Implement
             if (minigame == null)
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy Minigame", gameId.ToString());
 
-            // Kiểm tra Booth tồn tại
+           
             var boothExists = await _unitOfWork.Repository<Booth>()
                 .AnyAsync(b => b.BoothId == boothId);
             if (!boothExists)

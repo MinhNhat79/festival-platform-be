@@ -29,7 +29,7 @@ namespace FestivalFlatform.Service.Services.Implement
             if (request == null)
                 throw new ArgumentNullException(nameof(request), "Request không được null");
 
-            // Kiểm tra booth tồn tại chưa
+          
             var booth = await _unitOfWork.Repository<Booth>().GetAll()
                 .FirstOrDefaultAsync(b => b.BoothId == request.BoothId);
 

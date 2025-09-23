@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FestivalFlatform.Data.Migrations
 {
     [DbContext(typeof(FestivalFlatformDbContext))]
-    [Migration("20250918152547_InitialCreate")]
+    [Migration("20250920132530_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -395,6 +395,47 @@ namespace FestivalFlatform.Data.Migrations
                     b.HasIndex("AccountId");
 
                     b.ToTable("ChatSessions");
+                });
+
+            modelBuilder.Entity("FestivalFlatform.Data.Models.Comment", b =>
+                {
+                    b.Property<int>("CommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"));
+
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsEdit")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ParentCommentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReviewId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("CommentId");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("ParentCommentId");
+
+                    b.HasIndex("ReviewId");
+
+                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("FestivalFlatform.Data.Models.Festival", b =>
@@ -1522,6 +1563,32 @@ namespace FestivalFlatform.Data.Migrations
                     b.Navigation("Account");
                 });
 
+            modelBuilder.Entity("FestivalFlatform.Data.Models.Comment", b =>
+                {
+                    b.HasOne("FestivalFlatform.Data.Models.Account", "Account")
+                        .WithMany("Comments")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("FestivalFlatform.Data.Models.Comment", "ParentComment")
+                        .WithMany("Replies")
+                        .HasForeignKey("ParentCommentId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("FestivalFlatform.Data.Models.Review", "Review")
+                        .WithMany("Comments")
+                        .HasForeignKey("ReviewId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("ParentComment");
+
+                    b.Navigation("Review");
+                });
+
             modelBuilder.Entity("FestivalFlatform.Data.Models.Festival", b =>
                 {
                     b.HasOne("FestivalFlatform.Data.Models.School", "School")
@@ -1914,6 +1981,8 @@ namespace FestivalFlatform.Data.Migrations
 
                     b.Navigation("ChatSessions");
 
+                    b.Navigation("Comments");
+
                     b.Navigation("FestivalParticipants");
 
                     b.Navigation("GroupMemberships");
@@ -1957,6 +2026,11 @@ namespace FestivalFlatform.Data.Migrations
             modelBuilder.Entity("FestivalFlatform.Data.Models.ChatSession", b =>
                 {
                     b.Navigation("Messages");
+                });
+
+            modelBuilder.Entity("FestivalFlatform.Data.Models.Comment", b =>
+                {
+                    b.Navigation("Replies");
                 });
 
             modelBuilder.Entity("FestivalFlatform.Data.Models.Festival", b =>
@@ -2013,6 +2087,11 @@ namespace FestivalFlatform.Data.Migrations
                     b.Navigation("OrderItems");
 
                     b.Navigation("Payments");
+                });
+
+            modelBuilder.Entity("FestivalFlatform.Data.Models.Review", b =>
+                {
+                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("FestivalFlatform.Data.Models.Role", b =>

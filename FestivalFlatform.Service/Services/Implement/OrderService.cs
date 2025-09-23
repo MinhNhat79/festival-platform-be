@@ -29,13 +29,13 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<Order> CreateOrderAsync(CreateOrderRequest request)
         {
-            // Check account exists
+          
             var accountExists = await _unitOfWork.Repository<Account>()
                 .AnyAsync(a => a.AccountId == request.AccountId);
             if (!accountExists)
                 throw new ArgumentException("Account does not exist");
 
-            // Check booth exists
+            
             var boothExists = await _unitOfWork.Repository<Booth>()
                 .AnyAsync(b => b.BoothId == request.BoothId);
             if (!boothExists)
@@ -49,7 +49,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 PointsUsed = request.PointsUsed,
                 CashAmount = request.CashAmount,
                 Notes = request.Notes,
-                Status = request.Status ?? StatusOrder.Pending, // nếu có truyền thì dùng, không thì pending
+                Status = request.Status ?? StatusOrder.Pending, 
                 OrderDate = DateTime.UtcNow,
             };
 
