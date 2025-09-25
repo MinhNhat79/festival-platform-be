@@ -64,7 +64,7 @@ namespace FestivalFlatform.Service.Services.Implement
                     };
                 }
 
-                // So sánh mật khẩu trực tiếp (hoặc dùng hàm verify nếu hash)
+              
                 if (!BCrypt.Net.BCrypt.Verify(password, account.PasswordHash))
                 {
                     return new LoginResponse
@@ -74,13 +74,23 @@ namespace FestivalFlatform.Service.Services.Implement
                     };
                 }
 
-                var claims = new List<Claim>
-{
-    new Claim(ClaimTypes.Name, account.Email),
-    new Claim(ClaimTypes.Role, account.Role?.RoleName ?? ""), // đảm bảo null-safe
-    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) // 👈 thêm dòng này
-};
+           
+                if (!account.Status)
+                {
+                    return new LoginResponse
+                    {
+                        Success = false,
+                        Message = "Tài khoản của bạn đang bị khóa hoặc chưa được kích hoạt."
+                    };
+                }
 
+        
+                var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, account.Email),
+            new Claim(ClaimTypes.Role, account.Role?.RoleName ?? ""),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
 
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtAuth:Key"]));
                 var credentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);

@@ -14,6 +14,6 @@ namespace FestivalFlatform.Service.Services.Interface
         Task DeleteBoothMenuItemAsync(int id);
         Task<List<BoothMenuItem>> SearchBoothMenuItemsAsync(
         int? boothMenuItemId, int? boothId, int? menuItemId, string? status, int? pageNumber, int? pageSize);
-        Task<BoothMenuItem> UpdateBoothMenuItemAsync(int id, decimal? customPrice, int? quantityLimit, string? status);
+        Task<BoothMenuItem> UpdateBoothMenuItemAsync(int id, decimal? customPrice, int? quantityLimit, int? remainingQuantity, string? status);
     }
 }

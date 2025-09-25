@@ -35,10 +35,19 @@ namespace FestivalFlatform.Data.Models
         public int RegisteredBeverageBooths { get; set; } = 0;
 
         public string Status { get; set; } = "draft";
+        public decimal TotalRevenue { get; set; } = 0;
+        public string? Description { get; set; }
+
+        public string? cancellationReason { get; set; }
+        public int TotalRegisteredParticipants { get; set; } = 0;
+        public double Avr_Rating { get; set; } = 0;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
 
         public virtual School School { get; set; } = null!;
+
+        public virtual ICollection<AccountFestivalWallet> AccountFestivalWallets { get; set; } = new List<AccountFestivalWallet>();
+
 
 
         public virtual ICollection<Image> Images { get; set; } = new List<Image>();
@@ -46,6 +55,12 @@ namespace FestivalFlatform.Data.Models
         public virtual ICollection<Booth> Booths { get; set; } = new List<Booth>();
         public virtual ICollection<FestivalIngredient> FestivalIngredients { get; set; } = new List<FestivalIngredient>();
         public virtual ICollection<FestivalMap> FestivalMaps { get; set; } = new List<FestivalMap>();
+        public virtual ICollection<FestivalMenu> FestivalMenus { get; set; } = new List<FestivalMenu>();
         public virtual ICollection<FestivalSchool> FestivalSchools { get; set; } = new List<FestivalSchool>();
+        public virtual ICollection<FestivalParticipant> FestivalParticipants { get; set; } = new List<FestivalParticipant>();
+        public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+        public virtual FestivalCommission? FestivalCommission { get; set; }
+
+
     }
 }

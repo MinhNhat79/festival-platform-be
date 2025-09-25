@@ -55,6 +55,18 @@
               "target": "Package",
               "version": "[4.0.3, )"
             },
+            "Hangfire.AspNetCore": {
+              "target": "Package",
+              "version": "[1.8.21, )"
+            },
+            "Hangfire.Core": {
+              "target": "Package",
+              "version": "[1.8.21, )"
+            },
+            "Hangfire.SqlServer": {
+              "target": "Package",
+              "version": "[1.8.21, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.16, )"
@@ -163,9 +175,33 @@
               "target": "Package",
               "version": "[12.0.1, )"
             },
+            "EPPlus": {
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
             "EntityFramework": {
               "target": "Package",
               "version": "[6.5.1, )"
+            },
+            "ExcelDataReader": {
+              "target": "Package",
+              "version": "[3.7.0, )"
+            },
+            "ExcelDataReader.DataSet": {
+              "target": "Package",
+              "version": "[3.7.0, )"
+            },
+            "Hangfire.AspNetCore": {
+              "target": "Package",
+              "version": "[1.8.21, )"
+            },
+            "Hangfire.Core": {
+              "target": "Package",
+              "version": "[1.8.21, )"
+            },
+            "Hangfire.SqlServer": {
+              "target": "Package",
+              "version": "[1.8.21, )"
             },
             "Microsoft.AspNetCore.Identity": {
               "target": "Package",
@@ -183,6 +219,10 @@
               "target": "Package",
               "version": "[8.0.16, )"
             },
+            "NPOI": {
+              "target": "Package",
+              "version": "[2.7.4, )"
+            },
             "Swashbuckle.AspNetCore.SwaggerGen": {
               "target": "Package",
               "version": "[8.1.4, )"
@@ -190,6 +230,10 @@
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
               "version": "[8.12.0, )"
+            },
+            "payOS": {
+              "target": "Package",
+              "version": "[1.0.9, )"
             }
           },
           "imports": [

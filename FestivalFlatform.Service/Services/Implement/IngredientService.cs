@@ -29,7 +29,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<Ingredient> CreateIngredientAsync(IngredientCreateRequest request)
         {
-            // Kiểm tra Supplier có tồn tại không
+      
             var supplier = await _unitOfWork.Repository<Supplier>().FindAsync(s => s.SupplierId == request.SupplierId);
             if (supplier == null)
             {
@@ -96,10 +96,10 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(i => !minPrice.HasValue || i.PricePerUnit >= minPrice.Value)
                 .Where(i => !maxPrice.HasValue || i.PricePerUnit <= maxPrice.Value);
 
-            int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
-            int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
+            //int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
+            //int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
 
-            query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
+            //query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
 
             var result = await query.ToListAsync();
 

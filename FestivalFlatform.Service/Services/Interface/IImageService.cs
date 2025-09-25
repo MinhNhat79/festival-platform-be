@@ -24,6 +24,7 @@ namespace FestivalFlatform.Service.Services.Interface
        int? menuItemId,
        int? boothId,
        int? festivalId,
+       int? boothMenueItemid,
        string? imageUrl,
        string? imageName,
        int? pageNumber,

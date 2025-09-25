@@ -16,5 +16,6 @@ namespace FestivalFlatform.Service.Services.Interface
         int? festivalIngredientId, int? festivalId, int? ingredientId,
         string? status, int? pageNumber, int? pageSize);
         Task DeleteFestivalIngredientAsync(int id);
+        Task UpdateFestivaIngredientStatusToRejectAsync(int id, string? rejectReason);
     }
 }

@@ -12,7 +12,7 @@ namespace FestivalFlatform.Service.DTOs.Request
         public string GameName { get; set; } = null!;
        
         public string? Rules { get; set; }
-        public int? RewardPoints { get; set; } // optional
+        public int? RewardPoints { get; set; }
 
     }
 }

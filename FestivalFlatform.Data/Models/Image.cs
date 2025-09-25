@@ -24,7 +24,8 @@ namespace FestivalFlatform.Data.Models
         public int? MenuItemId { get; set; }
         public int? BoothId { get; set; }
         public int? FestivalId { get; set; }
-
+        public int? BoothMenuItemId { get; set; }
+        public virtual BoothMenuItem? BoothMenuItem { get; set; }
         public virtual MenuItem? MenuItem { get; set; }
         public virtual Booth? Booth { get; set; }
         public virtual Festival? Festival { get; set; }

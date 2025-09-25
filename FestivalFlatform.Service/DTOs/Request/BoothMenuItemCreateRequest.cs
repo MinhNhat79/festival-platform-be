@@ -12,5 +12,6 @@ namespace FestivalFlatform.Service.DTOs.Request
         public int MenuItemId { get; set; }
         //public decimal? CustomPrice { get; set; }
         public int? QuantityLimit { get; set; }
+        public decimal ?CustomPrice { get; set; }
     }
 }

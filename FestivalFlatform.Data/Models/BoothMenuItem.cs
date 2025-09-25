@@ -22,11 +22,15 @@ namespace FestivalFlatform.Data.Models
 
         public int? QuantityLimit { get; set; }
 
+        public int? RemainingQuantity { get; set; }
+
         public string Status { get; set; } = "active";
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public virtual Booth Booth { get; set; } = null!;
         public virtual MenuItem MenuItem { get; set; } = null!;
+
+        public virtual Image? Image { get; set; }
     }
 }

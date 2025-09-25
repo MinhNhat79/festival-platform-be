@@ -78,10 +78,10 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(q => !gameId.HasValue || q.GameId == gameId.Value)
                 .Where(q => string.IsNullOrWhiteSpace(questionText) || q.QuestionText.Contains(questionText.Trim()));
 
-            int currentPage = pageNumber.GetValueOrDefault(1);
-            int currentSize = pageSize.GetValueOrDefault(10);
+            //int currentPage = pageNumber.GetValueOrDefault(1);
+            //int currentSize = pageSize.GetValueOrDefault(10);
 
-            return await query.Skip((currentPage - 1) * currentSize).Take(currentSize).ToListAsync();
+            return await query.ToListAsync();
         }
         public async Task<bool> DeleteQuestionAsync(int questionId)
         {

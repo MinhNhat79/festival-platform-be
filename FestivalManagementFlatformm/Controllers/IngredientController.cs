@@ -15,50 +15,86 @@ namespace FestivalManagementFlatformm.Controllers
             _ingredientService = ingredientService;
         }
 
-
-
-
-
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] IngredientCreateRequest request)
         {
-            var result = await _ingredientService.CreateIngredientAsync(request);
-            return Ok(result);
+            try
+            {
+                var result = await _ingredientService.CreateIngredientAsync(request);
+                if (result == null)
+                    return NotFound(new { success = false, message = "❌ Không tạo được nguyên liệu." });
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message });
+            }
         }
 
         [HttpGet("search")]
         public async Task<IActionResult> Search(
-           [FromQuery] int? ingredientId,
-           [FromQuery] int? supplierId,
-           [FromQuery] string? ingredientName,
-           [FromQuery] string? unit,
-           [FromQuery] decimal? minPrice,
-           [FromQuery] decimal? maxPrice,
-           [FromQuery] int? pageNumber,
-           [FromQuery] int? pageSize)
+            [FromQuery] int? ingredientId,
+            [FromQuery] int? supplierId,
+            [FromQuery] string? ingredientName,
+            [FromQuery] string? unit,
+            [FromQuery] decimal? minPrice,
+            [FromQuery] decimal? maxPrice,
+            [FromQuery] int? pageNumber,
+            [FromQuery] int? pageSize)
         {
-            var result = await _ingredientService.SearchIngredientsAsync(
-                ingredientId, supplierId, ingredientName, unit, minPrice, maxPrice, pageNumber, pageSize);
-            return Ok(result);
+            try
+            {
+                var result = await _ingredientService.SearchIngredientsAsync(
+                    ingredientId, supplierId, ingredientName, unit, minPrice, maxPrice, pageNumber, pageSize);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message });
+            }
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> Update(int id,
-           [FromQuery] int? supplierId,
-           [FromQuery] string? ingredientName,
-           [FromQuery] string? description,
-           [FromQuery] string? unit,
-           [FromQuery] decimal? pricePerUnit)
+        public async Task<IActionResult> Update(
+            [FromQuery] int id,
+            [FromQuery] int? supplierId,
+            [FromQuery] string? ingredientName,
+            [FromQuery] string? description,
+            [FromQuery] string? unit,
+            [FromQuery] decimal? pricePerUnit)
         {
-            var result = await _ingredientService.UpdateIngredientAsync(id, supplierId, ingredientName, description, unit, pricePerUnit);
-            return Ok(result);
+            try
+            {
+                var result = await _ingredientService.UpdateIngredientAsync(
+                    id, supplierId, ingredientName, description, unit, pricePerUnit);
+
+                if (result == null)
+                    return NotFound(new { success = false, message = "❌ Không tìm thấy nguyên liệu để cập nhật." });
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message });
+            }
         }
 
         [HttpDelete("delete")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromQuery] int id)
         {
-            await _ingredientService.DeleteIngredientAsync(id);
-            return NoContent();
+            try
+            {
+                await _ingredientService.DeleteIngredientAsync(id);
+                
+
+                return Ok(new { success = true, message = "✅ Xóa thành công." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message });
+            }
         }
     }
 }

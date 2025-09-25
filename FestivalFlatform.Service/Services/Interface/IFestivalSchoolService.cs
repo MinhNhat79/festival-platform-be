@@ -16,7 +16,7 @@ namespace FestivalFlatform.Service.Services.Interface
         Task<List<FestivalSchool>> SearchFestivalSchoolsAsync(
         int? festivalSchoolId, int? festivalId, int? schoolId, string? status, int? pageNumber, int? pageSize);
         Task DeleteFestivalSchoolAsync(int id);
-        Task UpdateFestivalSchoolStatusToRejectAsync(int festivalSchoolId);
+        Task UpdateFestivalSchoolStatusToRejectAsync(int festivalSchoolId, string? rejectReason);
 
         Task UpdateFestivalSchoolStatusToApproveAsync(int festivalSchoolId);
     }

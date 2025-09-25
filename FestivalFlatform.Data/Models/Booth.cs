@@ -29,19 +29,20 @@ namespace FestivalFlatform.Data.Models
         public string? Description { get; set; }
 
         [Required]
-        public string Status { get; set; } // pending, approved, rejected, active
+        public string Status { get; set; } 
 
         public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
 
         public DateTime? ApprovalDate { get; set; }
 
         public int PointsBalance { get; set; } = 0;
-
+        public string? Note { get; set; }
+        public string? RejectionReason { get; set; }
         public DateTime? UpdatedAt { get; set; }
 
-        public string? Note { get; set; }
+        
 
-        // ✅ Navigation Properties
+        
         public virtual StudentGroup StudentGroup { get; set; } = null!;
         public virtual Festival Festival { get; set; } = null!;
         public virtual MapLocation Location { get; set; } = null!;
@@ -52,6 +53,8 @@ namespace FestivalFlatform.Data.Models
         public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
         public virtual ICollection<PointsTransaction> PointsTransactions { get; set; } = new List<PointsTransaction>();
         public virtual ICollection<BoothMenuItem> BoothMenuItems { get; set; } = new List<BoothMenuItem>();
+
+        public virtual BoothWallet BoothWallet { get; set; } = null!;
 
     }
 }

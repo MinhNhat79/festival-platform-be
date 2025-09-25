@@ -1,12 +1,15 @@
 ﻿using FestivalFlatform.Service.DTOs.Request;
 using FestivalFlatform.Service.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FestivalManagementFlatformm.Controllers
 {
     [ApiController]
     [Route("api/minigames")]
-    public class MiniGameController : Controller
+    public class MiniGameController : ControllerBase
     {
         private readonly IMiniGameService _service;
 
@@ -14,11 +17,19 @@ namespace FestivalManagementFlatformm.Controllers
         {
             _service = service;
         }
+
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] MinigameCreateRequest request)
         {
-            var result = await _service.CreateMinigameAsync(request);
-            return Ok(result);
+            try
+            {
+                var result = await _service.CreateMinigameAsync(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = ex.Message });
+            }
         }
 
         [HttpPut("update")]
@@ -31,9 +42,23 @@ namespace FestivalManagementFlatformm.Controllers
             int? rewardPoints,
             string? status)
         {
-            var result = await _service.UpdateMinigameAsync(
-                gameId, boothId, gameName, gameType, rules, rewardPoints, status);
-            return Ok(result);
+            try
+            {
+                var result = await _service.UpdateMinigameAsync(gameId, boothId, gameName, gameType, rules, rewardPoints, status);
+                return Ok(result);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { Success = false, Message = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { Success = false, Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = ex.Message });
+            }
         }
 
         [HttpGet("search")]
@@ -41,16 +66,33 @@ namespace FestivalManagementFlatformm.Controllers
             int? gameId, int? boothId, string? gameName, string? gameType, string? status,
             int? pageNumber, int? pageSize)
         {
-            var result = await _service.SearchMinigamesAsync(
-                gameId, boothId, gameName, gameType, status, pageNumber, pageSize);
-            return Ok(result);
+            try
+            {
+                var result = await _service.SearchMinigamesAsync(gameId, boothId, gameName, gameType, status, pageNumber, pageSize);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = ex.Message });
+            }
         }
 
         [HttpDelete("delete")]
         public async Task<IActionResult> Delete(int gameId)
         {
-            var result = await _service.DeleteMinigameAsync(gameId);
-            return Ok(result);
+            try
+            {
+                await _service.DeleteMinigameAsync(gameId);
+                return Ok(new { Success = true, Message = "Xóa thành công" });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { Success = false, Message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = ex.Message });
+            }
         }
     }
 }

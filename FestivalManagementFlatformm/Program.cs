@@ -14,6 +14,12 @@ using FestivalFlatform.Service.Services.Implement;
 using FestivalFlatform.Service.Services.Interface;
 using FestivalFlatform.Data.UnitOfWork;
 using System.Security.Claims;
+using Net.payOS;
+using NETCore.MailKit.Extensions;
+using NETCore.MailKit.Infrastructure.Internal;
+using Hangfire;
+using Hangfire.SqlServer;
+using FestivalFlatform.Data.Models;
 
 namespace FF.API
 {
@@ -23,11 +29,11 @@ namespace FF.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Lấy cấu hình JWT từ appsettings.json
+           
             var jwtSettings = builder.Configuration.GetSection("JwtAuth");
             var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
 
-            #region Đăng ký Authentication với JWT Bearer
+            #region Authentication với JWT
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -46,37 +52,34 @@ namespace FF.API
                     ValidateAudience = true,
                     ValidAudience = jwtSettings["Audience"],
                     ValidateLifetime = true,
-
-
                 };
             });
             #endregion
 
-            // Đăng ký Authorization với các policy theo Roles
+           
             builder.Services.AddAuthorization(options =>
             {
-                options.AddPolicy(Roles.Admin, policy =>
-                    policy.RequireRole(Roles.Admin));
-                options.AddPolicy(Roles.SchoolManager, policy =>
-                    policy.RequireRole(Roles.SchoolManager));
-                options.AddPolicy(Roles.Teacher, policy =>
-                    policy.RequireRole(Roles.Teacher));
-                options.AddPolicy(Roles.Student, policy =>
-                    policy.RequireRole(Roles.Student));
-                options.AddPolicy(Roles.Supplier, policy =>
-                    policy.RequireRole(Roles.Supplier));
+                options.AddPolicy(Roles.Admin, policy => policy.RequireRole(Roles.Admin));
+                options.AddPolicy(Roles.SchoolManager, policy => policy.RequireRole(Roles.SchoolManager));
+                options.AddPolicy(Roles.Teacher, policy => policy.RequireRole(Roles.Teacher));
+                options.AddPolicy(Roles.Student, policy => policy.RequireRole(Roles.Student));
+                options.AddPolicy(Roles.Supplier, policy => policy.RequireRole(Roles.Supplier));
             });
 
-            // Đăng ký DbContext với SQL Server
+            builder.Services.AddMailKit(config =>
+            {
+                config.UseMailKit(builder.Configuration.GetSection("Smtp").Get<MailKitOptions>());
+            });
+
+            
             builder.Services.AddDbContext<FestivalFlatformDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            // Đăng ký Identity (nếu bạn có sử dụng)
             builder.Services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<FestivalFlatformDbContext>()
                 .AddDefaultTokenProviders();
 
-            // Các service khác
+            
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<ILoginService, LoginService>();
             builder.Services.AddScoped<IAccountService, AccountService>();
@@ -85,7 +88,6 @@ namespace FF.API
             builder.Services.AddScoped<IBoothService, BoothService>();
             builder.Services.AddScoped<ISupplierService, SupplierService>();
             builder.Services.AddScoped<ISchoolService, SchoolService>();
-  
             builder.Services.AddScoped<IStudentGroupService, StudentGroupService>();
             builder.Services.AddScoped<IFestivalMapService, FestivalMapService>();
             builder.Services.AddScoped<IMapLocationService, MapLocationService>();
@@ -105,22 +107,44 @@ namespace FF.API
             builder.Services.AddScoped<IQuestionService, QuestionService>();
             builder.Services.AddScoped<IChatSessionService, ChatSessionService>();
             builder.Services.AddScoped<IRoleService, RoleService>();
+            builder.Services.AddScoped<ISchoolAccountRelationService, SchoolAccountRelationService>();
+            builder.Services.AddScoped<IPaymentService, PaymentService>();
+            builder.Services.AddScoped<IWalletService, WalletService>();
+            builder.Services.AddScoped<IAccountFestivalWalletService, AccountFestivalWalletService>();
+            builder.Services.AddScoped<IAccountWalletHistoryService, AccountWalletHistoryService>();
+            builder.Services.AddScoped<IBoothWalletService, BoothWalletService>();
+            builder.Services.AddScoped<IFestivalParticipantService, FestivalParticipantService>();
+            builder.Services.AddScoped<IReviewService, ReviewService>();
+            builder.Services.AddScoped<IFestivalCommissionService, FestivalCommissionService>();
+            builder.Services.AddScoped<IStatisticsService, StatisticsService>();
+            builder.Services.AddScoped<ICommentService, CommentService>();
 
+            builder.Services.AddSingleton<PayOS>(sp =>
+            {
+                var configuration = sp.GetRequiredService<IConfiguration>();
+                var clientId = configuration["PayOS:ClientId"];
+                var apiKey = configuration["PayOS:ApiKey"];
+                var checksumKey = configuration["PayOS:ChecksumKey"];
+                return new PayOS(clientId, apiKey, checksumKey);
+            });
 
+            
+            builder.Services.AddHangfire(config =>
+                config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                      .UseSimpleAssemblyNameTypeSerializer()
+                      .UseRecommendedSerializerSettings()
+                      .UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            builder.Services.AddHangfireServer();
 
-
-            // Các cấu hình bổ sung
+            
             builder.Services.AddControllers()
                 .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
             builder.Services.AddEndpointsApiExplorer();
-
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FF.API", Version = "v1" });
-
-                // Cấu hình Swagger để hỗ trợ JWT Bearer Authentication
                 var securitySchema = new OpenApiSecurityScheme
                 {
                     Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
@@ -128,11 +152,7 @@ namespace FF.API
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.Http,
                     Scheme = "bearer",
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    }
+                    Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
                 };
                 c.AddSecurityDefinition("Bearer", securitySchema);
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -142,42 +162,40 @@ namespace FF.API
             });
 
             builder.Services.AddMemoryCache();
-
             builder.Services.AddSingleton<IWebHostEnvironment>(builder.Environment);
-
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", policy =>
-                    policy.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyHeader());
+                    policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
 
             builder.Services.AddAutoMapper(typeof(Program));
 
             var app = builder.Build();
 
-            // Môi trường phát triển
-
+            
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FF.API v1"));
 
-
             app.UseDeveloperExceptionPage();
-
             app.UseRouting();
-
             app.UseCors("AllowAll");
-
-            app.UseAuthentication(); // Phải trước Authorization
+            app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseHttpsRedirection();
-
             app.UseStaticFiles();
 
-            app.MapControllers();
+         
+            app.UseHangfireDashboard();
 
+           
+            RecurringJob.AddOrUpdate<IFestivalService>(
+                 "update-festival-status",
+                 service => service.UpdateFestivalStatusDailyAsync(),
+                 "0 1 * * *",
+                 TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time")
+             );
+            app.MapControllers();
             app.Run();
         }
     }

@@ -76,6 +76,19 @@
           }
         }
       },
+      "BouncyCastle.Cryptography/2.4.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/BouncyCastle.Cryptography.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/BouncyCastle.Cryptography.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "EntityFramework/6.5.1": {
         "type": "package",
         "dependencies": {
@@ -104,6 +117,219 @@
         "build": {
           "buildTransitive/net6.0/EntityFramework.props": {},
           "buildTransitive/net6.0/EntityFramework.targets": {}
+        }
+      },
+      "Enums.NET/5.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/Enums.NET.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/Enums.NET.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "EPPlus/8.0.8": {
+        "type": "package",
+        "dependencies": {
+          "EPPlus.Interfaces": "8.0.0",
+          "Microsoft.Extensions.Configuration.Json": "8.0.1",
+          "Microsoft.IO.RecyclableMemoryStream": "3.0.1",
+          "System.ComponentModel.Annotations": "5.0.0",
+          "System.Security.Cryptography.Pkcs": "8.0.1",
+          "System.Security.Cryptography.Xml": "8.0.2",
+          "System.Text.Encoding.CodePages": "8.0.0"
+        },
+        "compile": {
+          "lib/net8.0/EPPlus.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/EPPlus.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "EPPlus.Interfaces/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/EPPlus.Interfaces.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/EPPlus.Interfaces.dll": {}
+        }
+      },
+      "ExcelDataReader/3.7.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/ExcelDataReader.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/ExcelDataReader.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "ExcelDataReader.DataSet/3.7.0": {
+        "type": "package",
+        "dependencies": {
+          "ExcelDataReader": "3.7.0"
+        },
+        "compile": {
+          "lib/netstandard2.1/ExcelDataReader.DataSet.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/ExcelDataReader.DataSet.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "ExtendedNumerics.BigDecimal/2025.1001.2.129": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/ExtendedNumerics.BigDecimal.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/ExtendedNumerics.BigDecimal.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Hangfire.AspNetCore/1.8.21": {
+        "type": "package",
+        "dependencies": {
+          "Hangfire.NetCore": "[1.8.21]"
+        },
+        "compile": {
+          "lib/netcoreapp3.0/Hangfire.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/Hangfire.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "Hangfire.Core/1.8.21": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/Hangfire.Core.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Hangfire.Core.dll": {
+            "related": ".xml"
+          }
+        },
+        "resource": {
+          "lib/netstandard2.0/ca/Hangfire.Core.resources.dll": {
+            "locale": "ca"
+          },
+          "lib/netstandard2.0/de/Hangfire.Core.resources.dll": {
+            "locale": "de"
+          },
+          "lib/netstandard2.0/es/Hangfire.Core.resources.dll": {
+            "locale": "es"
+          },
+          "lib/netstandard2.0/fa/Hangfire.Core.resources.dll": {
+            "locale": "fa"
+          },
+          "lib/netstandard2.0/fr/Hangfire.Core.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/netstandard2.0/nb/Hangfire.Core.resources.dll": {
+            "locale": "nb"
+          },
+          "lib/netstandard2.0/nl/Hangfire.Core.resources.dll": {
+            "locale": "nl"
+          },
+          "lib/netstandard2.0/pt-BR/Hangfire.Core.resources.dll": {
+            "locale": "pt-BR"
+          },
+          "lib/netstandard2.0/pt-PT/Hangfire.Core.resources.dll": {
+            "locale": "pt-PT"
+          },
+          "lib/netstandard2.0/pt/Hangfire.Core.resources.dll": {
+            "locale": "pt"
+          },
+          "lib/netstandard2.0/sv/Hangfire.Core.resources.dll": {
+            "locale": "sv"
+          },
+          "lib/netstandard2.0/tr-TR/Hangfire.Core.resources.dll": {
+            "locale": "tr-TR"
+          },
+          "lib/netstandard2.0/zh-TW/Hangfire.Core.resources.dll": {
+            "locale": "zh-TW"
+          },
+          "lib/netstandard2.0/zh/Hangfire.Core.resources.dll": {
+            "locale": "zh"
+          }
+        }
+      },
+      "Hangfire.NetCore/1.8.21": {
+        "type": "package",
+        "dependencies": {
+          "Hangfire.Core": "[1.8.21]",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "3.0.0",
+          "Microsoft.Extensions.Hosting.Abstractions": "3.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "3.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.1/Hangfire.NetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Hangfire.NetCore.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Hangfire.SqlServer/1.8.21": {
+        "type": "package",
+        "dependencies": {
+          "Hangfire.Core": "[1.8.21]"
+        },
+        "compile": {
+          "lib/netstandard2.0/Hangfire.SqlServer.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Hangfire.SqlServer.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "MathNet.Numerics.Signed/5.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/MathNet.Numerics.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/MathNet.Numerics.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Microsoft.AspNetCore.Authentication/2.3.0": {
@@ -1096,6 +1322,19 @@
           }
         }
       },
+      "Microsoft.IO.RecyclableMemoryStream/3.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Microsoft.IO.RecyclableMemoryStream.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.IO.RecyclableMemoryStream.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.Net.Http.Headers/2.3.0": {
         "type": "package",
         "dependencies": {
@@ -1188,6 +1427,78 @@
           }
         }
       },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "NPOI/2.7.4": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle.Cryptography": "2.4.0",
+          "Enums.NET": "5.0.0",
+          "ExtendedNumerics.BigDecimal": "2025.1001.2.129",
+          "MathNet.Numerics.Signed": "5.0.0",
+          "Microsoft.IO.RecyclableMemoryStream": "3.0.1",
+          "SharpZipLib": "1.4.2",
+          "SixLabors.Fonts": "1.0.1",
+          "SixLabors.ImageSharp": "2.1.10",
+          "System.Security.Cryptography.Xml": "8.0.2",
+          "ZString": "2.6.0"
+        },
+        "compile": {
+          "lib/net8.0/NPOI.Core.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net8.0/NPOI.OOXML.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net8.0/NPOI.OpenXml4Net.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net8.0/NPOI.OpenXmlFormats.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/NPOI.Core.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net8.0/NPOI.OOXML.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net8.0/NPOI.OpenXml4Net.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net8.0/NPOI.OpenXmlFormats.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "payOS/1.0.9": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/payos-lib-backend-dotnet.dll": {
+            "related": ".runtimeconfig.json"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/payos-lib-backend-dotnet.dll": {
+            "related": ".runtimeconfig.json"
+          }
+        }
+      },
       "runtime.native.System.Data.SqlClient.sni/4.7.0": {
         "type": "package",
         "dependencies": {
@@ -1220,6 +1531,49 @@
           "runtimes/win-x86/native/sni.dll": {
             "assetType": "native",
             "rid": "win-x86"
+          }
+        }
+      },
+      "SharpZipLib/1.4.2": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/ICSharpCode.SharpZipLib.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/ICSharpCode.SharpZipLib.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "SixLabors.Fonts/1.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.1/SixLabors.Fonts.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/SixLabors.Fonts.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "SixLabors.ImageSharp/2.1.10": {
+        "type": "package",
+        "dependencies": {
+          "System.Runtime.CompilerServices.Unsafe": "5.0.0",
+          "System.Text.Encoding.CodePages": "5.0.0"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/SixLabors.ImageSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/SixLabors.ImageSharp.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -1668,26 +2022,23 @@
           }
         }
       },
-      "System.Text.Encoding.CodePages/6.0.0": {
+      "System.Text.Encoding.CodePages/8.0.0": {
         "type": "package",
-        "dependencies": {
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
-        },
         "compile": {
-          "lib/net6.0/_._": {
+          "lib/net8.0/System.Text.Encoding.CodePages.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net6.0/System.Text.Encoding.CodePages.dll": {
+          "lib/net8.0/System.Text.Encoding.CodePages.dll": {
             "related": ".xml"
           }
         },
         "build": {
-          "buildTransitive/netcoreapp3.1/_._": {}
+          "buildTransitive/net6.0/_._": {}
         },
         "runtimeTargets": {
-          "runtimes/win/lib/net6.0/System.Text.Encoding.CodePages.dll": {
+          "runtimes/win/lib/net8.0/System.Text.Encoding.CodePages.dll": {
             "assetType": "runtime",
             "rid": "win"
           }
@@ -1759,11 +2110,27 @@
           }
         }
       },
+      "ZString/2.6.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/ZString.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/ZString.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "FestivalFlatform.Data/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "BCrypt.Net-Next": "4.0.3",
+          "Hangfire.AspNetCore": "1.8.21",
+          "Hangfire.Core": "1.8.21",
+          "Hangfire.SqlServer": "1.8.21",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.16",
           "Microsoft.EntityFrameworkCore": "8.0.16",
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.16",
@@ -1864,6 +2231,26 @@
         "readme.md"
       ]
     },
+    "BouncyCastle.Cryptography/2.4.0": {
+      "sha512": "SwXsAV3sMvAU/Nn31pbjhWurYSjJ+/giI/0n6tCrYoupEK34iIHCuk3STAd9fx8yudM85KkLSVdn951vTng/vQ==",
+      "type": "package",
+      "path": "bouncycastle.cryptography/2.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "README.md",
+        "bouncycastle.cryptography.2.4.0.nupkg.sha512",
+        "bouncycastle.cryptography.nuspec",
+        "lib/net461/BouncyCastle.Cryptography.dll",
+        "lib/net461/BouncyCastle.Cryptography.xml",
+        "lib/net6.0/BouncyCastle.Cryptography.dll",
+        "lib/net6.0/BouncyCastle.Cryptography.xml",
+        "lib/netstandard2.0/BouncyCastle.Cryptography.dll",
+        "lib/netstandard2.0/BouncyCastle.Cryptography.xml",
+        "packageIcon.png"
+      ]
+    },
     "EntityFramework/6.5.1": {
       "sha512": "sQRP2lWg1i3aAGWqdliAM8zrGx7LHMUk+9/MoxUjwfTZYGMXvZ2JYZTlyTm1PqDxvn3c9E3U76TWDON7Y5+CVA==",
       "type": "package",
@@ -1924,6 +2311,344 @@
         "tools/net6.0/any/ef6.dll",
         "tools/net6.0/any/ef6.pdb",
         "tools/net6.0/any/ef6.runtimeconfig.json"
+      ]
+    },
+    "Enums.NET/5.0.0": {
+      "sha512": "NfGq1iLJZ15XZPgBhjk4Ns1XZ+beaGk6cog6B4LxcROdGoSMdgCJqYXF70P6VTd3dz/vFRY4h1u1lAMqW/DC2w==",
+      "type": "package",
+      "path": "enums.net/5.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "enums.net.5.0.0.nupkg.sha512",
+        "enums.net.nuspec",
+        "lib/net461/Enums.NET.dll",
+        "lib/net461/Enums.NET.pdb",
+        "lib/net461/Enums.NET.xml",
+        "lib/net7.0/Enums.NET.dll",
+        "lib/net7.0/Enums.NET.pdb",
+        "lib/net7.0/Enums.NET.xml",
+        "lib/netcoreapp3.0/Enums.NET.dll",
+        "lib/netcoreapp3.0/Enums.NET.pdb",
+        "lib/netcoreapp3.0/Enums.NET.xml",
+        "lib/netstandard2.0/Enums.NET.dll",
+        "lib/netstandard2.0/Enums.NET.pdb",
+        "lib/netstandard2.0/Enums.NET.xml",
+        "lib/netstandard2.1/Enums.NET.dll",
+        "lib/netstandard2.1/Enums.NET.pdb",
+        "lib/netstandard2.1/Enums.NET.xml"
+      ]
+    },
+    "EPPlus/8.0.8": {
+      "sha512": "Vh0vlPuSmSP1L/KYrTzDEi0DMFpeT+UEpjuPnpTgT8IanZ/xyAxQ3Jid9TgM2TMEe+o1xysOWVjrVcXwurorkQ==",
+      "type": "package",
+      "path": "epplus/8.0.8",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "EPPlusLogo.png",
+        "epplus.8.0.8.nupkg.sha512",
+        "epplus.nuspec",
+        "lib/net35/EPPlus.dll",
+        "lib/net35/EPPlus.xml",
+        "lib/net462/EPPlus.dll",
+        "lib/net462/EPPlus.xml",
+        "lib/net8.0/EPPlus.dll",
+        "lib/net8.0/EPPlus.xml",
+        "lib/net9.0/EPPlus.dll",
+        "lib/net9.0/EPPlus.xml",
+        "lib/netstandard2.0/EPPlus.dll",
+        "lib/netstandard2.0/EPPlus.xml",
+        "lib/netstandard2.1/EPPlus.dll",
+        "lib/netstandard2.1/EPPlus.xml",
+        "license.md",
+        "readme.md",
+        "readme.txt"
+      ]
+    },
+    "EPPlus.Interfaces/8.0.0": {
+      "sha512": "EFr/vUbDYK55sxjfUfLUiv7oiz1f6ZLRYMKILHyfnWS019cYX5zJaQ1U3OojRuED8tgEeXX9QeG7Kj/b0XE7hQ==",
+      "type": "package",
+      "path": "epplus.interfaces/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "EPPlusLogo.png",
+        "epplus.interfaces.8.0.0.nupkg.sha512",
+        "epplus.interfaces.nuspec",
+        "lib/net35/EPPlus.Interfaces.dll",
+        "lib/net462/EPPlus.Interfaces.dll",
+        "lib/net8.0/EPPlus.Interfaces.dll",
+        "lib/net9.0/EPPlus.Interfaces.dll",
+        "lib/netstandard2.0/EPPlus.Interfaces.dll",
+        "lib/netstandard2.1/EPPlus.Interfaces.dll",
+        "license.md",
+        "readme.md"
+      ]
+    },
+    "ExcelDataReader/3.7.0": {
+      "sha512": "AMv3oDETRHSRyXC17rBtKH45qIfFyo433LMeaMB3u4RNr/c9Luuc0Z+JMP6+3Cx9n4wXqFqcrEIVxrf/GgYnZg==",
+      "type": "package",
+      "path": "exceldatareader/3.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ExcelDataReader.png",
+        "README.md",
+        "exceldatareader.3.7.0.nupkg.sha512",
+        "exceldatareader.nuspec",
+        "lib/net462/ExcelDataReader.dll",
+        "lib/net462/ExcelDataReader.pdb",
+        "lib/net462/ExcelDataReader.xml",
+        "lib/netstandard2.0/ExcelDataReader.dll",
+        "lib/netstandard2.0/ExcelDataReader.pdb",
+        "lib/netstandard2.0/ExcelDataReader.xml",
+        "lib/netstandard2.1/ExcelDataReader.dll",
+        "lib/netstandard2.1/ExcelDataReader.pdb",
+        "lib/netstandard2.1/ExcelDataReader.xml"
+      ]
+    },
+    "ExcelDataReader.DataSet/3.7.0": {
+      "sha512": "zA2/CVzbMspkNg0qf0/Zp+eU6VxYP5PtiJSErLDP46d/Y7F6of/NCcSGeXjs97KDq7UiEf6XJe+89s/92n2GYg==",
+      "type": "package",
+      "path": "exceldatareader.dataset/3.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ExcelDataReader.png",
+        "README.md",
+        "exceldatareader.dataset.3.7.0.nupkg.sha512",
+        "exceldatareader.dataset.nuspec",
+        "lib/net462/ExcelDataReader.DataSet.dll",
+        "lib/net462/ExcelDataReader.DataSet.pdb",
+        "lib/net462/ExcelDataReader.DataSet.xml",
+        "lib/netstandard2.0/ExcelDataReader.DataSet.dll",
+        "lib/netstandard2.0/ExcelDataReader.DataSet.pdb",
+        "lib/netstandard2.0/ExcelDataReader.DataSet.xml",
+        "lib/netstandard2.1/ExcelDataReader.DataSet.dll",
+        "lib/netstandard2.1/ExcelDataReader.DataSet.pdb",
+        "lib/netstandard2.1/ExcelDataReader.DataSet.xml"
+      ]
+    },
+    "ExtendedNumerics.BigDecimal/2025.1001.2.129": {
+      "sha512": "+woGT1lsBtwkntOpx2EZbdbySv0aWPefE0vrfvclxVdbi4oa2bbtphFPWgMiQe+kRCPICbfFJwp6w1DuR7Ge2Q==",
+      "type": "package",
+      "path": "extendednumerics.bigdecimal/2025.1001.2.129",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "extendednumerics.bigdecimal.2025.1001.2.129.nupkg.sha512",
+        "extendednumerics.bigdecimal.nuspec",
+        "lib/net45/ExtendedNumerics.BigDecimal.dll",
+        "lib/net45/ExtendedNumerics.BigDecimal.xml",
+        "lib/net46/ExtendedNumerics.BigDecimal.dll",
+        "lib/net46/ExtendedNumerics.BigDecimal.xml",
+        "lib/net472/ExtendedNumerics.BigDecimal.dll",
+        "lib/net472/ExtendedNumerics.BigDecimal.xml",
+        "lib/net48/ExtendedNumerics.BigDecimal.dll",
+        "lib/net48/ExtendedNumerics.BigDecimal.xml",
+        "lib/net5.0/ExtendedNumerics.BigDecimal.dll",
+        "lib/net5.0/ExtendedNumerics.BigDecimal.xml",
+        "lib/net6.0/ExtendedNumerics.BigDecimal.dll",
+        "lib/net6.0/ExtendedNumerics.BigDecimal.xml",
+        "lib/net7.0/ExtendedNumerics.BigDecimal.dll",
+        "lib/net7.0/ExtendedNumerics.BigDecimal.xml",
+        "lib/net8.0/ExtendedNumerics.BigDecimal.dll",
+        "lib/net8.0/ExtendedNumerics.BigDecimal.xml",
+        "lib/netcoreapp3.1/ExtendedNumerics.BigDecimal.dll",
+        "lib/netcoreapp3.1/ExtendedNumerics.BigDecimal.xml",
+        "lib/netstandard2.0/ExtendedNumerics.BigDecimal.dll",
+        "lib/netstandard2.0/ExtendedNumerics.BigDecimal.xml",
+        "lib/netstandard2.1/ExtendedNumerics.BigDecimal.dll",
+        "lib/netstandard2.1/ExtendedNumerics.BigDecimal.xml"
+      ]
+    },
+    "Hangfire.AspNetCore/1.8.21": {
+      "sha512": "G3yP92rPC313zRA1DIaROmF6UYB9NRtMHy64CCq4StqWmyUuFQQsYgZxo+Kp6gd2CbjaSI8JN8canTMYSGfrMw==",
+      "type": "package",
+      "path": "hangfire.aspnetcore/1.8.21",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "COPYING",
+        "COPYING.LESSER",
+        "LICENSE.md",
+        "LICENSE_ROYALTYFREE",
+        "LICENSE_STANDARD",
+        "NOTICES",
+        "hangfire.aspnetcore.1.8.21.nupkg.sha512",
+        "hangfire.aspnetcore.nuspec",
+        "icon.png",
+        "lib/net451/Hangfire.AspNetCore.dll",
+        "lib/net451/Hangfire.AspNetCore.xml",
+        "lib/net461/Hangfire.AspNetCore.dll",
+        "lib/net461/Hangfire.AspNetCore.xml",
+        "lib/netcoreapp3.0/Hangfire.AspNetCore.dll",
+        "lib/netcoreapp3.0/Hangfire.AspNetCore.xml",
+        "lib/netstandard1.3/Hangfire.AspNetCore.dll",
+        "lib/netstandard1.3/Hangfire.AspNetCore.xml",
+        "lib/netstandard2.0/Hangfire.AspNetCore.dll",
+        "lib/netstandard2.0/Hangfire.AspNetCore.xml"
+      ]
+    },
+    "Hangfire.Core/1.8.21": {
+      "sha512": "UfIDfDKJTue82ShKV/HHEBScAIJMnuiS8c5jcLHThY8i8O0eibCcNjFkVqlvY9cnDiOBZ7EBGWJ8horH9Ykq+g==",
+      "type": "package",
+      "path": "hangfire.core/1.8.21",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "COPYING",
+        "COPYING.LESSER",
+        "LICENSE.md",
+        "LICENSE_ROYALTYFREE",
+        "LICENSE_STANDARD",
+        "NOTICES",
+        "README.md",
+        "hangfire.core.1.8.21.nupkg.sha512",
+        "hangfire.core.nuspec",
+        "icon.png",
+        "lib/net451/Hangfire.Core.dll",
+        "lib/net451/Hangfire.Core.xml",
+        "lib/net451/ca/Hangfire.Core.resources.dll",
+        "lib/net451/de/Hangfire.Core.resources.dll",
+        "lib/net451/es/Hangfire.Core.resources.dll",
+        "lib/net451/fa/Hangfire.Core.resources.dll",
+        "lib/net451/fr/Hangfire.Core.resources.dll",
+        "lib/net451/nb/Hangfire.Core.resources.dll",
+        "lib/net451/nl/Hangfire.Core.resources.dll",
+        "lib/net451/pt-BR/Hangfire.Core.resources.dll",
+        "lib/net451/pt-PT/Hangfire.Core.resources.dll",
+        "lib/net451/pt/Hangfire.Core.resources.dll",
+        "lib/net451/sv/Hangfire.Core.resources.dll",
+        "lib/net451/tr-TR/Hangfire.Core.resources.dll",
+        "lib/net451/zh-TW/Hangfire.Core.resources.dll",
+        "lib/net451/zh/Hangfire.Core.resources.dll",
+        "lib/net46/Hangfire.Core.dll",
+        "lib/net46/Hangfire.Core.xml",
+        "lib/net46/ca/Hangfire.Core.resources.dll",
+        "lib/net46/de/Hangfire.Core.resources.dll",
+        "lib/net46/es/Hangfire.Core.resources.dll",
+        "lib/net46/fa/Hangfire.Core.resources.dll",
+        "lib/net46/fr/Hangfire.Core.resources.dll",
+        "lib/net46/nb/Hangfire.Core.resources.dll",
+        "lib/net46/nl/Hangfire.Core.resources.dll",
+        "lib/net46/pt-BR/Hangfire.Core.resources.dll",
+        "lib/net46/pt-PT/Hangfire.Core.resources.dll",
+        "lib/net46/pt/Hangfire.Core.resources.dll",
+        "lib/net46/sv/Hangfire.Core.resources.dll",
+        "lib/net46/tr-TR/Hangfire.Core.resources.dll",
+        "lib/net46/zh-TW/Hangfire.Core.resources.dll",
+        "lib/net46/zh/Hangfire.Core.resources.dll",
+        "lib/netstandard1.3/Hangfire.Core.dll",
+        "lib/netstandard1.3/Hangfire.Core.xml",
+        "lib/netstandard1.3/ca/Hangfire.Core.resources.dll",
+        "lib/netstandard1.3/de/Hangfire.Core.resources.dll",
+        "lib/netstandard1.3/es/Hangfire.Core.resources.dll",
+        "lib/netstandard1.3/fa/Hangfire.Core.resources.dll",
+        "lib/netstandard1.3/fr/Hangfire.Core.resources.dll",
+        "lib/netstandard1.3/nb/Hangfire.Core.resources.dll",
+        "lib/netstandard1.3/nl/Hangfire.Core.resources.dll",
+        "lib/netstandard1.3/pt-BR/Hangfire.Core.resources.dll",
+        "lib/netstandard1.3/pt-PT/Hangfire.Core.resources.dll",
+        "lib/netstandard1.3/pt/Hangfire.Core.resources.dll",
+        "lib/netstandard1.3/sv/Hangfire.Core.resources.dll",
+        "lib/netstandard1.3/tr-TR/Hangfire.Core.resources.dll",
+        "lib/netstandard1.3/zh-TW/Hangfire.Core.resources.dll",
+        "lib/netstandard1.3/zh/Hangfire.Core.resources.dll",
+        "lib/netstandard2.0/Hangfire.Core.dll",
+        "lib/netstandard2.0/Hangfire.Core.xml",
+        "lib/netstandard2.0/ca/Hangfire.Core.resources.dll",
+        "lib/netstandard2.0/de/Hangfire.Core.resources.dll",
+        "lib/netstandard2.0/es/Hangfire.Core.resources.dll",
+        "lib/netstandard2.0/fa/Hangfire.Core.resources.dll",
+        "lib/netstandard2.0/fr/Hangfire.Core.resources.dll",
+        "lib/netstandard2.0/nb/Hangfire.Core.resources.dll",
+        "lib/netstandard2.0/nl/Hangfire.Core.resources.dll",
+        "lib/netstandard2.0/pt-BR/Hangfire.Core.resources.dll",
+        "lib/netstandard2.0/pt-PT/Hangfire.Core.resources.dll",
+        "lib/netstandard2.0/pt/Hangfire.Core.resources.dll",
+        "lib/netstandard2.0/sv/Hangfire.Core.resources.dll",
+        "lib/netstandard2.0/tr-TR/Hangfire.Core.resources.dll",
+        "lib/netstandard2.0/zh-TW/Hangfire.Core.resources.dll",
+        "lib/netstandard2.0/zh/Hangfire.Core.resources.dll"
+      ]
+    },
+    "Hangfire.NetCore/1.8.21": {
+      "sha512": "NR8BvQqgvVstgY/YZVisuV/XdkKSZGiD+5b+NABuGxu/xDEhycFHS1uIC9zhIYkPr1tThGoThRIH07JWxPZTvQ==",
+      "type": "package",
+      "path": "hangfire.netcore/1.8.21",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "COPYING",
+        "COPYING.LESSER",
+        "LICENSE.md",
+        "LICENSE_ROYALTYFREE",
+        "LICENSE_STANDARD",
+        "NOTICES",
+        "hangfire.netcore.1.8.21.nupkg.sha512",
+        "hangfire.netcore.nuspec",
+        "icon.png",
+        "lib/net451/Hangfire.NetCore.dll",
+        "lib/net451/Hangfire.NetCore.xml",
+        "lib/net461/Hangfire.NetCore.dll",
+        "lib/net461/Hangfire.NetCore.xml",
+        "lib/netstandard1.3/Hangfire.NetCore.dll",
+        "lib/netstandard1.3/Hangfire.NetCore.xml",
+        "lib/netstandard2.0/Hangfire.NetCore.dll",
+        "lib/netstandard2.0/Hangfire.NetCore.xml",
+        "lib/netstandard2.1/Hangfire.NetCore.dll",
+        "lib/netstandard2.1/Hangfire.NetCore.xml"
+      ]
+    },
+    "Hangfire.SqlServer/1.8.21": {
+      "sha512": "uGz9yfyC9hrI4zGWQivpdOv4tLlueKRc1tYN/+/NcsAcW3ciN0fmG4OPpCb7je0+7z/SGBGDpzNrXUiF2x7rHQ==",
+      "type": "package",
+      "path": "hangfire.sqlserver/1.8.21",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "COPYING",
+        "COPYING.LESSER",
+        "LICENSE.md",
+        "LICENSE_ROYALTYFREE",
+        "LICENSE_STANDARD",
+        "NOTICES",
+        "hangfire.sqlserver.1.8.21.nupkg.sha512",
+        "hangfire.sqlserver.nuspec",
+        "icon.png",
+        "lib/net451/Hangfire.SqlServer.dll",
+        "lib/net451/Hangfire.SqlServer.xml",
+        "lib/netstandard1.3/Hangfire.SqlServer.dll",
+        "lib/netstandard1.3/Hangfire.SqlServer.xml",
+        "lib/netstandard2.0/Hangfire.SqlServer.dll",
+        "lib/netstandard2.0/Hangfire.SqlServer.xml",
+        "tools/install.sql"
+      ]
+    },
+    "MathNet.Numerics.Signed/5.0.0": {
+      "sha512": "PSrHBVMf41SjbhlnpOMnoir8YgkyEJ6/nwxvjYpH+vJCexNcx2ms6zRww5yLVqLet1xLJgZ39swtKRTLhWdnAw==",
+      "type": "package",
+      "path": "mathnet.numerics.signed/5.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/net461/MathNet.Numerics.dll",
+        "lib/net461/MathNet.Numerics.xml",
+        "lib/net48/MathNet.Numerics.dll",
+        "lib/net48/MathNet.Numerics.xml",
+        "lib/net5.0/MathNet.Numerics.dll",
+        "lib/net5.0/MathNet.Numerics.xml",
+        "lib/net6.0/MathNet.Numerics.dll",
+        "lib/net6.0/MathNet.Numerics.xml",
+        "lib/netstandard2.0/MathNet.Numerics.dll",
+        "lib/netstandard2.0/MathNet.Numerics.xml",
+        "mathnet.numerics.signed.5.0.0.nupkg.sha512",
+        "mathnet.numerics.signed.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Authentication/2.3.0": {
@@ -3240,6 +3965,24 @@
         "microsoft.identitymodel.tokens.nuspec"
       ]
     },
+    "Microsoft.IO.RecyclableMemoryStream/3.0.1": {
+      "sha512": "s/s20YTVY9r9TPfTrN5g8zPF1YhwxyqO6PxUkrYTGI2B+OGPe9AdajWZrLhFqXIvqIW23fnUE4+ztrUWNU1+9g==",
+      "type": "package",
+      "path": "microsoft.io.recyclablememorystream/3.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net6.0/Microsoft.IO.RecyclableMemoryStream.dll",
+        "lib/net6.0/Microsoft.IO.RecyclableMemoryStream.xml",
+        "lib/netstandard2.0/Microsoft.IO.RecyclableMemoryStream.dll",
+        "lib/netstandard2.0/Microsoft.IO.RecyclableMemoryStream.xml",
+        "lib/netstandard2.1/Microsoft.IO.RecyclableMemoryStream.dll",
+        "lib/netstandard2.1/Microsoft.IO.RecyclableMemoryStream.xml",
+        "microsoft.io.recyclablememorystream.3.0.1.nupkg.sha512",
+        "microsoft.io.recyclablememorystream.nuspec"
+      ]
+    },
     "Microsoft.Net.Http.Headers/2.3.0": {
       "sha512": "/M0wVg6tJUOHutWD3BMOUVZAioJVXe0tCpFiovzv0T9T12TBf4MnaHP0efO8TCr1a6O9RZgQeZ9Gdark8L9XdA==",
       "type": "package",
@@ -3362,6 +4105,115 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "Newtonsoft.Json/13.0.3": {
+      "sha512": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ==",
+      "type": "package",
+      "path": "newtonsoft.json/13.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "README.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/net6.0/Newtonsoft.Json.dll",
+        "lib/net6.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "newtonsoft.json.13.0.3.nupkg.sha512",
+        "newtonsoft.json.nuspec",
+        "packageIcon.png"
+      ]
+    },
+    "NPOI/2.7.4": {
+      "sha512": "1tCebTkr9qAfwiEa2ErXco2IT+D8MNmT9d4KFz9nWn3owkc5fAOsvxV8kq6y4531B4Z3gnInrvEdonwFyoRqPQ==",
+      "type": "package",
+      "path": "npoi/2.7.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "README.md",
+        "lib/net472/NPOI.Core.dll",
+        "lib/net472/NPOI.Core.pdb",
+        "lib/net472/NPOI.Core.xml",
+        "lib/net472/NPOI.OOXML.dll",
+        "lib/net472/NPOI.OOXML.pdb",
+        "lib/net472/NPOI.OOXML.xml",
+        "lib/net472/NPOI.OpenXml4Net.dll",
+        "lib/net472/NPOI.OpenXml4Net.pdb",
+        "lib/net472/NPOI.OpenXml4Net.xml",
+        "lib/net472/NPOI.OpenXmlFormats.dll",
+        "lib/net472/NPOI.OpenXmlFormats.pdb",
+        "lib/net472/NPOI.OpenXmlFormats.xml",
+        "lib/net8.0/NPOI.Core.dll",
+        "lib/net8.0/NPOI.Core.pdb",
+        "lib/net8.0/NPOI.Core.xml",
+        "lib/net8.0/NPOI.OOXML.dll",
+        "lib/net8.0/NPOI.OOXML.pdb",
+        "lib/net8.0/NPOI.OOXML.xml",
+        "lib/net8.0/NPOI.OpenXml4Net.dll",
+        "lib/net8.0/NPOI.OpenXml4Net.pdb",
+        "lib/net8.0/NPOI.OpenXml4Net.xml",
+        "lib/net8.0/NPOI.OpenXmlFormats.dll",
+        "lib/net8.0/NPOI.OpenXmlFormats.pdb",
+        "lib/net8.0/NPOI.OpenXmlFormats.xml",
+        "lib/netstandard2.0/NPOI.Core.dll",
+        "lib/netstandard2.0/NPOI.Core.pdb",
+        "lib/netstandard2.0/NPOI.Core.xml",
+        "lib/netstandard2.0/NPOI.OOXML.dll",
+        "lib/netstandard2.0/NPOI.OOXML.pdb",
+        "lib/netstandard2.0/NPOI.OOXML.xml",
+        "lib/netstandard2.0/NPOI.OpenXml4Net.dll",
+        "lib/netstandard2.0/NPOI.OpenXml4Net.pdb",
+        "lib/netstandard2.0/NPOI.OpenXml4Net.xml",
+        "lib/netstandard2.0/NPOI.OpenXmlFormats.dll",
+        "lib/netstandard2.0/NPOI.OpenXmlFormats.pdb",
+        "lib/netstandard2.0/NPOI.OpenXmlFormats.xml",
+        "lib/netstandard2.1/NPOI.Core.dll",
+        "lib/netstandard2.1/NPOI.Core.pdb",
+        "lib/netstandard2.1/NPOI.Core.xml",
+        "lib/netstandard2.1/NPOI.OOXML.dll",
+        "lib/netstandard2.1/NPOI.OOXML.pdb",
+        "lib/netstandard2.1/NPOI.OOXML.xml",
+        "lib/netstandard2.1/NPOI.OpenXml4Net.dll",
+        "lib/netstandard2.1/NPOI.OpenXml4Net.pdb",
+        "lib/netstandard2.1/NPOI.OpenXml4Net.xml",
+        "lib/netstandard2.1/NPOI.OpenXmlFormats.dll",
+        "lib/netstandard2.1/NPOI.OpenXmlFormats.pdb",
+        "lib/netstandard2.1/NPOI.OpenXmlFormats.xml",
+        "logo/120_120.jpg",
+        "logo/240_240.png",
+        "logo/32_32.jpg",
+        "logo/60_60.jpg",
+        "npoi.2.7.4.nupkg.sha512",
+        "npoi.nuspec"
+      ]
+    },
+    "payOS/1.0.9": {
+      "sha512": "LPfIWXg0Oo8mPk8l3otrqtH4iQcjaG+ughDp2DS3gS52s7bs8eEtU+uXflu32GPDCFKksfFyAAOLUoPDva4/Gw==",
+      "type": "package",
+      "path": "payos/1.0.9",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net6.0/payos-lib-backend-dotnet.dll",
+        "lib/net6.0/payos-lib-backend-dotnet.runtimeconfig.json",
+        "payos.1.0.9.nupkg.sha512",
+        "payos.nuspec"
+      ]
+    },
     "runtime.native.System.Data.SqlClient.sni/4.7.0": {
       "sha512": "9kyFSIdN3T0qjDQ2R0HRXYIhS3l5psBzQi6qqhdLz+SzFyEy4sVxNOke+yyYv8Cu8rPER12c3RDjLT8wF3WBYQ==",
       "type": "package",
@@ -3423,6 +4275,67 @@
         "runtimes/win-x86/native/sni.dll",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "SharpZipLib/1.4.2": {
+      "sha512": "yjj+3zgz8zgXpiiC3ZdF/iyTBbz2fFvMxZFEBPUcwZjIvXOf37Ylm+K58hqMfIBt5JgU/Z2uoUS67JmTLe973A==",
+      "type": "package",
+      "path": "sharpziplib/1.4.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "images/sharpziplib-nuget-256x256.png",
+        "lib/net6.0/ICSharpCode.SharpZipLib.dll",
+        "lib/net6.0/ICSharpCode.SharpZipLib.pdb",
+        "lib/net6.0/ICSharpCode.SharpZipLib.xml",
+        "lib/netstandard2.0/ICSharpCode.SharpZipLib.dll",
+        "lib/netstandard2.0/ICSharpCode.SharpZipLib.pdb",
+        "lib/netstandard2.0/ICSharpCode.SharpZipLib.xml",
+        "lib/netstandard2.1/ICSharpCode.SharpZipLib.dll",
+        "lib/netstandard2.1/ICSharpCode.SharpZipLib.pdb",
+        "lib/netstandard2.1/ICSharpCode.SharpZipLib.xml",
+        "sharpziplib.1.4.2.nupkg.sha512",
+        "sharpziplib.nuspec"
+      ]
+    },
+    "SixLabors.Fonts/1.0.1": {
+      "sha512": "ljezRHWc7N0azdQViib7Aa5v+DagRVkKI2/93kEbtjVczLs+yTkSq6gtGmvOcx4IqyNbO3GjLt7SAQTpLkySNw==",
+      "type": "package",
+      "path": "sixlabors.fonts/1.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netcoreapp3.1/SixLabors.Fonts.dll",
+        "lib/netcoreapp3.1/SixLabors.Fonts.xml",
+        "lib/netstandard2.0/SixLabors.Fonts.dll",
+        "lib/netstandard2.0/SixLabors.Fonts.xml",
+        "lib/netstandard2.1/SixLabors.Fonts.dll",
+        "lib/netstandard2.1/SixLabors.Fonts.xml",
+        "sixlabors.fonts.1.0.1.nupkg.sha512",
+        "sixlabors.fonts.128.png",
+        "sixlabors.fonts.nuspec"
+      ]
+    },
+    "SixLabors.ImageSharp/2.1.10": {
+      "sha512": "hk1E7U3RSlxrBVo6Gb6OjeM52fChpFYH+SZvyT/M2vzSGlzAaKE33hc3V/Pvnjcnn1opT8/Z+0QfqdM5HsIaeA==",
+      "type": "package",
+      "path": "sixlabors.imagesharp/2.1.10",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net472/SixLabors.ImageSharp.dll",
+        "lib/net472/SixLabors.ImageSharp.xml",
+        "lib/netcoreapp2.1/SixLabors.ImageSharp.dll",
+        "lib/netcoreapp2.1/SixLabors.ImageSharp.xml",
+        "lib/netcoreapp3.1/SixLabors.ImageSharp.dll",
+        "lib/netcoreapp3.1/SixLabors.ImageSharp.xml",
+        "lib/netstandard2.0/SixLabors.ImageSharp.dll",
+        "lib/netstandard2.0/SixLabors.ImageSharp.xml",
+        "lib/netstandard2.1/SixLabors.ImageSharp.dll",
+        "lib/netstandard2.1/SixLabors.ImageSharp.xml",
+        "sixlabors.imagesharp.128.png",
+        "sixlabors.imagesharp.2.1.10.nupkg.sha512",
+        "sixlabors.imagesharp.nuspec"
       ]
     },
     "Swashbuckle.AspNetCore.Swagger/8.1.4": {
@@ -4291,41 +5204,44 @@
         "version.txt"
       ]
     },
-    "System.Text.Encoding.CodePages/6.0.0": {
-      "sha512": "ZFCILZuOvtKPauZ/j/swhvw68ZRi9ATCfvGbk1QfydmcXBkIWecWKn/250UH7rahZ5OoDBaiAudJtPvLwzw85A==",
+    "System.Text.Encoding.CodePages/8.0.0": {
+      "sha512": "OZIsVplFGaVY90G2SbpgU7EnCoOO5pw1t4ic21dBF3/1omrJFpAGoNAVpPyMVOC90/hvgkGG3VFqR13YgZMQfg==",
       "type": "package",
-      "path": "system.text.encoding.codepages/6.0.0",
+      "path": "system.text.encoding.codepages/8.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
+        "PACKAGE.md",
         "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Text.Encoding.CodePages.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
         "buildTransitive/netcoreapp2.0/System.Text.Encoding.CodePages.targets",
-        "buildTransitive/netcoreapp3.1/_._",
         "lib/MonoAndroid10/_._",
         "lib/MonoTouch10/_._",
-        "lib/net461/System.Text.Encoding.CodePages.dll",
-        "lib/net461/System.Text.Encoding.CodePages.xml",
+        "lib/net462/System.Text.Encoding.CodePages.dll",
+        "lib/net462/System.Text.Encoding.CodePages.xml",
         "lib/net6.0/System.Text.Encoding.CodePages.dll",
         "lib/net6.0/System.Text.Encoding.CodePages.xml",
-        "lib/netcoreapp3.1/System.Text.Encoding.CodePages.dll",
-        "lib/netcoreapp3.1/System.Text.Encoding.CodePages.xml",
+        "lib/net7.0/System.Text.Encoding.CodePages.dll",
+        "lib/net7.0/System.Text.Encoding.CodePages.xml",
+        "lib/net8.0/System.Text.Encoding.CodePages.dll",
+        "lib/net8.0/System.Text.Encoding.CodePages.xml",
         "lib/netstandard2.0/System.Text.Encoding.CodePages.dll",
         "lib/netstandard2.0/System.Text.Encoding.CodePages.xml",
         "lib/xamarinios10/_._",
         "lib/xamarinmac20/_._",
         "lib/xamarintvos10/_._",
         "lib/xamarinwatchos10/_._",
-        "runtimes/win/lib/net461/System.Text.Encoding.CodePages.dll",
-        "runtimes/win/lib/net461/System.Text.Encoding.CodePages.xml",
         "runtimes/win/lib/net6.0/System.Text.Encoding.CodePages.dll",
         "runtimes/win/lib/net6.0/System.Text.Encoding.CodePages.xml",
-        "runtimes/win/lib/netcoreapp3.1/System.Text.Encoding.CodePages.dll",
-        "runtimes/win/lib/netcoreapp3.1/System.Text.Encoding.CodePages.xml",
-        "runtimes/win/lib/netstandard2.0/System.Text.Encoding.CodePages.dll",
-        "runtimes/win/lib/netstandard2.0/System.Text.Encoding.CodePages.xml",
-        "system.text.encoding.codepages.6.0.0.nupkg.sha512",
+        "runtimes/win/lib/net7.0/System.Text.Encoding.CodePages.dll",
+        "runtimes/win/lib/net7.0/System.Text.Encoding.CodePages.xml",
+        "runtimes/win/lib/net8.0/System.Text.Encoding.CodePages.dll",
+        "runtimes/win/lib/net8.0/System.Text.Encoding.CodePages.xml",
+        "system.text.encoding.codepages.8.0.0.nupkg.sha512",
         "system.text.encoding.codepages.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -4447,6 +5363,26 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "ZString/2.6.0": {
+      "sha512": "XE8a+11nZg0LRaf+RGABEWaHIf8yGd5w8v/Ra1iWxMBmAVzwuKbW7G21mS0U7w7sh1lYcgckInWGgnz4qyET8A==",
+      "type": "package",
+      "path": "zstring/2.6.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "lib/net6.0/ZString.dll",
+        "lib/net6.0/ZString.xml",
+        "lib/net7.0/ZString.dll",
+        "lib/net7.0/ZString.xml",
+        "lib/netstandard2.0/ZString.dll",
+        "lib/netstandard2.0/ZString.xml",
+        "lib/netstandard2.1/ZString.dll",
+        "lib/netstandard2.1/ZString.xml",
+        "zstring.2.6.0.nupkg.sha512",
+        "zstring.nuspec"
+      ]
+    },
     "FestivalFlatform.Data/1.0.0": {
       "type": "project",
       "path": "../FestivalFlatform.Data/FestivalFlatform.Data.csproj",
@@ -4456,14 +5392,22 @@
   "projectFileDependencyGroups": {
     "net8.0": [
       "AutoMapper >= 12.0.1",
+      "EPPlus >= 8.0.8",
       "EntityFramework >= 6.5.1",
+      "ExcelDataReader >= 3.7.0",
+      "ExcelDataReader.DataSet >= 3.7.0",
       "FestivalFlatform.Data >= 1.0.0",
+      "Hangfire.AspNetCore >= 1.8.21",
+      "Hangfire.Core >= 1.8.21",
+      "Hangfire.SqlServer >= 1.8.21",
       "Microsoft.AspNetCore.Identity >= 2.3.1",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 8.0.16",
       "Microsoft.EntityFrameworkCore >= 8.0.16",
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.16",
+      "NPOI >= 2.7.4",
       "Swashbuckle.AspNetCore.SwaggerGen >= 8.1.4",
-      "System.IdentityModel.Tokens.Jwt >= 8.12.0"
+      "System.IdentityModel.Tokens.Jwt >= 8.12.0",
+      "payOS >= 1.0.9"
     ]
   },
   "packageFolders": {
@@ -4525,9 +5469,33 @@
             "target": "Package",
             "version": "[12.0.1, )"
           },
+          "EPPlus": {
+            "target": "Package",
+            "version": "[8.0.8, )"
+          },
           "EntityFramework": {
             "target": "Package",
             "version": "[6.5.1, )"
+          },
+          "ExcelDataReader": {
+            "target": "Package",
+            "version": "[3.7.0, )"
+          },
+          "ExcelDataReader.DataSet": {
+            "target": "Package",
+            "version": "[3.7.0, )"
+          },
+          "Hangfire.AspNetCore": {
+            "target": "Package",
+            "version": "[1.8.21, )"
+          },
+          "Hangfire.Core": {
+            "target": "Package",
+            "version": "[1.8.21, )"
+          },
+          "Hangfire.SqlServer": {
+            "target": "Package",
+            "version": "[1.8.21, )"
           },
           "Microsoft.AspNetCore.Identity": {
             "target": "Package",
@@ -4545,6 +5513,10 @@
             "target": "Package",
             "version": "[8.0.16, )"
           },
+          "NPOI": {
+            "target": "Package",
+            "version": "[2.7.4, )"
+          },
           "Swashbuckle.AspNetCore.SwaggerGen": {
             "target": "Package",
             "version": "[8.1.4, )"
@@ -4552,6 +5524,10 @@
           "System.IdentityModel.Tokens.Jwt": {
             "target": "Package",
             "version": "[8.12.0, )"
+          },
+          "payOS": {
+            "target": "Package",
+            "version": "[1.0.9, )"
           }
         },
         "imports": [

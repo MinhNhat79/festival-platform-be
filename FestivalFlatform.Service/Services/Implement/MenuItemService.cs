@@ -29,7 +29,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<MenuItem> CreateMenuItemAsync(MenuItemCreateRequest request)
         {
-            // Validate MenuId tồn tại
+       
             var menuExists = await _unitOfWork.Repository<FestivalMenu>()
                 .GetAll()
                 .AnyAsync(m => m.MenuId == request.MenuId);
@@ -39,7 +39,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.BadRequest, "Không tìm thấy FestivalMenu", request.MenuId.ToString());
             }
 
-            // Validate ItemType bằng enum-like
+          
             var normalizedType = request.ItemType.Trim().ToLower();
             if (normalizedType != StatusMenuItem.food && normalizedType != StatusMenuItem.beverage)
             {
@@ -52,7 +52,8 @@ namespace FestivalFlatform.Service.Services.Implement
                 ItemName = request.ItemName.Trim(),
                 Description = request.Description?.Trim(),
                 ItemType = normalizedType,
-                BasePrice = request.BasePrice,
+                MinPrice = request.MinPrice,
+                MaxPrice = request.MaxPrice,
                 Status = "active",
                 CreatedAt = DateTime.UtcNow
             };
@@ -68,7 +69,8 @@ namespace FestivalFlatform.Service.Services.Implement
         string itemName,
         string? description,
         string itemType,
-        decimal basePrice)
+        decimal minPrice,
+        decimal maxPrice)
         {
             var item = await _unitOfWork.Repository<MenuItem>().GetAll()
                 .FirstOrDefaultAsync(x => x.ItemId == itemId);
@@ -78,7 +80,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy MenuItem", itemId.ToString());
             }
 
-            // Kiểm tra tồn tại FestivalMenu
+       
             var menuExists = await _unitOfWork.Repository<FestivalMenu>()
                 .GetAll()
                 .AnyAsync(f => f.MenuId == menuId);
@@ -88,7 +90,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new CrudException(HttpStatusCode.BadRequest, "Không tìm thấy FestivalMenu", menuId.ToString());
             }
 
-            // Kiểm tra ItemType hợp lệ
+           
             var type = itemType.Trim().ToLower();
             if (type != StatusMenuItem.food && type != StatusMenuItem.beverage)
             {
@@ -99,7 +101,8 @@ namespace FestivalFlatform.Service.Services.Implement
             item.ItemName = itemName.Trim();
             item.Description = description?.Trim();
             item.ItemType = type;
-            item.BasePrice = basePrice;
+            item.MinPrice = minPrice;
+            item.MaxPrice = maxPrice;
             item.UpdatedAt = DateTime.UtcNow;
 
             await _unitOfWork.CommitAsync();
@@ -116,10 +119,10 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(i => string.IsNullOrWhiteSpace(itemName) || i.ItemName.Contains(itemName.Trim()))
                 .Where(i => string.IsNullOrWhiteSpace(itemType) || i.ItemType == itemType.Trim().ToLower());
 
-            int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
-            int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
+            //int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
+            //int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
 
-            query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
+            //query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
 
             var result = await query.ToListAsync();
 

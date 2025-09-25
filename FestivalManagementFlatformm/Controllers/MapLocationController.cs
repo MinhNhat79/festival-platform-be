@@ -1,6 +1,4 @@
-﻿using System.Drawing.Printing;
-using FestivalFlatform.Service.DTOs.Request;
-using FestivalFlatform.Service.Services.Implement;
+﻿using FestivalFlatform.Service.DTOs.Request;
 using FestivalFlatform.Service.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,7 +6,7 @@ namespace FestivalManagementFlatformm.Controllers
 {
     [ApiController]
     [Route("api/maplocations")]
-    public class MapLocationController : Controller
+    public class MapLocationController : ControllerBase
     {
         private readonly IMapLocationService _maplocationservice;
         public MapLocationController(IMapLocationService maplocationservice)
@@ -19,8 +17,19 @@ namespace FestivalManagementFlatformm.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateMapLocation([FromBody] MapLocationCreateRequest request)
         {
-            var result = await _maplocationservice.CreateMapLocationAsync(request);
-            return Ok(result);
+            try
+            {
+                var result = await _maplocationservice.CreateMapLocationAsync(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = ex.Message
+                });
+            }
         }
 
         [HttpPut("update")]
@@ -31,26 +40,64 @@ namespace FestivalManagementFlatformm.Controllers
             [FromQuery] string? coordinates,
             [FromQuery] bool? isOccupied)
         {
-            var result = await _maplocationservice.UpdateMapLocationAsync(id, locationName, locationType, coordinates, isOccupied);
-            return Ok(result);
+            try
+            {
+                var result = await _maplocationservice.UpdateMapLocationAsync(id, locationName, locationType, coordinates, isOccupied);
+                return Ok(result);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { success = false, message = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message });
+            }
         }
 
         [HttpGet("search")]
         public async Task<IActionResult> Search(
-           [FromQuery] int? locationId,
-           [FromQuery] int? mapId,
-           [FromQuery] string? locationName,
-           [FromQuery] string? locationType, [FromQuery] int? pageNumber, [FromQuery] int? pageSize)
+            [FromQuery] int? locationId,
+            [FromQuery] int? mapId,
+            [FromQuery] string? locationName,
+            [FromQuery] string? locationType,
+            [FromQuery] int? pageNumber,
+            [FromQuery] int? pageSize)
         {
-            var result = await _maplocationservice.SearchMapLocationsAsync(locationId, mapId, locationName, locationType,  pageNumber, pageSize);
-            return Ok(result);
+            try
+            {
+                var result = await _maplocationservice.SearchMapLocationsAsync(locationId, mapId, locationName, locationType, pageNumber, pageSize);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message });
+            }
         }
 
         [HttpDelete("delete")]
         public async Task<IActionResult> Delete(int id)
         {
-            var success = await _maplocationservice.DeleteMapLocationAsync(id);
-            return Ok(new { success });
+            try
+            {
+                var success = await _maplocationservice.DeleteMapLocationAsync(id);
+                if (success)
+                {
+                    return Ok(new { success = true, message = "Xóa thành công" });
+                }
+                else
+                {
+                    return NotFound(new { success = false, message = "Không tìm thấy bản ghi để xóa" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message });
+            }
         }
     }
 }

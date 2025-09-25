@@ -1,4 +1,5 @@
 ﻿using FestivalFlatform.Data.Models;
+using System.Net;
 using FestivalFlatform.Service.DTOs.Request;
 using FestivalFlatform.Service.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -20,54 +21,146 @@ namespace FestivalManagementFlatformm.Controllers
         public async Task<IActionResult> CreateFestival([FromBody] FestivalCreateRequest request)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return BadRequest(new { success = false, message = "Dữ liệu không hợp lệ", errors = ModelState });
 
             try
             {
                 var createdFestival = await _festivalService.CreateFestivalAsync(request);
                 return Ok(createdFestival);
             }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
             catch (Exception ex)
             {
-                // log error nếu cần
-                return StatusCode(500, $"Lỗi khi tạo festival: {ex.Message}");
+                return StatusCode(500, new { success = false, message = $"Lỗi khi tạo festival", detail = ex.Message });
             }
-
-
         }
 
         [HttpPut("update")]
-        public async Task<ActionResult<Festival>> UpdateFestival(int id,
-           [FromQuery] int? maxFoodBooths,
-           [FromQuery] int? maxBeverageBooths,
-           [FromQuery] int? registeredFoodBooths,
-           [FromQuery] int? registeredBeverageBooths,
-           [FromQuery] string? status)
+        public async Task<IActionResult> UpdateFestival(
+            int id,
+            [FromQuery] int? maxFoodBooths,
+            [FromQuery] int? maxBeverageBooths,
+            [FromQuery] int? registeredFoodBooths,
+            [FromQuery] int? registeredBeverageBooths,
+            [FromQuery] string? cancelReason,
+            [FromQuery] string? status)
         {
-            var result = await _festivalService.UpdateFestivalAsync(id, maxFoodBooths, maxBeverageBooths, registeredFoodBooths, registeredBeverageBooths, status);
-            return Ok(result);
+            try
+            {
+                var result = await _festivalService.UpdateFestivalAsync(id, maxFoodBooths, maxBeverageBooths, registeredFoodBooths, registeredBeverageBooths, cancelReason, status);
+                if (result == null)
+                    return NotFound(new { success = false, message = "Festival không tồn tại" });
+
+                return Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = $"Lỗi khi cập nhật festival", detail = ex.Message });
+            }
         }
 
         [HttpGet("search")]
-        public async Task<ActionResult<List<Festival>>> SearchFestivals(
-           [FromQuery] int? festivalId,
-           [FromQuery] int? schoolId,
-           [FromQuery] string? status,
-           [FromQuery] DateTime? startDate,
-           [FromQuery] DateTime? endDate,
-           [FromQuery] DateTime? registrationStartDate,
-           [FromQuery] DateTime? registrationEndDate,
-           [FromQuery] int? pageNumber,
-           [FromQuery] int? pageSize)
+        public async Task<IActionResult> SearchFestivals(
+            [FromQuery] int? festivalId,
+            [FromQuery] int? schoolId,
+            [FromQuery] string? status,
+            [FromQuery] DateTime? startDate,
+            [FromQuery] DateTime? endDate,
+            [FromQuery] DateTime? registrationStartDate,
+            [FromQuery] DateTime? registrationEndDate,
+            [FromQuery] int? pageNumber,
+            [FromQuery] int? pageSize)
         {
-            var result = await _festivalService.SearchFestivalsAsync(festivalId, schoolId, status, startDate, endDate, registrationStartDate, registrationEndDate, pageNumber, pageSize);
-            return Ok(result);
+            try
+            {
+                var result = await _festivalService.SearchFestivalsAsync(
+                    festivalId, schoolId, status, startDate, endDate, registrationStartDate, registrationEndDate, pageNumber, pageSize
+                );
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi khi tìm kiếm festival", detail = ex.Message });
+            }
         }
+
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteFestival(int id)
         {
-            await _festivalService.DeleteFestivalAsync(id);
-            return NoContent();
+            try
+            {
+                await _festivalService.DeleteFestivalAsync(id);
+                return Ok(new { success = true, message = "Xoá thành công" });
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(new { success = false, message = "Festival không tồn tại" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi khi xoá festival", detail = ex.Message });
+            }
+        }
+        [HttpPost("calculate-commission")]
+        public async Task<IActionResult> CalculateCommission(
+     [FromBody] DistributeCommissionRequest request)
+        {
+            try
+            {
+                
+               
+
+                await _festivalService.DistributeCommissionAsync(request);
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Tính và phân bổ hoa hồng thành công."
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = ex.Message
+                });
+            }
+        }
+
+        [HttpGet("{id}")]
+     
+        public async Task<IActionResult> GetFestivalDetail(int id)
+        {
+            var festival = await _festivalService.GetFestivalDetailAsync(id);
+            return Ok(festival);
+        }
+
+
+
+        [HttpPut("update-info")]
+        public async Task<IActionResult> UpdateFestivalInfo([FromBody] UpdateFestivalRequest request)
+        {
+            try
+            {
+                var result = await _festivalService.UpdateFestivalInfoAsync(request);
+                return Ok(new { success = true, data = result });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi hệ thống", detail = ex.Message });
+            }
         }
     }
 }

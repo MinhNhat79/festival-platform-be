@@ -28,21 +28,28 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<StudentGroup> CreateStudentGroupAsync(StudentGroupCreateRequest request)
         {
-            // Optional: Validate SchoolId, AccountId tồn tại nếu cần
-            var schoolExists = _unitOfWork.Repository<School>()
-        .GetAll().Any(s => s.SchoolId == request.SchoolId);
+           
+            var schoolExists = await _unitOfWork.Repository<School>()
+                .AnyAsync(s => s.SchoolId == request.SchoolId);
 
             if (!schoolExists)
-            {
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy trường tương ứng", request.SchoolId.ToString());
-            }
-            var accountExists = _unitOfWork.Repository<Account>()
-       .GetAll().Any(s => s.AccountId == request.AccountId);
 
-            if (!schoolExists)
-            {
+            
+            var accountExists = await _unitOfWork.Repository<Account>()
+                .AnyAsync(a => a.AccountId == request.AccountId);
+
+            if (!accountExists)
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy Account tương ứng", request.AccountId.ToString());
-            }
+
+           
+            var duplicateGroup = await _unitOfWork.Repository<StudentGroup>()
+                .AnyAsync(g => g.SchoolId == request.SchoolId && g.GroupName == request.GroupName);
+
+            if (duplicateGroup)
+                throw new CrudException(HttpStatusCode.Conflict, "Tên nhóm đã tồn tại trong trường này", request.GroupName);
+
+           
             var group = new StudentGroup
             {
                 SchoolId = request.SchoolId,
@@ -98,10 +105,10 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(g => !accountId.HasValue || g.AccountId == accountId.Value)
                 .Where(g => !schoolId.HasValue || g.SchoolId == schoolId.Value);
 
-            int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
-            int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
+            //int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
+            //int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
 
-            query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
+            //query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
 
             var result = await query.ToListAsync();
 

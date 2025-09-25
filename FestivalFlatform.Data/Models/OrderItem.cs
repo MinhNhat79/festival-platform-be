@@ -30,7 +30,7 @@ namespace FestivalFlatform.Data.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        // Navigation property: chỉ cần 1
+      
         public virtual Order Order { get; set; } = null!;
 
         public virtual MenuItem MenuItem { get; set; } = null!;

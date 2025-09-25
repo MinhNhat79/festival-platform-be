@@ -29,8 +29,6 @@ namespace FestivalFlatform.Service.Services.Implement
         public async Task<School> CreateSchoolAsync(SchoolCreateRequest request)
         { 
          
-
-
             var school = new School
             {
                 SchoolName = request.SchoolName,
@@ -69,14 +67,15 @@ namespace FestivalFlatform.Service.Services.Implement
         public async Task<List<School>> SearchSchoolsAsync(int? schoolId, int? accountId, string? schoolName, int? pageNumber, int? pageSize)
         {
             var query = _unitOfWork.Repository<School>().GetAll()
+                .Include(s => s.Account)
                 .Where(s => !schoolId.HasValue || schoolId == 0 || s.SchoolId == schoolId.Value)
                 .Where(s => string.IsNullOrWhiteSpace(schoolName) || s.SchoolName.Contains(schoolName.Trim()));
 
-            int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
-            int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
+            //int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
+            //int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
 
-            query = query.Skip((currentPage - 1) * currentSize)
-                         .Take(currentSize);
+            //query = query.Skip((currentPage - 1) * currentSize)
+            //             .Take(currentSize);
 
             var schools = await query.ToListAsync();
 

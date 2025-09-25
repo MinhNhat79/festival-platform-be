@@ -21,11 +21,12 @@ namespace FestivalFlatform.Data.Models
         public int QuantityAvailable { get; set; }
         public decimal? SpecialPrice { get; set; }
         public string Status { get; set; } = "available";
-
+        public string? Note { get; set; }
+        public string? RejectReason { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
         
-        public string? Note { get; set; }
+     
 
         public virtual Festival Festival { get; set; } = null!;
         public virtual Ingredient Ingredient { get; set; } = null!;

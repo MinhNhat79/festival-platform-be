@@ -18,6 +18,7 @@
     <Import Project="$(NuGetPackageRoot)entityframework\6.5.1\buildTransitive\net6.0\EntityFramework.props" Condition="Exists('$(NuGetPackageRoot)entityframework\6.5.1\buildTransitive\net6.0\EntityFramework.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgHangfire_SqlServer Condition=" '$(PkgHangfire_SqlServer)' == '' ">C:\Users\Admin\.nuget\packages\hangfire.sqlserver\1.8.21</PkgHangfire_SqlServer>
     <PkgEntityFramework Condition=" '$(PkgEntityFramework)' == '' ">C:\Users\Admin\.nuget\packages\entityframework\6.5.1</PkgEntityFramework>
   </PropertyGroup>
 </Project>

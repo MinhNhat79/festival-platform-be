@@ -31,13 +31,13 @@ namespace FestivalFlatform.Service.Services.Implement
         {
            
 
-            // Kiểm tra tồn tại MenuItem
+          
             var menuItemExists = await _unitOfWork.Repository<MenuItem>()
                 .AnyAsync(m => m.ItemId == request.ItemId);
             if (!menuItemExists)
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy MenuItem", request.ItemId.ToString());
 
-            // Kiểm tra tồn tại Ingredient
+      
             var ingredientExists = await _unitOfWork.Repository<Ingredient>()
                 .AnyAsync(i => i.IngredientId == request.IngredientId);
             if (!ingredientExists)
@@ -71,19 +71,19 @@ namespace FestivalFlatform.Service.Services.Implement
             if (entity == null)
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy MenuItemIngredient", itemIngredientId.ToString());
 
-            // Kiểm tra MenuItem
+           
             var itemExists = await _unitOfWork.Repository<MenuItem>()
                 .AnyAsync(x => x.ItemId == itemId);
             if (!itemExists)
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy MenuItem", itemId.ToString());
 
-            // Kiểm tra Ingredient
+          
             var ingExists = await _unitOfWork.Repository<Ingredient>()
                 .AnyAsync(x => x.IngredientId == ingredientId);
             if (!ingExists)
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy Ingredient", ingredientId.ToString());
 
-            // Gán giá trị mới
+        
             entity.ItemId = itemId;
             entity.IngredientId = ingredientId;
             entity.Quantity = quantity;
@@ -108,16 +108,16 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(x => !ingredientId.HasValue || x.IngredientId == ingredientId.Value)
                 .Where(x => string.IsNullOrWhiteSpace(unit) || x.Unit.Contains(unit.Trim()));
 
-            int currentPage = pageNumber.GetValueOrDefault(1);
-            int currentSize = pageSize.GetValueOrDefault(10);
+            //int currentPage = pageNumber.GetValueOrDefault(1);
+            //int currentSize = pageSize.GetValueOrDefault(10);
 
-            var result = await query
-                .Skip((currentPage - 1) * currentSize)
-                .Take(currentSize)
-                .ToListAsync();
+            //var result = await query
+            //    .Skip((currentPage - 1) * currentSize)
+            //    .Take(currentSize)
+            //    .ToListAsync();
 
 
-            return result;
+            return await query.ToListAsync();
 
 
         }

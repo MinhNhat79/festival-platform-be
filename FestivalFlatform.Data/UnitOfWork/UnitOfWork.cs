@@ -15,7 +15,10 @@ namespace FestivalFlatform.Data.UnitOfWork
         {
             _context = context;
         }
-
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync();
+        }
         private readonly Dictionary<Type, object> reposotories = new Dictionary<Type, object>();
 
         public IGenericRepository<T> Repository<T>()

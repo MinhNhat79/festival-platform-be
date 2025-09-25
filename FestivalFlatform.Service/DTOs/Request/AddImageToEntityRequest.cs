@@ -14,5 +14,7 @@ namespace FestivalFlatform.Service.DTOs.Request
         public int? FestivalId { get; set; }
         public int? BoothId { get; set; }
         public int? MenuItemId { get; set; }
+        public int? BoothMenuItemId { get; set; }
+
     }
 }

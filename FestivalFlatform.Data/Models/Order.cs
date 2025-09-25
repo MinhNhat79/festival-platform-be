@@ -34,7 +34,7 @@ namespace FestivalFlatform.Data.Models
         public virtual Account Account { get; set; } = null!;
         public virtual Booth Booth { get; set; } = null!;
 
-
+        public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
 
     }
 }

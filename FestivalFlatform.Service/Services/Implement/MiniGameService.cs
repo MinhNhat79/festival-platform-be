@@ -30,7 +30,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<Minigame> CreateMinigameAsync(MinigameCreateRequest request)
         {
-            // Validate Booth
+           
             var boothExists = await _unitOfWork.Repository<Booth>()
                 .AnyAsync(b => b.BoothId == request.BoothId);
 
@@ -70,7 +70,7 @@ namespace FestivalFlatform.Service.Services.Implement
             if (minigame == null)
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy Minigame", gameId.ToString());
 
-            // Kiểm tra Booth tồn tại
+           
             var boothExists = await _unitOfWork.Repository<Booth>()
                 .AnyAsync(b => b.BoothId == boothId);
             if (!boothExists)
@@ -98,10 +98,10 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(m => string.IsNullOrWhiteSpace(gameType) || m.GameType == gameType.Trim().ToLower())
                 .Where(m => string.IsNullOrWhiteSpace(status) || m.Status == status.Trim().ToLower());
 
-            int currentPage = pageNumber.GetValueOrDefault(1);
-            int currentSize = pageSize.GetValueOrDefault(10);
+            //int currentPage = pageNumber.GetValueOrDefault(1);
+            //int currentSize = pageSize.GetValueOrDefault(10);
 
-            query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
+            //query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
 
             var result = await query.ToListAsync();
 

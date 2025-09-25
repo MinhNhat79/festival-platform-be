@@ -28,21 +28,21 @@ namespace FestivalFlatform.Service.Services.Implement
         }
         public async Task<FestivalSchool> CreateFestivalSchoolAsync(FestivalSchoolCreateRequest request)
         {
-            // Validate Festival
+            
             var festival = await _unitOfWork.Repository<Festival>().FindAsync(f => f.FestivalId == request.FestivalId);
             if (festival == null)
             {
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy Festival", request.FestivalId.ToString());
             }
 
-            // Validate School
+          
             var school = await _unitOfWork.Repository<School>().FindAsync(s => s.SchoolId == request.SchoolId);
             if (school == null)
             {
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy School", request.SchoolId.ToString());
             }
 
-            // Check if already exists
+      
             var existing = await _unitOfWork.Repository<FestivalSchool>().GetAll()
                 .AnyAsync(fs => fs.FestivalId == request.FestivalId && fs.SchoolId == request.SchoolId);
 
@@ -94,7 +94,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
 
             entity.ApprovalDate = DateTime.UtcNow;
-            entity.RegistrationDate = entity.RegistrationDate; // giữ nguyên
+            entity.RegistrationDate = entity.RegistrationDate; 
 
             await _unitOfWork.CommitAsync();
 
@@ -109,10 +109,10 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(fs => !schoolId.HasValue || fs.SchoolId == schoolId)
                 .Where(fs => string.IsNullOrWhiteSpace(status) || fs.Status == status.Trim());
 
-            int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
-            int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
+            //int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
+            //int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
 
-            query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
+            //query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
 
             var result = await query.ToListAsync();
 
@@ -132,7 +132,7 @@ namespace FestivalFlatform.Service.Services.Implement
             _unitOfWork.Repository<FestivalSchool>().Delete(entity);
             await _unitOfWork.CommitAsync();
         }
-        public async Task UpdateFestivalSchoolStatusToRejectAsync(int festivalSchoolId)
+        public async Task UpdateFestivalSchoolStatusToRejectAsync(int festivalSchoolId,string? rejectReason)
         {
             var entity = await _unitOfWork.Repository<FestivalSchool>()
                 .GetAll()
@@ -142,7 +142,7 @@ namespace FestivalFlatform.Service.Services.Implement
             {
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy FestivalSchool", festivalSchoolId.ToString());
             }
-
+            entity.rejectReason = rejectReason;
             entity.Status = StatusFestivalSchool.Rejected;
             entity.ApprovalDate = DateTime.UtcNow;
             await _unitOfWork.CommitAsync();

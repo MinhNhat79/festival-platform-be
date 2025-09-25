@@ -1,5 +1,4 @@
 ﻿using FestivalFlatform.Service.DTOs.Request;
-using FestivalFlatform.Service.Services.Implement;
 using FestivalFlatform.Service.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +8,6 @@ namespace FestivalManagementFlatformm.Controllers
     [Route("api/festivalmaps")]
     public class FestivalMapController : Controller
     {
-
         private readonly IFestivalMapService _festivalmapService;
 
         public FestivalMapController(IFestivalMapService festivalmapService)
@@ -20,18 +18,51 @@ namespace FestivalManagementFlatformm.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateFestivalMap([FromBody] FestivalMapCreateRequest request)
         {
-            var result = await _festivalmapService.CreateFestivalMapAsync(request);
-            return Ok(result);
+            try
+            {
+                var result = await _festivalmapService.CreateFestivalMapAsync(request);
+                return Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi hệ thống", detail = ex.Message });
+            }
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> UpdateFestivalMap(int mapId, [FromQuery] int? festivalId, [FromQuery] string? mapName, [FromQuery] string? mapType, [FromQuery] string? mapUrl)
+        public async Task<IActionResult> UpdateFestivalMap(
+            int mapId,
+            [FromQuery] int? festivalId,
+            [FromQuery] string? mapName,
+            [FromQuery] string? mapType,
+            [FromQuery] string? mapUrl)
         {
-            var result = await _festivalmapService.UpdateFestivalMapAsync(mapId, festivalId, mapName, mapType, mapUrl);
-            return Ok(result);
-
+            try
+            {
+                var result = await _festivalmapService.UpdateFestivalMapAsync(mapId, festivalId, mapName, mapType, mapUrl);
+                return Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi hệ thống", detail = ex.Message });
+            }
         }
-
 
         [HttpGet("search")]
         public async Task<IActionResult> SearchFestivalMaps(
@@ -42,14 +73,33 @@ namespace FestivalManagementFlatformm.Controllers
             [FromQuery] int? pageNumber,
             [FromQuery] int? pageSize)
         {
-            var result = await _festivalmapService.SearchFestivalMapsAsync(mapId, festivalId, mapName, mapType, pageNumber, pageSize);
-            return Ok(result);
+            try
+            {
+                var result = await _festivalmapService.SearchFestivalMapsAsync(mapId, festivalId, mapName, mapType, pageNumber, pageSize);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi khi tìm kiếm", detail = ex.Message });
+            }
         }
+
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteFestivalMap(int mapId)
         {
-            await _festivalmapService.DeleteFestivalMapAsync(mapId);
-            return NoContent();
+            try
+            {
+                var result = await _festivalmapService.DeleteFestivalMapAsync(mapId);
+                return Ok(result);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { success = false, message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Lỗi hệ thống", detail = ex.Message });
+            }
         }
     }
 }

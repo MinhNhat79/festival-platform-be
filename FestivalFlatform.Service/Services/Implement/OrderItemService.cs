@@ -79,10 +79,10 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(i => !orderId.HasValue || i.OrderId == orderId)
                 .Where(i => !menuItemId.HasValue || i.MenuItemId == menuItemId);
 
-            int currentPage = page.GetValueOrDefault(1);
-            int pageSize = size.GetValueOrDefault(10);
+            //int currentPage = page.GetValueOrDefault(1);
+            //int pageSize = size.GetValueOrDefault(10);
 
-            return await query.Skip((currentPage - 1) * pageSize).Take(pageSize).ToListAsync();
+            return await query.ToListAsync();
         }
 
         public async Task DeleteOrderItemAsync(int id)
