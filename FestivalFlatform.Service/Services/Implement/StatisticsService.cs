@@ -191,15 +191,16 @@ namespace FestivalFlatform.Service.Services.Implement
         }
 
         public async Task<List<TopFestivalResponse>> GetTopFestivalsAsync(
-     string? range = null,
-     DateTime? startDate = null,
-     DateTime? endDate = null,
-     int limit = 5,
-     int? schoolId = null)
+       string? range = null,
+       DateTime? startDate = null,
+       DateTime? endDate = null,
+       int limit = 5,
+       int? schoolId = null)
         {
+            // Chuẩn hóa khoảng thời gian
             var (startUtc, endUtc) = NormalizeRange(range, startDate, endDate);
 
-            // Lấy danh sách Festival + School
+            // Lấy tất cả Festival kèm School
             var festivalsQuery = _unitOfWork.Repository<Festival>().GetAll()
                 .Include(f => f.School)
                 .AsQueryable();
@@ -209,40 +210,41 @@ namespace FestivalFlatform.Service.Services.Implement
 
             var festivals = await festivalsQuery.ToListAsync();
 
-            // Lấy các Payment gắn với Order hợp lệ
-            var paymentsQuery = _unitOfWork.Repository<Payment>().GetAll()
-                .Include(p => p.Order)
-                .ThenInclude(o => o.Booth)
+            // Lấy các Order hợp lệ (Completed)
+            var ordersQuery = _unitOfWork.Repository<Order>().GetAll()
+                .Include(o => o.Booth)
                 .ThenInclude(b => b.Festival)
                 .AsQueryable();
 
-            // Chỉ lấy các Order hợp lệ (ví dụ Completed / Success)
-            paymentsQuery = paymentsQuery.Where(p => p.Order.Status == StatusOrder.Completed);
+            ordersQuery = ordersQuery
+                .Where(o => o.Status.ToLower() == StatusOrder.Completed.ToLower());
 
             if (startUtc.HasValue)
-                paymentsQuery = paymentsQuery.Where(p => p.PaymentDate >= startUtc.Value);
+                ordersQuery = ordersQuery.Where(o => o.OrderDate >= startUtc.Value);
             if (endUtc.HasValue)
-                paymentsQuery = paymentsQuery.Where(p => p.PaymentDate <= endUtc.Value);
+                ordersQuery = ordersQuery.Where(o => o.OrderDate <= endUtc.Value);
 
             if (schoolId.HasValue)
-                paymentsQuery = paymentsQuery.Where(p => p.Order.Booth.Festival.SchoolId == schoolId.Value);
+                ordersQuery = ordersQuery.Where(o => o.Booth.Festival.SchoolId == schoolId.Value);
 
-            // Group doanh thu theo Festival
-            var groupedPayments = await paymentsQuery
-                .GroupBy(p => p.Order.Booth.FestivalId)
+            var orders = await ordersQuery.ToListAsync();
+
+            // Group Order theo Festival
+            var groupedOrders = orders
+                .GroupBy(o => o.Booth.FestivalId)
                 .Select(g => new
                 {
                     FestivalId = g.Key,
-                    Revenue = g.Sum(p => p.AmountPaid),
-                    Orders = g.Select(p => p.OrderId).Distinct().Count()
+                    Revenue = g.Sum(o => o.TotalAmount), // tổng tiền của order
+                    Orders = g.Count()
                 })
-                .ToListAsync();
+                .ToList();
 
-            // Build kết quả
+            // Build kết quả trả về
             var result = festivals
                 .Select(f =>
                 {
-                    var stats = groupedPayments.FirstOrDefault(g => g.FestivalId == f.FestivalId);
+                    var stats = groupedOrders.FirstOrDefault(g => g.FestivalId == f.FestivalId);
                     return new TopFestivalResponse
                     {
                         FestivalId = f.FestivalId,
