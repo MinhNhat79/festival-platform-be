@@ -1,5 +1,7 @@
-﻿using FestivalFlatform.Data.Models;
+﻿using System.Net;
+using FestivalFlatform.Data.Models;
 using FestivalFlatform.Service.DTOs.Request;
+using FestivalFlatform.Service.Exceptions;
 using FestivalFlatform.Service.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -143,6 +145,73 @@ namespace FestivalManagementFlatformm.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { success = false, message = "Lỗi hệ thống", detail = ex.Message });
+            }
+        }
+        [HttpPost("withdraw-revenue")]
+        public async Task<IActionResult> WithdrawRevenue([FromBody] WithdrawRevenueRequest request)
+        {
+            try
+            {
+                var booth = await _boothService.WithdrawBoothRevenueAsync(request.BoothId, request.AccountId);
+
+                return Ok(new
+                {
+                    Success = true,
+                    Message = "Chuyển doanh thu thành công",
+                    Booth = booth
+                });
+            }
+            catch (CrudException ex) 
+            {
+                return BadRequest(new
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+            catch (Exception ex) 
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+        }
+
+        public class WithdrawRevenueRequest
+        {
+            public int BoothId { get; set; }
+            public int AccountId { get; set; }
+        }
+
+        [HttpGet("can-withdraw-revenue")]
+        public async Task<IActionResult> CanWithdrawRevenue([FromQuery] int boothId, [FromQuery] int accountId)
+        {
+            try
+            {
+                var canWithdraw = await _boothService.CanWithdrawRevenueAsync(boothId, accountId);
+                return Ok(new
+                {
+                    Success = true,
+                    CanWithdraw = canWithdraw
+                });
+            }
+            catch (CrudException ex)
+            {
+                return BadRequest(new
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    Success = false,
+                    Message = ex.Message
+                });
             }
         }
     }

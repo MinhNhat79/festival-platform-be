@@ -104,5 +104,24 @@ namespace FestivalFlatform.Service.Services.Implement
 
             return true;
         }
+
+
+        public async Task<BoothWallet> UpdateTotalBalanceAsync(int boothId, decimal balance)
+        {
+            
+            var wallet = await _unitOfWork.Repository<BoothWallet>()
+                .GetAll()
+                .FirstOrDefaultAsync(w => w.BoothId == boothId);
+
+            if (wallet == null)
+                throw new KeyNotFoundException($"BoothWallet của BoothId {boothId} không tồn tại");
+
+           
+            wallet.TotalBalance += balance;
+            wallet.UpdatedAt = DateTime.UtcNow;
+
+            await _unitOfWork.CommitAsync();
+            return wallet;
+        }
     }
 }

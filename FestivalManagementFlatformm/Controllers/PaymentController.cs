@@ -31,11 +31,11 @@ namespace FestivalManagementFlatformm.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> UpdatePayment(int paymentId, string? status, string? description)
+        public async Task<IActionResult> UpdatePayment(int paymentId, string? status, string? description,int? orderid)
         {
             try
             {
-                var result = await _service.UpdatePaymentAsync(paymentId, status, description);
+                var result = await _service.UpdatePaymentAsync(paymentId, orderid, status, description);
                 return Ok(result);
             }
             catch (KeyNotFoundException ex)

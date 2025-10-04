@@ -77,5 +77,23 @@ namespace FestivalManagementFlatformm.Controllers
                 return StatusCode(500, new { success = false, message = ex.Message });
             }
         }
+
+        [HttpPut("update-total-balance")]
+        public async Task<IActionResult> UpdateTotalBalance([FromQuery] int boothId, [FromQuery] decimal balance)
+        {
+            try
+            {
+                var updatedWallet = await _service.UpdateTotalBalanceAsync(boothId, balance);
+                return Ok(updatedWallet);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }

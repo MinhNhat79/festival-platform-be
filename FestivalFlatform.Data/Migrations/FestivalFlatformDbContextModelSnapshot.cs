@@ -65,6 +65,12 @@ namespace FestivalFlatform.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountId"));
 
+                    b.Property<long?>("AccountBankNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("AtmName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("AvatarUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -200,6 +206,9 @@ namespace FestivalFlatform.Data.Migrations
 
                     b.Property<int>("GroupId")
                         .HasColumnType("int");
+
+                    b.Property<string>("IsWithdraw")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
@@ -1184,6 +1193,43 @@ namespace FestivalFlatform.Data.Migrations
                     b.ToTable("Questions");
                 });
 
+            modelBuilder.Entity("FestivalFlatform.Data.Models.Request", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Data")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("Request");
+                });
+
             modelBuilder.Entity("FestivalFlatform.Data.Models.Review", b =>
                 {
                     b.Property<int>("ReviewId")
@@ -1896,6 +1942,17 @@ namespace FestivalFlatform.Data.Migrations
                     b.Navigation("Game");
                 });
 
+            modelBuilder.Entity("FestivalFlatform.Data.Models.Request", b =>
+                {
+                    b.HasOne("FestivalFlatform.Data.Models.Account", "Account")
+                        .WithMany("Requests")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
             modelBuilder.Entity("FestivalFlatform.Data.Models.Review", b =>
                 {
                     b.HasOne("FestivalFlatform.Data.Models.Account", "Account")
@@ -1993,6 +2050,8 @@ namespace FestivalFlatform.Data.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("PointsTransactions");
+
+                    b.Navigation("Requests");
 
                     b.Navigation("Reviews");
 

@@ -1224,6 +1224,67 @@
         }
       }
     },
+    "/api/booths/withdraw-revenue": {
+      "post": {
+        "tags": [
+          "Booth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WithdrawRevenueRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WithdrawRevenueRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WithdrawRevenueRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/booths/can-withdraw-revenue": {
+      "get": {
+        "tags": [
+          "Booth"
+        ],
+        "parameters": [
+          {
+            "name": "boothId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "accountId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/boothmenuitems/create": {
       "post": {
         "tags": [
@@ -1502,6 +1563,36 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/boothwallets/update-total-balance": {
+      "put": {
+        "tags": [
+          "BoothWallet"
+        ],
+        "parameters": [
+          {
+            "name": "boothId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "balance",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
             }
           }
         ],
@@ -4814,6 +4905,14 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "orderid",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         ],
         "responses": {
@@ -5249,6 +5348,162 @@
         "parameters": [
           {
             "name": "questionId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/requests/create": {
+      "post": {
+        "tags": [
+          "Request"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreateRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreateRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/requests/update": {
+      "put": {
+        "tags": [
+          "Request"
+        ],
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "message",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/requests/search": {
+      "get": {
+        "tags": [
+          "Request"
+        ],
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "accountId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/requests/delete": {
+      "delete": {
+        "tags": [
+          "Request"
+        ],
+        "parameters": [
+          {
+            "name": "id",
             "in": "query",
             "schema": {
               "type": "integer",
@@ -6799,6 +7054,15 @@
             "type": "string",
             "nullable": true
           },
+          "atmName": {
+            "type": "string",
+            "nullable": true
+          },
+          "accountBankNumber": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
           "roleId": {
             "type": "integer",
             "format": "int32"
@@ -6913,6 +7177,13 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Comment"
+            },
+            "nullable": true
+          },
+          "requests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Request"
             },
             "nullable": true
           }
@@ -7099,6 +7370,15 @@
             "type": "string",
             "nullable": true
           },
+          "atmName": {
+            "type": "string",
+            "nullable": true
+          },
+          "accountBankNumber": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
           "status": {
             "type": "boolean",
             "nullable": true
@@ -7220,6 +7500,10 @@
             "nullable": true
           },
           "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "isWithdraw": {
             "type": "string",
             "nullable": true
           },
@@ -7469,6 +7753,10 @@
             "nullable": true
           },
           "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "isWithdraw": {
             "type": "string",
             "nullable": true
           },
@@ -9468,6 +9756,73 @@
         },
         "additionalProperties": false
       },
+      "Request": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "account": {
+            "$ref": "#/components/schemas/Account"
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RequestCreateRequest": {
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Review": {
         "required": [
           "accountId",
@@ -10085,6 +10440,20 @@
           "amount": {
             "type": "number",
             "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "WithdrawRevenueRequest": {
+        "type": "object",
+        "properties": {
+          "boothId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accountId": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

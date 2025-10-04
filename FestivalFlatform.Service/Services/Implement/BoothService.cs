@@ -253,7 +253,9 @@ namespace FestivalFlatform.Service.Services.Implement
             if (!string.IsNullOrWhiteSpace(request.Description))
                 booth.Description = request.Description;
             if (!string.IsNullOrWhiteSpace(request.Status))
-                booth.Status = request.Status.Trim(); // <-- cập nhật status ở đây
+                booth.Status = request.Status.Trim();
+            if (!string.IsNullOrWhiteSpace(request.IsWithdraw))
+                booth.IsWithdraw = request.IsWithdraw.Trim();
 
             booth.UpdatedAt = DateTime.UtcNow;
 
@@ -274,6 +276,7 @@ namespace FestivalFlatform.Service.Services.Implement
                         location.Coordinates = request.Location.Coordinates;
                     if (request.Location.IsOccupied.HasValue)
                         location.IsOccupied = request.Location.IsOccupied.Value;
+
 
                     location.UpdatedAt = DateTime.UtcNow;
                     booth.LocationId = location.LocationId;
@@ -320,6 +323,106 @@ namespace FestivalFlatform.Service.Services.Implement
                 .FirstOrDefaultAsync(b => b.BoothId == boothId);
 
             return updatedBooth;
+        }
+        public async Task<Booth> WithdrawBoothRevenueAsync(int boothId, int accountId)
+        {
+            // 1. Lấy booth
+            var booth = await _unitOfWork.Repository<Booth>()
+            .GetAll()
+            .Include(b => b.Festival)
+            .ThenInclude(f => f.FestivalCommission) // include navigation con
+        .FirstOrDefaultAsync(b => b.BoothId == boothId);
+
+            if (booth == null)
+                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy gian hàng", boothId.ToString());
+
+            //var festival = booth.Festival;
+
+            //if (festival == null || festival.FestivalCommission == null)
+            //    throw new CrudException(HttpStatusCode.BadRequest,
+            //        "Vui lòng đợi Admin rút hoa hồng trước khi chuyển doanh thu gian hàng về ví của bạn!");
+            // 2. Lấy BoothWallet
+            var boothWallet = await _unitOfWork.Repository<BoothWallet>()
+                .GetAll()
+                .FirstOrDefaultAsync(w => w.BoothId == boothId);
+
+            if (boothWallet == null)
+                throw new CrudException(HttpStatusCode.NotFound, "BoothWallet không tồn tại", boothId.ToString());
+
+            if (boothWallet.TotalBalance <= 0)
+                throw new CrudException(HttpStatusCode.BadRequest, "BoothWallet không có số dư để rút", boothId.ToString());
+
+            decimal amountToTransfer = boothWallet.TotalBalance;
+
+           
+            var accountWallet = await _unitOfWork.Repository<Wallet>()
+                        .GetAll()
+                        .FirstOrDefaultAsync(w => w.AccountId == accountId);
+
+            if (accountWallet == null)
+            {
+                throw new CrudException(HttpStatusCode.NotFound, "AccountWallet không tồn tại cho accountId " + accountId);
+            }
+
+           
+            accountWallet.Balance += amountToTransfer;
+            accountWallet.UpdateAt = DateTime.UtcNow;
+
+            boothWallet.TotalBalance = 0;
+            boothWallet.UpdatedAt = DateTime.UtcNow;
+
+           
+            booth.IsWithdraw = "true";
+            booth.UpdatedAt = DateTime.UtcNow;
+
+           
+            await _unitOfWork.CommitAsync();
+
+          
+            return booth;
+        }
+        public async Task<bool> CanWithdrawRevenueAsync(int boothId, int accountId)
+        {
+            // 1. Lấy booth và festival
+            var booth = await _unitOfWork.Repository<Booth>()
+    .GetAll()
+    .Include(b => b.Festival)
+        .ThenInclude(f => f.FestivalCommission) 
+    .FirstOrDefaultAsync(b => b.BoothId == boothId);
+
+
+            if (booth == null)
+                throw new CrudException(HttpStatusCode.NotFound, "Booth không tồn tại", boothId.ToString());
+
+            var festival = booth.Festival;
+            if (festival == null || festival.FestivalCommission == null)
+                throw new CrudException(HttpStatusCode.BadRequest,
+                    "Vui lòng đợi Admin rút hoa hồng trước khi chuyển doanh thu gian hàng về ví của bạn!");
+
+            // 2. Lấy BoothWallet
+            var boothWallet = await _unitOfWork.Repository<BoothWallet>()
+                .GetAll()
+                .FirstOrDefaultAsync(w => w.BoothId == boothId);
+
+            if (boothWallet == null || boothWallet.TotalBalance <= 0)
+                throw new CrudException(HttpStatusCode.BadRequest,
+                    "số dư của dan hàng đang là 0 nên không thể rút");
+
+            // 3. Lấy AccountWallet
+            var accountWallet = await _unitOfWork.Repository<Wallet>()
+                .GetAll()
+                .FirstOrDefaultAsync(w => w.AccountId == accountId);
+
+            if (accountWallet == null)
+                throw new CrudException(HttpStatusCode.BadRequest,
+                    "Vui lòng đợi Admin rút hoa hồng trước khi chuyển doanh thu gian hàng về ví của bạn!");
+
+            // 4. Kiểm tra IsWithdraw
+            if (booth.IsWithdraw != null && booth.IsWithdraw.Equals("true", StringComparison.OrdinalIgnoreCase))
+                throw new CrudException(HttpStatusCode.BadRequest,
+                    "Vui lòng đợi Admin rút hoa hồng trước khi chuyển doanh thu gian hàng về ví của bạn!");
+
+            return true;
         }
 
 

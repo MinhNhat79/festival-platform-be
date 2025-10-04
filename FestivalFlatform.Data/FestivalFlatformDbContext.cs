@@ -50,7 +50,7 @@ namespace FestivalFlatform.Data
         public DbSet<BoothWallet> boothWallets { get; set; }
 
         public DbSet<FestivalParticipant> FestivalParticipants { get; set; }
-
+        public DbSet<Request> Requests { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -420,7 +420,15 @@ namespace FestivalFlatform.Data
                 .HasOne(c => c.ParentComment)
                 .WithMany(c => c.Replies)
                 .HasForeignKey(c => c.ParentCommentId)
-                .OnDelete(DeleteBehavior.Restrict); 
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            modelBuilder.Entity<Request>()
+           .HasOne(r => r.Account)
+           .WithMany(a => a.Requests)
+           .HasForeignKey(r => r.AccountId)
+           .OnDelete(DeleteBehavior.Cascade);
+
 
         }
     }

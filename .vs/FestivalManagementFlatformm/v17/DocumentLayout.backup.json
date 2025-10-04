@@ -3,72 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.service\\services\\implement\\statisticsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|solutionrelative:festivalflatform.service\\services\\implement\\statisticsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.service\\services\\implement\\paymentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|solutionrelative:festivalflatform.service\\services\\implement\\paymentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.service\\services\\implement\\orderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|solutionrelative:festivalflatform.service\\services\\implement\\orderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{53ABA795-DB17-4155-9F90-6E0A30BCF2DE}|FestivalManagementFlatformm\\FestivalManagementFlatformm.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalmanagementflatformm\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{53ABA795-DB17-4155-9F90-6E0A30BCF2DE}|FestivalManagementFlatformm\\FestivalManagementFlatformm.csproj|solutionrelative:festivalmanagementflatformm\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.service\\helpers\\statusorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|solutionrelative:festivalflatform.service\\helpers\\statusorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.service\\services\\implement\\boothservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|solutionrelative:festivalflatform.service\\services\\implement\\boothservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.service\\helpers\\statusbooth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|solutionrelative:festivalflatform.service\\helpers\\statusbooth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{53ABA795-DB17-4155-9F90-6E0A30BCF2DE}|FestivalManagementFlatformm\\FestivalManagementFlatformm.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalmanagementflatformm\\controllers\\boothcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53ABA795-DB17-4155-9F90-6E0A30BCF2DE}|FestivalManagementFlatformm\\FestivalManagementFlatformm.csproj|solutionrelative:festivalmanagementflatformm\\controllers\\boothcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.service\\services\\implement\\festivalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|solutionrelative:festivalflatform.service\\services\\implement\\festivalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.service\\services\\implement\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|solutionrelative:festivalflatform.service\\services\\implement\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.service\\helpers\\orderqueryableextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|solutionrelative:festivalflatform.service\\helpers\\orderqueryableextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.service\\services\\implement\\loginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|solutionrelative:festivalflatform.service\\services\\implement\\loginservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{53ABA795-DB17-4155-9F90-6E0A30BCF2DE}|FestivalManagementFlatformm\\FestivalManagementFlatformm.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalmanagementflatformm\\controllers\\festivalcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{53ABA795-DB17-4155-9F90-6E0A30BCF2DE}|FestivalManagementFlatformm\\FestivalManagementFlatformm.csproj|solutionrelative:festivalmanagementflatformm\\controllers\\festivalcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.service\\services\\interface\\ifestivalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|solutionrelative:festivalflatform.service\\services\\interface\\ifestivalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\maplocation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\maplocation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.service\\helpers\\validationresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|solutionrelative:festivalflatform.service\\helpers\\validationresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{53ABA795-DB17-4155-9F90-6E0A30BCF2DE}|FestivalManagementFlatformm\\FestivalManagementFlatformm.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalmanagementflatformm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{53ABA795-DB17-4155-9F90-6E0A30BCF2DE}|FestivalManagementFlatformm\\FestivalManagementFlatformm.csproj|solutionrelative:festivalmanagementflatformm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.data\\models\\booth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{76A4AB8E-B960-4E92-952F-ECBBF93E47DB}|FestivalFlatform.Data\\FestivalFlatform.Data.csproj|solutionrelative:festivalflatform.data\\models\\booth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.service\\services\\interface\\iboothservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|solutionrelative:festivalflatform.service\\services\\interface\\iboothservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7323B38D-6B0A-42A6-95C9-03A5C5C9553F}|FestivalFlatform.Service\\FestivalFlatform.Service.csproj|c:\\users\\admin\\source\\repos\\festivalmanagementflatformm\\festivalflatform.service\\dtos\\request\\boothupdaterequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -82,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -102,223 +50,68 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Order.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Order.cs",
-              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\Order.cs",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Order.cs",
-              "RelativeToolTip": "FestivalFlatform.Data\\Models\\Order.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T17:56:12.272Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "StatusOrder.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Helpers\\StatusOrder.cs",
-              "RelativeDocumentMoniker": "FestivalFlatform.Service\\Helpers\\StatusOrder.cs",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Helpers\\StatusOrder.cs",
-              "RelativeToolTip": "FestivalFlatform.Service\\Helpers\\StatusOrder.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T14:44:34.493Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "PaymentService.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Implement\\PaymentService.cs",
-              "RelativeDocumentMoniker": "FestivalFlatform.Service\\Services\\Implement\\PaymentService.cs",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Implement\\PaymentService.cs",
-              "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\PaymentService.cs",
-              "ViewState": "AgIAAEcAAAAAAAAAAAAQwDwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T14:46:31.842Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "OrderService.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Implement\\OrderService.cs",
-              "RelativeDocumentMoniker": "FestivalFlatform.Service\\Services\\Implement\\OrderService.cs",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Implement\\OrderService.cs",
-              "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\OrderService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "AccountService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Implement\\AccountService.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Service\\Services\\Implement\\AccountService.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Implement\\AccountService.cs",
+              "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\AccountService.cs",
+              "ViewState": "AgIAAJUAAAAAAAAAAAAWwKUAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T14:48:34.737Z",
+              "WhenOpened": "2025-10-04T21:28:20.183Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "StatisticsService.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Implement\\StatisticsService.cs",
-              "RelativeDocumentMoniker": "FestivalFlatform.Service\\Services\\Implement\\StatisticsService.cs",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Implement\\StatisticsService.cs",
-              "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\StatisticsService.cs",
-              "ViewState": "AgIAAI8AAAAAAAAAAAAWwJsAAAAeAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "IBoothService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Interface\\IBoothService.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Service\\Services\\Interface\\IBoothService.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Interface\\IBoothService.cs",
+              "RelativeToolTip": "FestivalFlatform.Service\\Services\\Interface\\IBoothService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T14:17:19.465Z",
+              "WhenOpened": "2025-10-04T21:13:12.097Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "MapLocation.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\MapLocation.cs",
-              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\MapLocation.cs",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\MapLocation.cs",
-              "RelativeToolTip": "FestivalFlatform.Data\\Models\\MapLocation.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T11:56:12.736Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "IFestivalService.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Interface\\IFestivalService.cs",
-              "RelativeDocumentMoniker": "FestivalFlatform.Service\\Services\\Interface\\IFestivalService.cs",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Interface\\IFestivalService.cs",
-              "RelativeToolTip": "FestivalFlatform.Service\\Services\\Interface\\IFestivalService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T11:54:15.338Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "FestivalController.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalManagementFlatformm\\Controllers\\FestivalController.cs",
-              "RelativeDocumentMoniker": "FestivalManagementFlatformm\\Controllers\\FestivalController.cs",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalManagementFlatformm\\Controllers\\FestivalController.cs",
-              "RelativeToolTip": "FestivalManagementFlatformm\\Controllers\\FestivalController.cs",
-              "ViewState": "AgIAAI0AAAAAAAAAAAD4v7UAAABVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T11:26:34.397Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalManagementFlatformm\\appsettings.json",
-              "RelativeDocumentMoniker": "FestivalManagementFlatformm\\appsettings.json",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalManagementFlatformm\\appsettings.json",
-              "RelativeToolTip": "FestivalManagementFlatformm\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-04T06:23:19.186Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "StatusBooth.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Helpers\\StatusBooth.cs",
-              "RelativeDocumentMoniker": "FestivalFlatform.Service\\Helpers\\StatusBooth.cs",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Helpers\\StatusBooth.cs",
-              "RelativeToolTip": "FestivalFlatform.Service\\Helpers\\StatusBooth.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T15:01:18.464Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "BoothService.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Implement\\BoothService.cs",
-              "RelativeDocumentMoniker": "FestivalFlatform.Service\\Services\\Implement\\BoothService.cs",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Implement\\BoothService.cs",
-              "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\BoothService.cs",
-              "ViewState": "AgIAAOwAAAAAAAAAAAA2wDkBAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T12:59:54.693Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "ValidationResult.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Helpers\\ValidationResult.cs",
-              "RelativeDocumentMoniker": "FestivalFlatform.Service\\Helpers\\ValidationResult.cs",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Helpers\\ValidationResult.cs",
-              "RelativeToolTip": "FestivalFlatform.Service\\Helpers\\ValidationResult.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T11:58:14.662Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "LoginService.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Implement\\LoginService.cs",
-              "RelativeDocumentMoniker": "FestivalFlatform.Service\\Services\\Implement\\LoginService.cs",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Implement\\LoginService.cs",
-              "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\LoginService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T12:14:58.74Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalManagementFlatformm\\Program.cs",
-              "RelativeDocumentMoniker": "FestivalManagementFlatformm\\Program.cs",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalManagementFlatformm\\Program.cs",
-              "RelativeToolTip": "FestivalManagementFlatformm\\Program.cs",
-              "ViewState": "AgIAAJ0AAAAAAAAAAAAmwMoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T06:24:12.266Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "Booth.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Booth.cs",
-              "RelativeDocumentMoniker": "FestivalFlatform.Data\\Models\\Booth.cs",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Data\\Models\\Booth.cs",
-              "RelativeToolTip": "FestivalFlatform.Data\\Models\\Booth.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T06:20:58.895Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "FestivalService.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Implement\\FestivalService.cs",
-              "RelativeDocumentMoniker": "FestivalFlatform.Service\\Services\\Implement\\FestivalService.cs",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Implement\\FestivalService.cs",
-              "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\FestivalService.cs",
-              "ViewState": "AgIAAEwAAAAAAAAAAAAAAHEAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T13:03:15.873Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "OrderQueryableExtensions.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Helpers\\OrderQueryableExtensions.cs",
-              "RelativeDocumentMoniker": "FestivalFlatform.Service\\Helpers\\OrderQueryableExtensions.cs",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Helpers\\OrderQueryableExtensions.cs",
-              "RelativeToolTip": "FestivalFlatform.Service\\Helpers\\OrderQueryableExtensions.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T14:29:12.38Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
               "Title": "BoothUpdateRequest.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\DTOs\\Request\\BoothUpdateRequest.cs",
               "RelativeDocumentMoniker": "FestivalFlatform.Service\\DTOs\\Request\\BoothUpdateRequest.cs",
               "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\DTOs\\Request\\BoothUpdateRequest.cs",
               "RelativeToolTip": "FestivalFlatform.Service\\DTOs\\Request\\BoothUpdateRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T06:20:49.612Z"
+              "WhenOpened": "2025-10-04T21:01:34.492Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BoothService.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Implement\\BoothService.cs",
+              "RelativeDocumentMoniker": "FestivalFlatform.Service\\Services\\Implement\\BoothService.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalFlatform.Service\\Services\\Implement\\BoothService.cs",
+              "RelativeToolTip": "FestivalFlatform.Service\\Services\\Implement\\BoothService.cs",
+              "ViewState": "AgIAAH8BAAAAAAAAAIA6wJoBAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-04T21:01:18.905Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BoothController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalManagementFlatformm\\Controllers\\BoothController.cs",
+              "RelativeDocumentMoniker": "FestivalManagementFlatformm\\Controllers\\BoothController.cs",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\FestivalManagementFlatformm\\FestivalManagementFlatformm\\Controllers\\BoothController.cs",
+              "RelativeToolTip": "FestivalManagementFlatformm\\Controllers\\BoothController.cs",
+              "ViewState": "AgIAAIsAAAAAAAAAAAAIwKsAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-04T21:01:09.591Z",
+              "EditorCaption": ""
             }
           ]
         }

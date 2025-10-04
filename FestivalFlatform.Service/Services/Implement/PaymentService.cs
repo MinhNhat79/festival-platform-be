@@ -243,7 +243,7 @@ namespace FestivalFlatform.Service.Services.Implement
                         return false;
                     }
 
-                    order.Status = "Completed";
+                    order.Status = "completed";
 
                     var payment = await _unitOfWork.Repository<Payment>()
                         .GetAll()
@@ -347,7 +347,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
                         if (order != null)
                         {
-                            order.Status = "Cancelled";
+                            order.Status = "cancelled";
                             await _unitOfWork.SaveChangesAsync();
                             _logger.LogInformation($"⚠️ Đã hủy Order với ID={order.OrderId}");
                         }
@@ -398,7 +398,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
                         if (order != null)
                         {
-                            order.Status = "Cancelled";
+                            order.Status = "cancelled";
                             await _unitOfWork.SaveChangesAsync();
                             _logger.LogInformation($"⚠️ Đã hủy Order với ID={order.OrderId}");
                         }
@@ -438,17 +438,43 @@ namespace FestivalFlatform.Service.Services.Implement
 
 
 
-        public async Task<Payment> UpdatePaymentAsync(int id, string status, string? description)
+        public async Task<Payment> UpdatePaymentAsync(int? paymentId, int? orderId, string? status, string? description)
         {
-            var payment = await _unitOfWork.Repository<Payment>().GetAll().FirstOrDefaultAsync(p => p.PaymentId == id)
-                ?? throw new Exception("Payment not found");
+            Payment payment = null;
 
-            payment.Status = status;
-            payment.Description = description;
+            if (paymentId.HasValue && paymentId.Value > 0)
+            {
+                payment = await _unitOfWork.Repository<Payment>()
+                    .GetAll()
+                    .FirstOrDefaultAsync(p => p.PaymentId == paymentId.Value);
+            }
+
+            if (payment == null && orderId.HasValue)
+            {
+                payment = await _unitOfWork.Repository<Payment>()
+                    .GetAll()
+                    .FirstOrDefaultAsync(p => p.OrderId == orderId.Value);
+            }
+
+            if (payment == null)
+                throw new Exception("Không tìm thấy Payment với paymentId hoặc orderId đã cung cấp");
+
+            if (!string.IsNullOrWhiteSpace(status))
+                payment.Status = status;
+
+            if (description != null)
+                payment.Description = description;
+
+          
+
             await _unitOfWork.CommitAsync();
 
             return payment;
         }
+
+
+
+
         public async Task<List<Payment>> SearchPaymentsAsync(
       int? orderId,
       int? walletId,

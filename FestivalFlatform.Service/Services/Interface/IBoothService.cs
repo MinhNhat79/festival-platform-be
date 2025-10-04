@@ -18,5 +18,7 @@ namespace FestivalFlatform.Service.Services.Interface
         Task UpdateBoothStatusToActive(int boothId);
         Task DeleteBoothAsync(int boothId);
         Task<Booth?> UpdateBoothAsync(int boothId, BoothUpdateRequest request);
+        Task<Booth> WithdrawBoothRevenueAsync(int boothId, int accountId);
+        Task<bool> CanWithdrawRevenueAsync(int boothId, int accountId);
     }
 }

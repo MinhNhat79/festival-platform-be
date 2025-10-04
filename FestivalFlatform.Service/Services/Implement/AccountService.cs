@@ -261,6 +261,12 @@ namespace FestivalFlatform.Service.Services.Implement
             if (accountRequest.Status.HasValue)
                 account.Status = accountRequest.Status.Value;
 
+            if (!string.IsNullOrWhiteSpace(accountRequest.AtmName))
+                account.AtmName = accountRequest.AtmName;
+
+            if (accountRequest.AccountBankNumber.HasValue)
+                account.AccountBankNumber = accountRequest.AccountBankNumber.Value;
+
             account.UpdatedAt = DateTime.UtcNow;
 
             await _unitOfWork.Repository<Account>().Update(account, id);

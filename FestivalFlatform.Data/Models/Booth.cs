@@ -28,6 +28,7 @@ namespace FestivalFlatform.Data.Models
 
         public string? Description { get; set; }
 
+        public string? IsWithdraw { get; set; }
         [Required]
         public string Status { get; set; } 
 

@@ -26,7 +26,8 @@ namespace FestivalFlatform.Data.Models
 
         public string? ClassName { get; set; }
         public string? PhoneNumber { get; set; }
-
+        public string? AtmName { get; set; }
+        public long? AccountBankNumber { get; set; }
         [Required]
         public int RoleId { get; set; }
 
@@ -54,6 +55,8 @@ namespace FestivalFlatform.Data.Models
         public virtual ICollection<FestivalParticipant> FestivalParticipants { get; set; } = new List<FestivalParticipant>();
         public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+
+        public ICollection<Request> Requests { get; set; } = new List<Request>();
 
 
     }

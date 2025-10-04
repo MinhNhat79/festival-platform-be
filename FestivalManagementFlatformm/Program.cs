@@ -118,6 +118,7 @@ namespace FF.API
             builder.Services.AddScoped<IFestivalCommissionService, FestivalCommissionService>();
             builder.Services.AddScoped<IStatisticsService, StatisticsService>();
             builder.Services.AddScoped<ICommentService, CommentService>();
+            builder.Services.AddScoped<IRequestService, RequestService>();
 
             builder.Services.AddSingleton<PayOS>(sp =>
             {

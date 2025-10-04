@@ -12,6 +12,7 @@ namespace FestivalFlatform.Service.DTOs.Request
         public string? BoothType { get; set; }
         public string? Description { get; set; }
         public string? Status { get; set; }
+        public string? IsWithdraw { get; set; }
 
         public MapLocationUpdateRequest? Location { get; set; }
         public List<BoothMenuItemUpdateRequest>? BoothMenuItems { get; set; }

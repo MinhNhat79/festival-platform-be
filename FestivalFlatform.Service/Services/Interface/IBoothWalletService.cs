@@ -15,5 +15,6 @@ namespace FestivalFlatform.Service.Services.Interface
         Task<BoothWallet> UpdateBoothWalletAsync(int boothWalletId, decimal totalBalance);
         Task<bool> DeleteBoothWalletAsync(int boothWalletId);
         Task<BoothWallet> CreateBoothWalletAsync(CreateBoothWalletRequest request);
+        Task<BoothWallet> UpdateTotalBalanceAsync(int boothId, decimal balance);
     }
 }

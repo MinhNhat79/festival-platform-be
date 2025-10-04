@@ -21,7 +21,7 @@ namespace FestivalFlatform.Service.Services.Interface
        string? status,
        int? pageNumber,
        int? pageSize);
-        Task<Payment> UpdatePaymentAsync(int id, string status, string? description);
+        Task<Payment> UpdatePaymentAsync(int? paymentId, int? orderId, string? status, string? description);
         Task<PaymentResponseDto> CreatePaymentAsync(CreatePaymentRequest request);
         Task<bool> HandleWebhookAsync(string rawJson);
     }

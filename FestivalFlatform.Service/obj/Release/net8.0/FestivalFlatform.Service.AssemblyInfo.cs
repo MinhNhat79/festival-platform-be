@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FestivalFlatform.Service")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6d7014120f2e6ffbc3c6118cfe20985f30f12b2c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+af13b7317833efbf1ae88e8ba68395545ecba6ba")]
 [assembly: System.Reflection.AssemblyProductAttribute("FestivalFlatform.Service")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FestivalFlatform.Service")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
