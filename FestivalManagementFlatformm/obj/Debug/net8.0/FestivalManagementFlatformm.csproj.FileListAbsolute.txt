@@ -216,3 +216,4 @@ C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatfo
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\bin\Debug\net8.0\zh\Hangfire.Core.resources.dll
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\bin\Debug\net8.0\Hangfire.AspNetCore.dll
 C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\bin\Debug\net8.0\Hangfire.NetCore.dll
+C:\Users\Admin\source\repos\FestivalManagementFlatformm\FestivalManagementFlatformm\obj\Debug\net8.0\FestivalManagementFlatformm.MvcApplicationPartsAssemblyInfo.cs

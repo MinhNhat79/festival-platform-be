@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FestivalFlatform.Data.Migrations
 {
     [DbContext(typeof(FestivalFlatformDbContext))]
-    [Migration("20250920132530_InitialCreate")]
+    [Migration("20250929141854_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -84,6 +84,9 @@ namespace FestivalFlatform.Data.Migrations
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
 
                     b.Property<string>("OtpVerify")
                         .HasColumnType("nvarchar(max)");
@@ -461,6 +464,9 @@ namespace FestivalFlatform.Data.Migrations
                     b.Property<string>("FestivalName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");

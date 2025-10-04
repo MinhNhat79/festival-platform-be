@@ -10,5 +10,6 @@ namespace FestivalFlatform.Service.Services.Interface
     public interface ILoginService
     {
         Task<LoginResponse> AuthenticateAsync(string email, string password);
+        Task<LoginResponse> LoginWithGoogleAsync(string googleToken);
     }
 }

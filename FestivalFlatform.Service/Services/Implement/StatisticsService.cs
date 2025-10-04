@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FestivalFlatform.Data.Models;
 using FestivalFlatform.Data.UnitOfWork;
 using FestivalFlatform.Service.DTOs.Response;
+using FestivalFlatform.Service.Helpers;
 using FestivalFlatform.Service.Services.Interface;
 using Microsoft.EntityFrameworkCore;
 
@@ -148,35 +149,35 @@ namespace FestivalFlatform.Service.Services.Implement
 
 
         public async Task<List<PaymentMixResponse>> GetPaymentMixAsync(
-      string? range = null,
-      DateTime? startDate = null,
-      DateTime? endDate = null,
-      int? schoolId = null,
-      int? festivalId = null)
+       string? range = null,
+       DateTime? startDate = null,
+       DateTime? endDate = null,
+       int? schoolId = null,
+       int? festivalId = null)
         {
             var (startUtc, endUtc) = NormalizeRange(range, startDate, endDate);
 
             var paymentsQuery = _unitOfWork.Repository<Payment>().GetAll()
-                .Include(p => p.Order) 
+                .Include(p => p.Order)
+                .ThenInclude(o => o.Booth)
+                .ThenInclude(b => b.Festival)
                 .AsQueryable();
 
-           
-            if (startUtc.HasValue) paymentsQuery = paymentsQuery.Where(p => p.PaymentDate >= startUtc.Value);
-            if (endUtc.HasValue) paymentsQuery = paymentsQuery.Where(p => p.PaymentDate <= endUtc.Value);
+            paymentsQuery = paymentsQuery.Where(p =>
+                p.Status == StatusPayment.Success || p.Status == StatusPayment.Completed);
 
-           
+            if (startUtc.HasValue)
+                paymentsQuery = paymentsQuery.Where(p => p.PaymentDate >= startUtc.Value);
+            if (endUtc.HasValue)
+                paymentsQuery = paymentsQuery.Where(p => p.PaymentDate <= endUtc.Value);
+
             if (festivalId.HasValue)
-            {
                 paymentsQuery = paymentsQuery.Where(p => p.Order != null && p.Order.Booth.FestivalId == festivalId.Value);
-            }
 
-           
             if (schoolId.HasValue)
-            {
                 paymentsQuery = paymentsQuery.Where(p => p.Order != null && p.Order.Booth.Festival.SchoolId == schoolId.Value);
-            }
 
-            
+          
             var grouped = await paymentsQuery
                 .GroupBy(p => p.PaymentMethod.ToLower())
                 .Select(g => new PaymentMixResponse
@@ -198,7 +199,7 @@ namespace FestivalFlatform.Service.Services.Implement
         {
             var (startUtc, endUtc) = NormalizeRange(range, startDate, endDate);
 
-
+            // Lấy danh sách Festival + School
             var festivalsQuery = _unitOfWork.Repository<Festival>().GetAll()
                 .Include(f => f.School)
                 .AsQueryable();
@@ -208,42 +209,46 @@ namespace FestivalFlatform.Service.Services.Implement
 
             var festivals = await festivalsQuery.ToListAsync();
 
-          
-            var ordersQuery = _unitOfWork.Repository<Order>().GetAll()
-                .Include(o => o.Booth)
+            // Lấy các Payment gắn với Order hợp lệ
+            var paymentsQuery = _unitOfWork.Repository<Payment>().GetAll()
+                .Include(p => p.Order)
+                .ThenInclude(o => o.Booth)
                 .ThenInclude(b => b.Festival)
                 .AsQueryable();
 
+            // Chỉ lấy các Order hợp lệ (ví dụ Completed / Success)
+            paymentsQuery = paymentsQuery.Where(p => p.Order.Status == StatusOrder.Completed);
+
             if (startUtc.HasValue)
-                ordersQuery = ordersQuery.Where(o => o.OrderDate >= startUtc.Value);
+                paymentsQuery = paymentsQuery.Where(p => p.PaymentDate >= startUtc.Value);
             if (endUtc.HasValue)
-                ordersQuery = ordersQuery.Where(o => o.OrderDate <= endUtc.Value);
+                paymentsQuery = paymentsQuery.Where(p => p.PaymentDate <= endUtc.Value);
 
             if (schoolId.HasValue)
-                ordersQuery = ordersQuery.Where(o => o.Booth.Festival.SchoolId == schoolId.Value);
+                paymentsQuery = paymentsQuery.Where(p => p.Order.Booth.Festival.SchoolId == schoolId.Value);
 
-            var groupedOrders = await ordersQuery
-                .GroupBy(o => o.Booth.FestivalId)
+            // Group doanh thu theo Festival
+            var groupedPayments = await paymentsQuery
+                .GroupBy(p => p.Order.Booth.FestivalId)
                 .Select(g => new
                 {
                     FestivalId = g.Key,
-                    Revenue = g.Sum(o => o.TotalAmount),
-                    Orders = g.Count()
+                    Revenue = g.Sum(p => p.AmountPaid),
+                    Orders = g.Select(p => p.OrderId).Distinct().Count()
                 })
                 .ToListAsync();
 
-           
+            // Build kết quả
             var result = festivals
                 .Select(f =>
                 {
-                    var stats = groupedOrders.FirstOrDefault(g => g.FestivalId == f.FestivalId);
+                    var stats = groupedPayments.FirstOrDefault(g => g.FestivalId == f.FestivalId);
                     return new TopFestivalResponse
                     {
                         FestivalId = f.FestivalId,
                         FestivalName = f.FestivalName,
                         SchoolId = f.SchoolId,
                         SchoolName = f.School.SchoolName,
-                       
                         Revenue = stats?.Revenue ?? 0,
                         Orders = stats?.Orders ?? 0
                     };
@@ -383,14 +388,13 @@ namespace FestivalFlatform.Service.Services.Implement
 
 
         public async Task<List<FestivalPerformanceResponse>> GetFestivalPerformanceAsync(
-    int? schoolId,
-    string? range = null,
-    DateTime? startDate = null,
-    DateTime? endDate = null)
+      int? schoolId,
+      string? range = null,
+      DateTime? startDate = null,
+      DateTime? endDate = null)
         {
             var (startUtc, endUtc) = NormalizeRange(range, startDate, endDate);
 
-           
             var festivalsQuery = _unitOfWork.Repository<Festival>().GetAll()
                 .Where(f => f.SchoolId == schoolId);
 
@@ -406,16 +410,18 @@ namespace FestivalFlatform.Service.Services.Implement
                     FestivalName = f.FestivalName,
                     Revenue = f.Booths
                         .SelectMany(b => b.Orders)
+                        .Where(o => o.Status.ToLower() == "completed") // chỉ tính đơn hoàn tất
                         .Sum(o => (decimal?)o.TotalAmount) ?? 0,
                     Booths = f.Booths.Count(),
                     Orders = f.Booths
                         .SelectMany(b => b.Orders)
-                        .Count()
+                        .Count(o => o.Status.ToLower() == "completed") // chỉ tính đơn hoàn tất
                 })
                 .ToListAsync();
 
             return festivals;
         }
+
 
         public async Task<List<BoothFunnelResponse>> GetBoothFunnelAsync(
     int? schoolId = null,

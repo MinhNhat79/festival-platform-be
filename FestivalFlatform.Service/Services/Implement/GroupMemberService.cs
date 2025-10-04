@@ -157,10 +157,24 @@ namespace FestivalFlatform.Service.Services.Implement
             if (member == null)
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy GroupMember", memberId.ToString());
 
+            int groupId = member.GroupId;
+
+            // Check group có booth nào tham gia lễ hội đang diễn ra không
+            var hasOngoingFestival = await _unitOfWork.Repository<Booth>().GetAll()
+                .Where(b => b.GroupId == groupId)
+                .AnyAsync(b => _unitOfWork.Repository<Festival>().GetAll()
+                    .Any(f => f.FestivalId == b.FestivalId && f.Status == "Ongoing"));
+
+            if (hasOngoingFestival)
+                throw new CrudException(HttpStatusCode.BadRequest,
+                    "Không được mời thành viên ra khỏi nhóm trong khi lễ hội đang diễn ra",
+                    memberId.ToString());
+
             _unitOfWork.Repository<GroupMember>().Delete(member);
             await _unitOfWork.CommitAsync();
             return true;
         }
+
 
     }
 }

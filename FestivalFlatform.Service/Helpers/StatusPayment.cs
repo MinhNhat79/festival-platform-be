@@ -10,6 +10,7 @@ namespace FestivalFlatform.Service.Helpers
     {
         public const string Pending = "pending";
         public const string Success = "success";
+        public const string Completed = "completed";
         public const string Failed = "failed";
     }
 }

@@ -61,6 +61,7 @@ namespace FestivalFlatform.Data.Migrations
                     AvatarUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OtpVerify = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false),
+                    IsDelete = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -292,6 +293,7 @@ namespace FestivalFlatform.Data.Migrations
                     cancellationReason = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TotalRegisteredParticipants = table.Column<int>(type: "int", nullable: false),
                     Avr_Rating = table.Column<double>(type: "float", nullable: false),
+                    IsDelete = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },

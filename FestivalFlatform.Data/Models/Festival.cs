@@ -41,6 +41,7 @@ namespace FestivalFlatform.Data.Models
         public string? cancellationReason { get; set; }
         public int TotalRegisteredParticipants { get; set; } = 0;
         public double Avr_Rating { get; set; } = 0;
+        public bool IsDelete { get; set; } = false;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
 

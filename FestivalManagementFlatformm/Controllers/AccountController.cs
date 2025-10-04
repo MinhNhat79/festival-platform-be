@@ -238,5 +238,15 @@ namespace FestivalManagementFlatformm.Controllers
                 return StatusCode(500, new { success = false, message = ex.Message });
             }
         }
+
+        [HttpDelete("api/accounts/IsDelete")]
+        public async Task<IActionResult> SoftDeleteAccount(int id)
+        {
+            var success = await _accountService.SoftDeleteAccountAsync(id);
+            if (!success)
+                return NotFound(new { message = "Không tìm thấy tài khoản" });
+
+            return Ok(new { message = "Đã xoá tài khoản thành công" });
+        }
     }
 }

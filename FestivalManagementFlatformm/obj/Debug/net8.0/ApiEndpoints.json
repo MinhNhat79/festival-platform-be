@@ -332,6 +332,22 @@
   },
   {
     "ContainingType": "FestivalManagementFlatformm.Controllers.AccountController",
+    "Method": "SoftDeleteAccount",
+    "RelativePath": "api/accounts/IsDelete",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FestivalManagementFlatformm.Controllers.AccountController",
     "Method": "SearchAccountsByFields",
     "RelativePath": "api/accounts/search",
     "HttpMethod": "GET",
@@ -550,6 +566,22 @@
         "Name": "description",
         "Type": "System.String",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FestivalManagementFlatformm.Controllers.LoginController",
+    "Method": "LoginWithGoogle",
+    "RelativePath": "api/auth/google",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FestivalManagementFlatformm.Controllers.LoginController\u002BGoogleLoginRequest",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -1627,6 +1659,22 @@
   },
   {
     "ContainingType": "FestivalManagementFlatformm.Controllers.FestivalController",
+    "Method": "CanUpdateOngoingFestival",
+    "RelativePath": "api/festivals/can-update-ongoing",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "festivalId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FestivalManagementFlatformm.Controllers.FestivalController",
     "Method": "CreateFestival",
     "RelativePath": "api/festivals/create",
     "HttpMethod": "POST",
@@ -1645,6 +1693,22 @@
     "ContainingType": "FestivalManagementFlatformm.Controllers.FestivalController",
     "Method": "DeleteFestival",
     "RelativePath": "api/festivals/delete",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FestivalManagementFlatformm.Controllers.FestivalController",
+    "Method": "SoftDeleteFestival",
+    "RelativePath": "api/festivals/IsDelete",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,

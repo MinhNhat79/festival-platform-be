@@ -11,6 +11,8 @@ namespace FestivalFlatform.Service.DTOs.Request
         public string? BoothName { get; set; }
         public string? BoothType { get; set; }
         public string? Description { get; set; }
+        public string? Status { get; set; }
+
         public MapLocationUpdateRequest? Location { get; set; }
         public List<BoothMenuItemUpdateRequest>? BoothMenuItems { get; set; }
     }

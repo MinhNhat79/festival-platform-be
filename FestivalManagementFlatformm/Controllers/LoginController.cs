@@ -1,4 +1,5 @@
 ﻿using FestivalFlatform.Service.DTOs.Request;
+using FestivalFlatform.Service.Services.Implement;
 using FestivalFlatform.Service.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,6 +51,29 @@ namespace FestivalManagementFlatformm.Controllers
                     message = $"An error occurred: {ex.Message}"
                 });
             }
+        }
+        [HttpPost("google")]
+        public async Task<IActionResult> LoginWithGoogle([FromBody] GoogleLoginRequest request)
+        {
+            try
+            {
+                var response = await _iloginService.LoginWithGoogleAsync(request.Token);
+                if (!response.Success)
+                    return BadRequest(response);
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message });
+            }
+        }
+
+        
+
+        public class GoogleLoginRequest
+        {
+            public string Token { get; set; } = null!;
         }
     }
 }

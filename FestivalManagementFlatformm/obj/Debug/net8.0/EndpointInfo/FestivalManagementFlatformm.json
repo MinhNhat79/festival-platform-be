@@ -456,6 +456,28 @@
         }
       }
     },
+    "/api/accounts/IsDelete": {
+      "delete": {
+        "tags": [
+          "Account"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/accountfestivalwallets/create": {
       "post": {
         "tags": [
@@ -2054,6 +2076,50 @@
         }
       }
     },
+    "/api/festivals/IsDelete": {
+      "delete": {
+        "tags": [
+          "Festival"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/festivals/can-update-ongoing": {
+      "get": {
+        "tags": [
+          "Festival"
+        ],
+        "parameters": [
+          {
+            "name": "festivalId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/festival-commissions/create": {
       "post": {
         "tags": [
@@ -3617,6 +3683,37 @@
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/LoginnRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/auth/google": {
+      "post": {
+        "tags": [
+          "Login"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GoogleLoginRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GoogleLoginRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GoogleLoginRequest"
               }
             }
           }
@@ -6720,6 +6817,9 @@
           "status": {
             "type": "boolean"
           },
+          "isDelete": {
+            "type": "boolean"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -7368,6 +7468,10 @@
             "type": "string",
             "nullable": true
           },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
           "location": {
             "$ref": "#/components/schemas/MapLocationUpdateRequest"
           },
@@ -7901,6 +8005,9 @@
             "type": "number",
             "format": "double"
           },
+          "isDelete": {
+            "type": "boolean"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -8410,6 +8517,16 @@
         "type": "object",
         "properties": {
           "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GoogleLoginRequest": {
+        "type": "object",
+        "properties": {
+          "token": {
             "type": "string",
             "nullable": true
           }

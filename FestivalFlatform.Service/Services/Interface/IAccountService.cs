@@ -25,5 +25,6 @@ namespace FestivalFlatform.Service.Services.Interface
         Task<bool> ForgotPasswordAsync(string email);
         Task<bool> ConfirmOtpAsync(string email, string otp);
         Task<bool> SendOtpAsync(string email);
+        Task<bool> SoftDeleteAccountAsync(int id);
     }
 }

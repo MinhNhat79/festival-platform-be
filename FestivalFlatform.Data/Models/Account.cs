@@ -35,6 +35,7 @@ namespace FestivalFlatform.Data.Models
         public string? OtpVerify { get; set; }
 
         public bool Status { get; set; } = false;
+        public bool IsDelete { get; set; } = false;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
 

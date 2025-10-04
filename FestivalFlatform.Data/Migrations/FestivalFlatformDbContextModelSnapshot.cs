@@ -82,6 +82,9 @@ namespace FestivalFlatform.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
                     b.Property<string>("OtpVerify")
                         .HasColumnType("nvarchar(max)");
 
@@ -458,6 +461,9 @@ namespace FestivalFlatform.Data.Migrations
                     b.Property<string>("FestivalName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");

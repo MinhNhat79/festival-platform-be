@@ -26,9 +26,35 @@ namespace FestivalFlatform.Service.Services.Implement
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
+        private async Task UpdateFestivalAvgRatingAsync(int festivalId)
+        {
+            var reviews = await _unitOfWork.Repository<Review>().GetAll()
+                .Where(r => r.FestivalId == festivalId)
+                .ToListAsync();
 
+            double avgRating = reviews.Any() ? reviews.Average(r => r.Rating) : 0;
+
+            var festival = await _unitOfWork.Repository<Festival>()
+                .FindAsync(f => f.FestivalId == festivalId);
+
+            if (festival != null)
+            {
+                festival.Avr_Rating = Math.Round(avgRating, 2);
+                festival.UpdatedAt = DateTime.UtcNow;
+                await _unitOfWork.CommitAsync();
+            }
+        }
         public async Task<Review> CreateReviewAsync(ReviewCreateRequest request)
         {
+            var festival = await _unitOfWork.Repository<Festival>()
+                .FindAsync(f => f.FestivalId == request.FestivalId);
+
+            if (festival == null)
+                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy festival", request.FestivalId.ToString());
+
+            if (festival.Status != "ongoing" && festival.Status != "completed")
+                throw new CrudException(HttpStatusCode.BadRequest, "Chỉ có thể đánh giá khi lễ hội đang diễn ra hoặc đã kết thúc");
+
             var review = new Review
             {
                 FestivalId = request.FestivalId,
@@ -42,22 +68,7 @@ namespace FestivalFlatform.Service.Services.Implement
             await _unitOfWork.Repository<Review>().InsertAsync(review);
             await _unitOfWork.CommitAsync();
 
-         
-            var reviews = await _unitOfWork.Repository<Review>().GetAll()
-                .Where(r => r.FestivalId == request.FestivalId)
-                .ToListAsync();
-
-            double avgRating = reviews.Any() ? reviews.Average(r => r.Rating) : 0;
-
-            var festival = await _unitOfWork.Repository<Festival>()
-                            .GetAll()
-                            .FirstOrDefaultAsync(f => f.FestivalId == request.FestivalId);
-            if (festival != null)
-            {
-                festival.Avr_Rating = Math.Round(avgRating, 2);
-                festival.UpdatedAt = DateTime.UtcNow;
-                await _unitOfWork.CommitAsync();
-            }
+            await UpdateFestivalAvgRatingAsync(request.FestivalId);
 
             return review;
         }
@@ -74,10 +85,12 @@ namespace FestivalFlatform.Service.Services.Implement
             if (!string.IsNullOrWhiteSpace(comment))
                 review.Comment = comment;
 
-            review.IsEdit = true; 
+            review.IsEdit = true;
             review.UpdatedAt = DateTime.UtcNow;
 
             await _unitOfWork.CommitAsync();
+
+            await UpdateFestivalAvgRatingAsync(review.FestivalId);
 
             return review;
         }
@@ -103,8 +116,12 @@ namespace FestivalFlatform.Service.Services.Implement
             if (review == null)
                 throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy review", reviewId.ToString());
 
+            int festivalId = review.FestivalId;
+
             _unitOfWork.Repository<Review>().Delete(review);
             await _unitOfWork.CommitAsync();
+
+            await UpdateFestivalAvgRatingAsync(festivalId);
         }
     }
 }

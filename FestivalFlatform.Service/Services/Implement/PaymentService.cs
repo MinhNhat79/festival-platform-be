@@ -47,13 +47,16 @@ namespace FestivalFlatform.Service.Services.Implement
         public async Task<PaymentResponseDto> CreatePaymentAsync(CreatePaymentRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.PaymentMethod))
+
                 throw new ArgumentException("Phương thức thanh toán là bắt buộc");
 
             if (string.IsNullOrWhiteSpace(request.PaymentType))
                 throw new ArgumentException("Loại giao dịch là bắt buộc");
 
-            var paymentType = request.PaymentType.Trim().ToLower();
-            long orderCode;
+            var paymentType = request.PaymentType.Trim().ToLower(); 
+
+            long orderCode; 
+
             string description;
 
             if (paymentType == "order")
@@ -63,11 +66,15 @@ namespace FestivalFlatform.Service.Services.Implement
 
                 var orderExists = await _unitOfWork.Repository<Order>()
                     .AnyAsync(o => o.OrderId == request.OrderId.Value);
+
                 if (!orderExists)
                     throw new ArgumentException("Không tìm thấy đơn hàng tương ứng");
 
                 orderCode = request.OrderId.Value;
-                description = request.Description;
+
+                description = string.IsNullOrWhiteSpace(request.Description) ?
+                    $"Hoa don {request.OrderId.Value}" :
+                    request.Description.Trim();
             }
             else
             {
@@ -75,19 +82,25 @@ namespace FestivalFlatform.Service.Services.Implement
                 {
                     var walletExists = await _unitOfWork.Repository<Wallet>()
                         .AnyAsync(w => w.WalletId == request.WalletId.Value);
-                    if (!walletExists)
+
+                    if (!walletExists) 
                         throw new ArgumentException("Không tìm thấy ví tương ứng");
 
-                    orderCode = long.Parse(DateTime.UtcNow.ToString("yyMMddHHmmssfff"));
-                    description = request.Description + " " + request.WalletId.Value.ToString();
+                    string suffix = (DateTime.UtcNow.Ticks % 1_000_000).ToString("D6");
+
+                    orderCode = long.Parse($"{request.WalletId.Value}{suffix}");
+
+                    description = (request.Description ?? "Nap vi").Trim() + " " + request.WalletId.Value;
                 }
                 else
                 {
-                    orderCode = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-                    description = request.Description;
+                    string suffix = (DateTime.UtcNow.Ticks % 1_000_000).ToString("D6");
+
+                    orderCode = long.Parse($"{suffix}{new Random().Next(100, 999)}");
+
+                    description = string.IsNullOrWhiteSpace(request.Description) ? $"Thanh toan {paymentType}" : request.Description.Trim();
                 }
             }
-
             var payment = new Payment
             {
                 OrderId = request.OrderId,
@@ -99,66 +112,37 @@ namespace FestivalFlatform.Service.Services.Implement
                 Description = description,
                 PaymentDate = DateTime.UtcNow
             };
-
             await _unitOfWork.Repository<Payment>().InsertAsync(payment);
-            await _unitOfWork.CommitAsync();
-
             string baseUrl = "https://school-festival-platform.vercel.app";
-            string cancelUrl = baseUrl;
-            string returnUrl = baseUrl;
-
+            string cancelUrl = baseUrl + "/app/payments/cancel";
+            string returnUrl = baseUrl + "/app/payments/success";
             if (description?.Contains("Hoa don", StringComparison.OrdinalIgnoreCase) == true)
             {
-                var order = await _unitOfWork.Repository<Order>()
-                    .GetAll()
-                    .FirstOrDefaultAsync(o => o.OrderId == request.OrderId.Value);
-
+                var order = await _unitOfWork.Repository<Order>().GetAll().FirstOrDefaultAsync(o => o.OrderId == request.OrderId.Value);
                 if (order != null)
                 {
-                    var booth = await _unitOfWork.Repository<Booth>()
-                        .GetAll()
-                        .FirstOrDefaultAsync(b => b.BoothId == order.BoothId);
-
+                    var booth = await _unitOfWork.Repository<Booth>().GetAll().FirstOrDefaultAsync(b => b.BoothId == order.BoothId);
                     if (booth != null)
                     {
-                        int groupId = booth.GroupId;
-                        int boothId = booth.BoothId;
+                        string groupPath = $"/app/groups/{booth.GroupId}/booth/{booth.BoothId}/orders";
 
-                        string groupPath = $"/app/groups/{groupId}/booth/{boothId}/orders";
-                        cancelUrl = baseUrl + groupPath;
+                        cancelUrl = baseUrl + groupPath; 
+
                         returnUrl = baseUrl + groupPath;
                     }
                 }
             }
-
-
             else if (description?.Contains("Nap vi", StringComparison.OrdinalIgnoreCase) == true)
             {
                 int ExtractWalletId(string descText)
                 {
                     var parts = descText.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-
-                  
-                    if (parts.Length > 0 &&
-                        !parts[0].Equals("nap", StringComparison.OrdinalIgnoreCase))
-                    {
-                        parts = parts.Skip(1).ToArray();
-                    }
-
-                    if (parts.Length >= 3 && int.TryParse(parts[2], out int id))
-                        return id;
-
-                    return 0;
+                    if (parts.Length >= 2 && int.TryParse(parts[^1], out int id)) return id; return 0;
                 }
-
                 int walletId = ExtractWalletId(description);
-
                 if (walletId > 0)
                 {
-                    var wallet = await _unitOfWork.Repository<Wallet>()
-                        .GetAll()
-                        .FirstOrDefaultAsync(w => w.WalletId == walletId);
-
+                    var wallet = await _unitOfWork.Repository<Wallet>().GetAll().FirstOrDefaultAsync(w => w.WalletId == walletId);
                     if (wallet != null)
                     {
                         int accountId = wallet.AccountId;
@@ -168,32 +152,22 @@ namespace FestivalFlatform.Service.Services.Implement
                     }
                 }
             }
-
             var itemList = new List<ItemData>();
-
-            var paymentData = new PaymentData(
-                orderCode: orderCode,
+            var paymentData = new PaymentData(orderCode: orderCode,
                 amount: (int)request.AmountPaid,
                 description: description,
                 items: itemList,
                 cancelUrl: cancelUrl,
                 returnUrl: returnUrl,
-                null, null, null, null, null, null
-            );
-
+                null, null, null, null, null, null);
             CreatePaymentResult createPayment;
-
             try
             {
                 createPayment = await _payOS.createPaymentLink(paymentData);
+                await _unitOfWork.CommitAsync();
             }
             catch (Exception ex)
-            {
-                await _unitOfWork.Repository<Payment>().DeleteAsync(payment);
-                await _unitOfWork.CommitAsync();
-                throw new InvalidOperationException("Không thể tạo link thanh toán từ PayOS", ex);
-            }
-
+            { throw new InvalidOperationException("Không thể tạo link thanh toán từ PayOS", ex); }
             return new PaymentResponseDto
             {
                 OrderCode = paymentData.orderCode,
@@ -209,6 +183,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 CheckoutUrl = createPayment.checkoutUrl
             };
         }
+
 
         public async Task<bool> HandleWebhookAsync(string rawJson)
         {
@@ -238,7 +213,7 @@ namespace FestivalFlatform.Service.Services.Implement
             string? desc = payload.Desc;
 
 
-        
+
             long? orderCode = payload.Data?.OrderCode;
             long? amount = payload.Data?.Amount;
             string? description = payload.Data?.Description;
@@ -280,7 +255,7 @@ namespace FestivalFlatform.Service.Services.Implement
                         payment.PaymentDate = DateTime.UtcNow;
                     }
 
-                 
+
                     var boothWallet = await _unitOfWork.Repository<BoothWallet>()
                         .GetAll()
                         .FirstOrDefaultAsync(w => w.BoothId == order.BoothId);
@@ -362,11 +337,11 @@ namespace FestivalFlatform.Service.Services.Implement
 
                     if (description?.Contains("Hoa don", StringComparison.OrdinalIgnoreCase) == true)
                     {
-                      
+
                         payment = await _unitOfWork.Repository<Payment>().GetAll()
                             .FirstOrDefaultAsync(p => p.OrderId == orderCode);
 
-                       
+
                         var order = await _unitOfWork.Repository<Order>().GetAll()
                             .FirstOrDefaultAsync(o => o.OrderId == orderCode);
 
@@ -379,7 +354,7 @@ namespace FestivalFlatform.Service.Services.Implement
                     }
                     else
                     {
-                        
+
                         int walletIdFromDesc = 0;
                         var parts = description?.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
 
@@ -388,7 +363,7 @@ namespace FestivalFlatform.Service.Services.Implement
                             walletIdFromDesc = parsedId;
                         }
 
-                       
+
                         payment = await _unitOfWork.Repository<Payment>().GetAll()
                             .FirstOrDefaultAsync(p => p.WalletId == walletIdFromDesc);
                     }
@@ -413,11 +388,11 @@ namespace FestivalFlatform.Service.Services.Implement
 
                     if (description?.Contains("Hoa don", StringComparison.OrdinalIgnoreCase) == true)
                     {
-                       
+
                         payment = await _unitOfWork.Repository<Payment>().GetAll()
                             .FirstOrDefaultAsync(p => p.OrderId == orderCode);
 
-                        
+
                         var order = await _unitOfWork.Repository<Order>().GetAll()
                             .FirstOrDefaultAsync(o => o.OrderId == orderCode);
 
@@ -430,7 +405,7 @@ namespace FestivalFlatform.Service.Services.Implement
                     }
                     else
                     {
-                        
+
                         int walletIdFromDesc = 0;
                         var parts = description?.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
 
@@ -439,7 +414,7 @@ namespace FestivalFlatform.Service.Services.Implement
                             walletIdFromDesc = parsedId;
                         }
 
-                        
+
                         payment = await _unitOfWork.Repository<Payment>().GetAll()
                             .FirstOrDefaultAsync(p => p.WalletId == walletIdFromDesc);
                     }
@@ -460,7 +435,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
 
 
-      
+
 
 
         public async Task<Payment> UpdatePaymentAsync(int id, string status, string? description)

@@ -27,11 +27,17 @@ namespace FestivalFlatform.Service.Services.Implement
         }
 
         public async Task<School> CreateSchoolAsync(SchoolCreateRequest request)
-        { 
-         
+        {
+            // Kiểm tra tên trùng
+            bool exists = await _unitOfWork.Repository<School>()
+                .AnyAsync(s => s.SchoolName.ToLower().Trim() == request.SchoolName.ToLower().Trim());
+
+            if (exists)
+                throw new CrudException(HttpStatusCode.BadRequest, $"Tên trường '{request.SchoolName}' đã tồn tại", request.SchoolName);
+
             var school = new School
             {
-                SchoolName = request.SchoolName,
+                SchoolName = request.SchoolName.Trim(),
                 AccountId = request.AccountId,
                 Address = request.Address,
                 ContactInfo = request.ContactInfo,
@@ -45,6 +51,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             return school;
         }
+
 
         public async Task<School> UpdateSchoolAsync(int schoolId, string? contactInfo, string? logoUrl, string? description)
         {

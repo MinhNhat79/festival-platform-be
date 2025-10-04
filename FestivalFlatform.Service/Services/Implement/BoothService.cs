@@ -29,51 +29,62 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<Booth> CreateBoothAsync(BoothCreateRequest request)
         {
-           
             var groupExists = await _unitOfWork.Repository<StudentGroup>()
                 .AnyAsync(g => g.GroupId == request.GroupId);
             if (!groupExists)
-            {
                 throw new CrudException(HttpStatusCode.NotFound, "GroupId không tồn tại", request.GroupId.ToString());
-            }
 
-           
             var hasHomeroomTeacher = await _unitOfWork.Repository<GroupMember>()
                 .AnyAsync(gm => gm.GroupId == request.GroupId && gm.Role == "homeroom_teacher");
 
             if (!hasHomeroomTeacher)
-            {
                 throw new CrudException(HttpStatusCode.BadRequest,
                     "Nhóm này chưa có giáo viên chủ nhiệm (homeroom_teacher), không thể đăng ký gian hàng",
                     request.GroupId.ToString());
-            }
 
-           
-            var festivalExists = await _unitOfWork.Repository<Festival>()
-                .AnyAsync(f => f.FestivalId == request.FestivalId);
-            if (!festivalExists)
-            {
+            var festival = await _unitOfWork.Repository<Festival>()
+                .FindAsync(f => f.FestivalId == request.FestivalId);
+
+            if (festival == null)
                 throw new CrudException(HttpStatusCode.NotFound, "FestivalId không tồn tại", request.FestivalId.ToString());
-            }
 
-           
+            if (!festival.Status.Equals("published", StringComparison.OrdinalIgnoreCase))
+                throw new CrudException(HttpStatusCode.BadRequest,
+                    "Không thể đăng ký gian hàng lễ hội đang diễn ra",
+                    request.FestivalId.ToString());
+
             var locationExists = await _unitOfWork.Repository<MapLocation>()
                 .AnyAsync(l => l.LocationId == request.LocationId);
             if (!locationExists)
-            {
                 throw new CrudException(HttpStatusCode.NotFound, "LocationId không tồn tại", request.LocationId.ToString());
-            }
 
-            
             var alreadyRegistered = await _unitOfWork.Repository<Booth>()
                 .AnyAsync(b => b.GroupId == request.GroupId && b.FestivalId == request.FestivalId);
 
             if (alreadyRegistered)
+                throw new CrudException(HttpStatusCode.BadRequest,
+                    "Nhóm của bạn đã đăng kí tham gia lễ hội này rồi",
+                    request.GroupId.ToString());
+
+            if (request.BoothType.Equals("food", StringComparison.OrdinalIgnoreCase))
             {
-                throw new CrudException(HttpStatusCode.BadRequest, "Nhóm của bạn đã đăng kí tham gia lễ hội này rồi", request.GroupId.ToString());
+                if (festival.RegisteredFoodBooths >= festival.MaxFoodBooths)
+                    throw new CrudException(HttpStatusCode.BadRequest, "Số lượng gian hàng Food đã đầy", request.FestivalId.ToString());
+
+                festival.RegisteredFoodBooths++;
+            }
+            else if (request.BoothType.Equals("beverage", StringComparison.OrdinalIgnoreCase))
+            {
+                if (festival.RegisteredBeverageBooths >= festival.MaxBeverageBooths)
+                    throw new CrudException(HttpStatusCode.BadRequest, "Số lượng gian hàng Beverage đã đầy", request.FestivalId.ToString());
+
+                festival.RegisteredBeverageBooths++;
+            }
+            else
+            {
+                throw new CrudException(HttpStatusCode.BadRequest, "BoothType không hợp lệ, chỉ được 'food' hoặc 'beverage'", request.BoothType);
             }
 
-            
             var booth = new Booth
             {
                 GroupId = request.GroupId,
@@ -89,6 +100,9 @@ namespace FestivalFlatform.Service.Services.Implement
             };
 
             await _unitOfWork.Repository<Booth>().InsertAsync(booth);
+
+        
+
             await _unitOfWork.CommitAsync();
 
             return booth;
@@ -98,22 +112,42 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<Booth?> UpdateBoothApproveAsync(int boothId, DateTime approvalDate, int pointsBalance)
         {
-            var booth = await _unitOfWork.Repository<Booth>().FindAsync(b => b.BoothId == boothId);
-
+            var booth = await _unitOfWork.Repository<Booth>()
+                .GetAll()
+                .FirstOrDefaultAsync(b => b.BoothId == boothId);
 
             if (booth == null)
                 return null;
 
+          
+            if (booth.LocationId == null)
+                throw new CrudException(HttpStatusCode.BadRequest, "Booth chưa được gán vị trí", boothId.ToString());
+
+            var mapLocation = await _unitOfWork.Repository<MapLocation>()
+                .GetAll()
+                .FirstOrDefaultAsync(m => m.LocationId == booth.LocationId);
+
+            if (mapLocation == null)
+                throw new CrudException(HttpStatusCode.NotFound, "Không tìm thấy vị trí trên bản đồ", booth.LocationId.ToString());
+
+           
+            if (mapLocation.IsOccupied)
+                throw new CrudException(HttpStatusCode.BadRequest, "Vị trí này đã có gian hàng khác đặt chỗ. Vui lòng chọn vị trí khác!");
+
+         
             booth.ApprovalDate = approvalDate;
             booth.PointsBalance = pointsBalance;
             booth.UpdatedAt = DateTime.UtcNow;
             booth.Status = StatusBooth.Approved;
 
+           
             
+
             await _unitOfWork.CommitAsync();
 
             return booth;
         }
+
 
         public async Task<List<Booth>> GetBooths(
             int? boothId,
@@ -211,22 +245,24 @@ namespace FestivalFlatform.Service.Services.Implement
             if (booth == null)
                 return null;
 
-          
+            // Cập nhật thông tin booth
             if (!string.IsNullOrWhiteSpace(request.BoothName))
                 booth.BoothName = request.BoothName;
             if (!string.IsNullOrWhiteSpace(request.BoothType))
                 booth.BoothType = request.BoothType;
             if (!string.IsNullOrWhiteSpace(request.Description))
                 booth.Description = request.Description;
+            if (!string.IsNullOrWhiteSpace(request.Status))
+                booth.Status = request.Status.Trim(); // <-- cập nhật status ở đây
+
             booth.UpdatedAt = DateTime.UtcNow;
 
-           
+            // Cập nhật location nếu có
             if (request.Location != null)
             {
                 var location = await _unitOfWork.Repository<MapLocation>()
                                 .GetAll()
                                 .FirstOrDefaultAsync(l => l.LocationId == request.Location.LocationId);
-
 
                 if (location != null)
                 {
@@ -244,7 +280,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 }
             }
 
-           
+            // Cập nhật BoothMenuItems nếu có
             if (request.BoothMenuItems != null && request.BoothMenuItems.Any())
             {
                 foreach (var itemReq in request.BoothMenuItems)
@@ -259,10 +295,9 @@ namespace FestivalFlatform.Service.Services.Implement
                         if (itemReq.QuantityLimit.HasValue)
                             boothMenuItem.QuantityLimit = itemReq.QuantityLimit.Value;
                         if (!string.IsNullOrWhiteSpace(itemReq.Status))
-                            boothMenuItem.Status = itemReq.Status;
+                            boothMenuItem.Status = itemReq.Status.Trim();
                         if (!string.IsNullOrWhiteSpace(itemReq.ImageUrl))
                         {
-                           
                             boothMenuItem.Image = new Image
                             {
                                 ImageUrl = itemReq.ImageUrl,
@@ -276,7 +311,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             await _unitOfWork.CommitAsync();
 
-          
+            // Lấy lại booth đã cập nhật
             var updatedBooth = await _unitOfWork.Repository<Booth>()
                 .GetAll()
                 .Include(b => b.Location)
@@ -286,7 +321,6 @@ namespace FestivalFlatform.Service.Services.Implement
 
             return updatedBooth;
         }
-
 
 
     }

@@ -38,8 +38,9 @@ namespace FestivalFlatform.Service.Services.Implement
             {
                 throw new CrudException(HttpStatusCode.BadRequest, "Không tìm thấy FestivalMenu", request.MenuId.ToString());
             }
+            if (request.MinPrice <= 5000)
+                throw new CrudException(HttpStatusCode.BadRequest, "Giá tối thiểu (MinPrice) phải lớn hơn 5000", request.MinPrice.ToString());
 
-          
             var normalizedType = request.ItemType.Trim().ToLower();
             if (normalizedType != StatusMenuItem.food && normalizedType != StatusMenuItem.beverage)
             {

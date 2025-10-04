@@ -32,13 +32,15 @@ namespace FestivalFlatform.Service.Services.Implement
         }
         public async Task<Festival> CreateFestivalAsync(FestivalCreateRequest request)
         {
-           
             var schoolExists = await _unitOfWork.Repository<School>()
                 .AnyAsync(g => g.SchoolId == request.OrganizerSchoolId);
             if (!schoolExists)
                 throw new CrudException(HttpStatusCode.NotFound, "SchoolId không tồn tại", request.OrganizerSchoolId.ToString());
 
-           
+            if (request.MaxFoodBooths + request.MaxBeverageBooths < 3)
+                throw new CrudException(HttpStatusCode.BadRequest, "Tổng số gian hàng (đồ ăn + đồ uống) phải từ 3 trở lên");
+
+
             var festival = new Festival
             {
                 SchoolId = request.OrganizerSchoolId,
@@ -60,10 +62,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 Description = request.Description
             };
 
-           
             await _unitOfWork.Repository<Festival>().InsertAsync(festival);
-
-           
             await _unitOfWork.CommitAsync();
 
             return festival;
@@ -72,95 +71,77 @@ namespace FestivalFlatform.Service.Services.Implement
 
 
 
-
-        public async Task<Festival> UpdateFestivalAsync(
-       int festivalId,
-       int? maxFoodBooths,
-       int? maxBeverageBooths,
-       int? registeredFoodBooths,
-       int? registeredBeverageBooths,
-       string? cancelReason,
-       string? status)
+        public async Task<Festival> UpdateFestivalAsync(int festivalId, int? maxFoodBooths, int? maxBeverageBooths, int? registeredFoodBooths, int? registeredBeverageBooths, string? cancelReason, string? status)
         {
-            var festival = await _unitOfWork.Repository<Festival>()
-                .FindAsync(f => f.FestivalId == festivalId);
 
-            if (festival == null)
-                throw new CrudException(HttpStatusCode.NotFound, "Festival không tồn tại", festivalId.ToString());
-
-            if (maxFoodBooths.HasValue)
-                festival.MaxFoodBooths = maxFoodBooths.Value;
-
-            if (maxBeverageBooths.HasValue)
-                festival.MaxBeverageBooths = maxBeverageBooths.Value;
-
-            if (registeredFoodBooths.HasValue)
-                festival.RegisteredFoodBooths = registeredFoodBooths.Value;
-
-            if (registeredBeverageBooths.HasValue)
-                festival.RegisteredBeverageBooths = registeredBeverageBooths.Value;
-
-            if (!string.IsNullOrWhiteSpace(cancelReason))
-                festival.cancellationReason = cancelReason.Trim();
-
+            var festival = await _unitOfWork.Repository<Festival>().FindAsync(f => f.FestivalId == festivalId);
+            if (festival == null) throw new CrudException(HttpStatusCode.NotFound, "Festival không tồn tại", festivalId.ToString());
+            if (maxFoodBooths.HasValue) festival.MaxFoodBooths = maxFoodBooths.Value;
+            if (maxBeverageBooths.HasValue) festival.MaxBeverageBooths = maxBeverageBooths.Value;
+            if (registeredFoodBooths.HasValue) festival.RegisteredFoodBooths = registeredFoodBooths.Value;
+            if (registeredBeverageBooths.HasValue) festival.RegisteredBeverageBooths = registeredBeverageBooths.Value;
+            if (!string.IsNullOrWhiteSpace(cancelReason)) festival.cancellationReason = cancelReason.Trim();
             if (!string.IsNullOrWhiteSpace(status))
             {
                 festival.Status = status.Trim();
-
                 if (string.Equals(status.Trim(), "completed", StringComparison.OrdinalIgnoreCase))
                 {
-                   
-                    var booths = await _unitOfWork.Repository<Booth>()
-                        .GetAll()
-                        .Where(b => b.FestivalId == festivalId)
-                        .ToListAsync();
-
-                    decimal totalRevenue = 0;
-
+                    var booths = await _unitOfWork.Repository<Booth>().GetAll().Where(b => b.FestivalId == festivalId).ToListAsync(); decimal totalRevenue = 0;
                     if (booths.Any())
                     {
                         foreach (var booth in booths)
                         {
-                           
-                            var boothRevenue = await _unitOfWork.Repository<Order>()
-                                .GetAll()
-                                .Where(o => o.BoothId == booth.BoothId && o.Status.ToLower() == "completed")
+                            var boothRevenue = await _unitOfWork.Repository<Order>().GetAll().
+                                Where(o => o.BoothId == booth.BoothId && o.Status.ToLower() == "completed")
                                 .SumAsync(o => (decimal?)o.TotalAmount) ?? 0m;
-
-                           
                             var boothWallet = await _unitOfWork.Repository<BoothWallet>()
                                 .FindAsync(w => w.BoothId == booth.BoothId);
-
                             if (boothWallet != null)
                             {
                                 boothWallet.TotalBalance = boothRevenue;
                                 boothWallet.UpdatedAt = DateTime.UtcNow;
                             }
-
-                           
                             booth.Status = StatusBooth.Closed;
                             booth.UpdatedAt = DateTime.UtcNow;
-
                             totalRevenue += boothRevenue;
                         }
                     }
-
                     festival.TotalRevenue = totalRevenue;
                 }
             }
-
             festival.UpdatedAt = DateTime.UtcNow;
-
-            await _unitOfWork.CommitAsync();
-            return festival;
+            await _unitOfWork.CommitAsync(); return festival;
         }
 
 
-        public async Task<List<Festival>> SearchFestivalsAsync(int? festivalId, int? schoolId, string? status,
-        DateTime? startDate, DateTime? endDate, DateTime? registrationStartDate, DateTime? registrationEndDate,
-        int? pageNumber, int? pageSize)
+
+        public async Task<List<Festival>> SearchFestivalsAsync(
+     int? festivalId,
+     int? schoolId,
+     string? status,
+     DateTime? startDate,
+     DateTime? endDate,
+     DateTime? registrationStartDate,
+     DateTime? registrationEndDate,
+     int? pageNumber,
+     int? pageSize)
         {
             var query = _unitOfWork.Repository<Festival>().GetAll()
+                .Include(f => f.Images)
+                .Include(f => f.FestivalMaps)
+                    .ThenInclude(m => m.Locations)
+                .Include(f => f.FestivalMenus)
+                    .ThenInclude(fm => fm.MenuItems)
+                .Include(f => f.FestivalSchools)
+                    .ThenInclude(fs => fs.School)
+                        .ThenInclude(s => s.Account)
+                .Include(f => f.Booths)
+                 .Where(a => !a.IsDelete)
+                .AsQueryable();
+
+            // Filters
+            query = query
+
                 .Where(f => !festivalId.HasValue || f.FestivalId == festivalId)
                 .Where(f => !schoolId.HasValue || f.SchoolId == schoolId)
                 .Where(f => string.IsNullOrWhiteSpace(status) || f.Status == status.Trim())
@@ -169,17 +150,17 @@ namespace FestivalFlatform.Service.Services.Implement
                 .Where(f => !registrationStartDate.HasValue || (f.RegistrationStartDate.HasValue && f.RegistrationStartDate.Value.Date >= registrationStartDate.Value.Date))
                 .Where(f => !registrationEndDate.HasValue || (f.RegistrationEndDate.HasValue && f.RegistrationEndDate.Value.Date <= registrationEndDate.Value.Date));
 
-            //int currentPage = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
-            //int currentSize = pageSize.HasValue && pageSize.Value > 0 ? pageSize.Value : 10;
+            // Pagination (nếu cần)
+            if (pageNumber.HasValue && pageNumber.Value > 0 && pageSize.HasValue && pageSize.Value > 0)
+            {
+                query = query
+                    .Skip((pageNumber.Value - 1) * pageSize.Value)
+                    .Take(pageSize.Value);
+            }
 
-            //query = query.Skip((currentPage - 1) * currentSize).Take(currentSize);
-
-            var festivals = await query.ToListAsync();
-
-
-
-            return festivals;
+            return await query.ToListAsync();
         }
+
 
         public async Task DeleteFestivalAsync(int festivalId)
         {
@@ -199,7 +180,7 @@ namespace FestivalFlatform.Service.Services.Implement
             if (festival == null)
                 throw new CrudException(HttpStatusCode.NotFound, "Festival không tồn tại", festivalId.ToString());
 
-            
+
             if (festival.Images.Any())
                 _unitOfWork.Repository<Image>().DeleteRange(festival.Images.AsQueryable());
 
@@ -243,7 +224,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
         public async Task<bool> DistributeCommissionAsync(DistributeCommissionRequest request)
         {
-           
+
             var festival = await _unitOfWork.Repository<Festival>()
                 .GetAll()
                 .FirstOrDefaultAsync(f => f.FestivalId == request.FestivalId);
@@ -254,7 +235,7 @@ namespace FestivalFlatform.Service.Services.Implement
             if (festival.Status != StatusFestival.Completed)
                 throw new InvalidOperationException("Festival must be completed before distributing commission");
 
-            
+
             var boothWallets = await _unitOfWork.Repository<BoothWallet>()
                 .GetAll()
                 .Include(bw => bw.Booth)
@@ -264,10 +245,10 @@ namespace FestivalFlatform.Service.Services.Implement
             if (!boothWallets.Any())
                 throw new InvalidOperationException("No booth wallets found for this festival");
 
-            
+
             decimal totalRevenue = boothWallets.Sum(bw => bw.TotalBalance);
 
-            
+
             decimal commissionAmount = totalRevenue * (request.CommissionRate / 100);
 
             var adminWallet = await _unitOfWork.Repository<Wallet>()
@@ -278,11 +259,11 @@ namespace FestivalFlatform.Service.Services.Implement
             if (adminWallet == null)
                 throw new InvalidOperationException("Admin wallet not found");
 
-            
+
             adminWallet.Balance += commissionAmount;
             adminWallet.UpdateAt = DateTime.UtcNow;
 
-          
+
             int boothCount = boothWallets.Count;
             decimal deductionPerBooth = commissionAmount / boothCount;
 
@@ -294,7 +275,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 boothWallet.UpdatedAt = DateTime.UtcNow;
             }
 
-           
+
             await _unitOfWork.CommitAsync();
 
             return true;
@@ -305,7 +286,7 @@ namespace FestivalFlatform.Service.Services.Implement
             var vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow,
                    TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"));
             var todayVN = vietnamTime.Date;
-             _logger.LogInformation("✅ FestivalJobService: Updated status for festivals on {Date}", todayVN);
+            _logger.LogInformation("✅ FestivalJobService: Updated status for festivals on {Date}", todayVN);
         }
         public async Task UpdateFestivalStatusDailyAsync()
         {
@@ -313,7 +294,7 @@ namespace FestivalFlatform.Service.Services.Implement
             {
                 var vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
 
-               
+
                 var vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, vietnamTimeZone);
                 var todayVN = vietnamTime.Date;
 
@@ -330,7 +311,7 @@ namespace FestivalFlatform.Service.Services.Implement
                         if (fest.Status == StatusFestival.Published && startVN == todayVN)
                         {
                             fest.Status = StatusFestival.Ongoing;
-                            fest.UpdatedAt = DateTime.UtcNow; 
+                            fest.UpdatedAt = DateTime.UtcNow;
                         }
                     }
 
@@ -340,7 +321,7 @@ namespace FestivalFlatform.Service.Services.Implement
                         if (fest.Status == StatusFestival.Ongoing && endVN == todayVN)
                         {
                             fest.Status = StatusFestival.Completed;
-                            fest.UpdatedAt = DateTime.UtcNow; 
+                            fest.UpdatedAt = DateTime.UtcNow;
                         }
                     }
                 }
@@ -389,7 +370,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 throw new KeyNotFoundException("Festival không tồn tại");
             if (!string.Equals(festival.Status, "draft", StringComparison.OrdinalIgnoreCase))
                 throw new InvalidOperationException("Chỉ có thể cập nhật festival khi đang ở trạng thái draft");
-          
+
             festival.SchoolId = request.SchoolId ?? festival.SchoolId;
             festival.FestivalName = request.FestivalName ?? festival.FestivalName;
             festival.Theme = request.Theme ?? festival.Theme;
@@ -403,22 +384,22 @@ namespace FestivalFlatform.Service.Services.Implement
             festival.RegisteredFoodBooths = request.RegisteredFoodBooths ?? festival.RegisteredFoodBooths;
             festival.RegisteredBeverageBooths = request.RegisteredBeverageBooths ?? festival.RegisteredBeverageBooths;
             festival.Status = request.Status ?? festival.Status;
-            
+
             festival.Description = request.Description ?? festival.Description;
             festival.cancellationReason = request.CancellationReason;
             festival.UpdatedAt = DateTime.UtcNow;
 
-           
+
             if (request.Images != null)
             {
-                // Xóa image không còn trong request
+
                 var removeImages = festival.Images
                     .Where(i => !request.Images.Any(ri => ri.ImageId == i.ImageId))
                     .ToList();
                 foreach (var img in removeImages)
                     _unitOfWork.Repository<Image>().Delete(img);
 
-              
+
                 foreach (var imgReq in request.Images)
                 {
                     var existing = festival.Images.FirstOrDefault(i => i.ImageId == imgReq.ImageId);
@@ -436,7 +417,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 }
             }
 
-          
+
             if (request.FestivalMaps != null)
             {
                 var removeMaps = festival.FestivalMaps
@@ -455,7 +436,7 @@ namespace FestivalFlatform.Service.Services.Implement
                         existingMap.MapUrl = mapReq.MapUrl;
                         existingMap.LastUpdated = DateTime.UtcNow;
 
-                    
+
                         var removeLocs = existingMap.Locations
                             .Where(l => !mapReq.Locations.Any(rl => rl.LocationId == l.LocationId))
                             .ToList();
@@ -488,7 +469,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 }
             }
 
-         
+
             if (request.FestivalMenus != null)
             {
                 var removeMenus = festival.FestivalMenus
@@ -506,7 +487,7 @@ namespace FestivalFlatform.Service.Services.Implement
                         existingMenu.Description = menuReq.Description;
                         existingMenu.UpdatedAt = DateTime.UtcNow;
 
-                       
+
                         var removeItems = existingMenu.MenuItems
                             .Where(i => !menuReq.MenuItems.Any(ri => ri.ItemId == i.ItemId))
                             .ToList();
@@ -544,6 +525,95 @@ namespace FestivalFlatform.Service.Services.Implement
             await _unitOfWork.CommitAsync();
             return festival;
         }
+        public async Task<bool> SoftDeleteFestivalAsync(int id)
+        {
+            var festival = await _unitOfWork.Repository<Festival>().FindAsync(f => f.FestivalId == id);
+            if (festival == null) return false;
+
+            festival.IsDelete = true;
+            festival.UpdatedAt = DateTime.UtcNow;
+
+            await _unitOfWork.CommitAsync();
+            return true;
+        }
+
+        public async Task<ValidationResult> CanUpdateOngoingFestivalAsync(int festivalId)
+        {
+            var booths = await _unitOfWork.Repository<Booth>()
+                .GetAll()
+                .Where(b => b.FestivalId == festivalId)
+                .Include(b => b.Location)
+                .ToListAsync();
+
+            if (!booths.Any())
+            {
+                return new ValidationResult
+                {
+                    Success = false,
+                    Message = "Không tìm thấy gian hàng nào trong lễ hội này"
+                };
+            }
+
+            var errors = new List<string>();
+
+            // --- 1. Group theo LocationId ---
+            var groupedByLocation = booths
+                .Where(b => b.LocationId != null)
+                .GroupBy(b => b.LocationId);
+
+            var processedBoothIds = new HashSet<int>();
+
+            foreach (var group in groupedByLocation)
+            {
+                var boothsInLocation = group.ToList();
+                foreach (var b in boothsInLocation) processedBoothIds.Add(b.BoothId);
+
+                var location = boothsInLocation.First().Location;
+
+                if (location == null)
+                {
+                    errors.Add($"Các gian hàng {string.Join(", ", boothsInLocation.Select(b => b.BoothName))} chưa được gán vị trí");
+                    continue;
+                }
+
+                if (!boothsInLocation.Any(b => b.Location != null && b.Location.IsOccupied))
+                {
+                    errors.Add($"Các gian hàng {string.Join(", ", boothsInLocation.Select(b => b.BoothName))} tại vị trí {location.Coordinates} - {location.LocationName} chưa được kiểm duyệt");
+                }
+            }
+
+            // --- 2. Duyệt booth còn lại ---
+            var remainingBooths = booths.Where(b => !processedBoothIds.Contains(b.BoothId)).ToList();
+            foreach (var booth in remainingBooths)
+            {
+                if (booth.Location == null)
+                {
+                    errors.Add($"Gian hàng {booth.BoothName} chưa được gán vị trí");
+                }
+                else if (!booth.Location.IsOccupied)
+                {
+                    errors.Add($"Gian hàng {booth.BoothName} tại vị trí {booth.Location.Coordinates} - {booth.Location.LocationName} chưa được kiểm duyệt");
+                }
+            }
+
+            // --- 3. Trả kết quả ---
+            if (errors.Any())
+            {
+                return new ValidationResult
+                {
+                    Success = false,
+                    Message = string.Join("; ", errors)
+                };
+            }
+
+            return new ValidationResult
+            {
+                Success = true,
+                Message = "Tất cả gian hàng đã hợp lệ"
+            };
+        }
 
     }
+
+
 }

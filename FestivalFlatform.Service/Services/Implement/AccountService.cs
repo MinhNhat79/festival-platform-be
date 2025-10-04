@@ -166,7 +166,7 @@ namespace FestivalFlatform.Service.Services.Implement
         public async Task<List<AccountResponse>> GetAccount(int? id, string? phone, string? email, string? classNAme, int? role, int? pageNumber, int? pageSize)
         {
             var query = _unitOfWork.Repository<Account>().GetAll()
-
+                                                           .Where(a => !a.IsDelete)
                                                          .Where(a => !id.HasValue || id == 0 || a.AccountId == id.Value)
 
                                                          .Where(a => string.IsNullOrWhiteSpace(phone) || a.PhoneNumber.Contains(phone.Trim()))
@@ -281,6 +281,7 @@ namespace FestivalFlatform.Service.Services.Implement
                 Pasword = account.PasswordHash,
                 PhoneNumber = account.PhoneNumber,
                 RoleId = account.RoleId,
+                Status = account.Status,
                 CreatedAt = account.CreatedAt,
                 UpdatedAt = account.UpdatedAt,
 
@@ -460,7 +461,8 @@ namespace FestivalFlatform.Service.Services.Implement
           
             var uriBuilder = new UriBuilder(defaultLink);
             var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-            query["id"] = account.AccountId.ToString();           
+            query["id"] = account.AccountId.ToString();
+            query["status"] = "true";
             uriBuilder.Query = query.ToString();
             var buttonLink = uriBuilder.ToString();
             var htmlBody = @"
@@ -538,7 +540,7 @@ namespace FestivalFlatform.Service.Services.Implement
 
             await smtp.SendMailAsync(mail);
             account.PlainPassword = null;
-            account.Status = true;
+            account.Status = false;
             account.UpdatedAt = DateTime.UtcNow;
             await _unitOfWork.CommitAsync();
         }
@@ -793,6 +795,18 @@ namespace FestivalFlatform.Service.Services.Implement
 
             
             return await ForgotPasswordAsync(email);
+        }
+
+        public async Task<bool> SoftDeleteAccountAsync(int id)
+        {
+            var account = await _unitOfWork.Repository<Account>().FindAsync(a => a.AccountId == id);
+            if (account == null) return false;
+
+            account.IsDelete = true;
+            account.UpdatedAt = DateTime.UtcNow;
+
+            await _unitOfWork.CommitAsync();
+            return true;
         }
 
     }

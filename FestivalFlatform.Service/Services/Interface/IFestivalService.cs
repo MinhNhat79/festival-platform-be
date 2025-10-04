@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FestivalFlatform.Data.Models;
 using FestivalFlatform.Service.DTOs.Request;
+using FestivalFlatform.Service.Helpers;
 
 namespace FestivalFlatform.Service.Services.Interface
 {
@@ -22,6 +23,8 @@ namespace FestivalFlatform.Service.Services.Interface
         Task UpdateFestivalStatusDailyAsync();
 
         Task<Festival> UpdateFestivalInfoAsync(UpdateFestivalRequest request);
-
-    }  
+        Task<bool> SoftDeleteFestivalAsync(int id);
+        Task<ValidationResult> CanUpdateOngoingFestivalAsync(int festivalId);
+        
+        }  
 }

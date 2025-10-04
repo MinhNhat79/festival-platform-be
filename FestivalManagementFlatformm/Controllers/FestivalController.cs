@@ -162,5 +162,26 @@ namespace FestivalManagementFlatformm.Controllers
                 return StatusCode(500, new { success = false, message = "Lỗi hệ thống", detail = ex.Message });
             }
         }
+
+        [HttpDelete("IsDelete")]
+        public async Task<IActionResult> SoftDeleteFestival(int id)
+        {
+            var success = await _festivalService.SoftDeleteFestivalAsync(id);
+            if (!success)
+                return NotFound(new { message = "Không tìm thấy festival" });
+
+            return Ok(new { message = "Đã xoá festival thành công" });
+        }
+
+        [HttpGet("can-update-ongoing")]
+        public async Task<IActionResult> CanUpdateOngoingFestival(int festivalId)
+        {
+            var result = await _festivalService.CanUpdateOngoingFestivalAsync(festivalId);
+
+            if (!result.Success)
+                return BadRequest(new { success = false, message = result.Message });
+
+            return Ok(new { success = true, message = "Có thể chuyển festival sang trạng thái Ongoing" });
+        }
     }
 }
